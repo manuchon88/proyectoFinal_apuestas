@@ -6,6 +6,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="D:\NyCD\Tercer Semestre NyCD\PROGRAMACIÓN II\ProyectoFinalApuestas"/>
 			<item value="D:\NyCD\Tercer Semestre NyCD\PROGRAMACIÓN II\ProyectoFinalApuestas\proyectoFinal_apuestas"/>
 			<item value="C:\Users\manuC\OneDrive\Desktop\ePC\Semestre3\ProyectoFinal_PrograII\proyectoFinal_apuestas"/>
 		</list>
