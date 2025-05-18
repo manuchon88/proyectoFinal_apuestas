@@ -6,17 +6,36 @@ public class Administrador extends Usuario {
 		super(nombre, correo, contrasenia);
 	}
 
-	public Evento crearEvento(String tipo, int anio, int mes, int dia, String equipo1, String equipo2) {
-		return new EventoFutbol(anio, mes, dia, equipo1, equipo2);
+	public String crearEvento(int deporte, String datos) {
+		switch (deporte) {
+		case 1: {
+			return EventoFutbol.leerEventFutbol(datos).toString();
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + deporte);
+		}
     }
 	
-	public Apuesta crearApuesta(String descripcion, double cuota, Evento evento) {
-		return new ApuestaFutbol(descripcion, cuota, (EventoFutbol) evento);
+	public String crearApuesta(int deporte, String apuestaString) {
+		switch (deporte) {
+		case 1: {
+			return ApuestaFutbol.leerApuestaFut(apuestaString).toString();
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + deporte);
+		}
     }
 	
-	public void editarApuesta(Apuesta apuesta, String nuevaDescripcion, double nuevaCuota) {
-        apuesta.setDescripcion(nuevaDescripcion);
-        apuesta.setCuota(nuevaCuota);
-        System.out.println("Nueva Apuesta: " + nuevaDescripcion + ", Nueva cuota: " + nuevaCuota);
+	public String editarApuesta(int deporte, String CadenaApuesta, String nuevaDescripcion, double nuevaCuota) {
+        switch (deporte) {
+		case 1: {
+			ApuestaFutbol apuesta = ApuestaFutbol.leerApuestaFut(CadenaApuesta);
+			apuesta.setDescripcion(nuevaDescripcion);
+			apuesta.setCuota(nuevaCuota);
+			return apuesta.toString();
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + deporte);
+		}
     }
 }

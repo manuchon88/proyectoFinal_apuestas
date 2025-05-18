@@ -1,5 +1,11 @@
 package proyectoFinal_apuestas;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
@@ -68,18 +74,96 @@ public class Apostador extends Usuario{
         }
     }
 
-    // ¿Para que es el registrar? 
-    public void registrar() {
-        System.out.println("¿Para que es el registrar?");
+    @Override
+	public String toString() {
+		return getNombre()+", "+getCorreo()+", "+getContrasenia()+", "+saldo;
+	}
+
+	// ¿Para que es el registrar? 
+    public boolean registrarse() {
+    	try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(Archivos.archivosUsuarios, true));
+			escritor.println(this.toString());
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+    	return true;
     }
 
-    public void cerrarSesion() {
-        System.out.println("Cerrar sesión");
+    public boolean cerrarSesion() {
+    	ArrayList<Apostador> base = leerApostadoresTxt();
+    	for (Apostador user : base) {
+			if (user.getCorreo().equals(this.getCorreo())) {
+				user.setContrasenia(this.getContrasenia());
+				user.setNombre(this.getNombre());
+				user.setSaldo(this.getSaldo());
+			}
+		}
+    	if (reescribirApostadoresTxt(base)) {
+			return true;
+		} else {
+			return false;
+		}
     }
 
-    public void iniciarSesion() {
-        System.out.println("Iniciar Sesión");
+    public static int VerificarInicioSesion(String correoIngresado, String contraseniaIngresada) {
+    	ArrayList<Apostador> base = leerApostadoresTxt();
+    	for (Apostador user : base) {
+			if (user.getCorreo().equals(correoIngresado)) {
+				if (user.getContrasenia().equals(contraseniaIngresada)) {
+					return 2; //2 = Usuario y contraseña correctos
+				} else {
+					return 1; //1 = Usuario existente, contraseña incorrecta
+				}
+			}
+		}
+    	return 0; //0 = Usuario no existe, tiene que crear cuenta
     }
 	
+    public static Apostador iniciarSesion(String correoIngresado, String contraseniaIngresada) {
+    	ArrayList<Apostador> base = leerApostadoresTxt();
+		for (Apostador apos : base) {
+			if (apos.getCorreo().equals(correoIngresado) && apos.getContrasenia().equals(contraseniaIngresada)) {
+				return apos;
+			}
+		}
+		return null;
+	}
+    
+	public static ArrayList<Apostador> leerApostadoresTxt() {
+		ArrayList<Apostador> base = new ArrayList<Apostador>();
+		try {
+			BufferedReader lector = new BufferedReader(new FileReader(Archivos.archivosUsuarios));
+			String linea;
+			while ((linea = lector.readLine())!=null) {
+				String datos[] = linea.split(", ");
+				base.add(new Apostador(datos[0], datos[1], datos[2], Double.parseDouble(datos[3])));
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return base;
+	}
 	
+	public static boolean reescribirApostadoresTxt(ArrayList<Apostador> apostadores) {
+		try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(Archivos.archivosUsuarios));
+			for (Apostador apos : apostadores) {
+				escritor.println(apos.toString());
+			}
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }
