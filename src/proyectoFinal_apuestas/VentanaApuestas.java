@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -59,9 +61,11 @@ public class VentanaApuestas extends JFrame {
 		panPrincipal.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panTitulo = new JPanel();
+		panTitulo.setBackground(new Color(45, 104, 184));
 		panPrincipal.add(panTitulo, BorderLayout.NORTH);
 		
 		JLabel lblTitulo = new JLabel("UCBet");
+		lblTitulo.setForeground(new Color(255, 232, 0));
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 28));
 		panTitulo.add(lblTitulo);
 		

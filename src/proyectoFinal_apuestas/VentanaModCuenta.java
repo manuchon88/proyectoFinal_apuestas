@@ -50,15 +50,16 @@ public class VentanaModCuenta extends JFrame {
 		panPrincipal.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panTitulo = new JPanel();
-		panTitulo.setBackground(new Color(169, 204, 227));
+		panTitulo.setBackground(new Color(45, 104, 184));
 		panPrincipal.add(panTitulo, BorderLayout.NORTH);
 		
 		JLabel lblTitulo = new JLabel("Modificar Cuenta");
+		lblTitulo.setForeground(new Color(255, 232, 0));
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 22));
 		panTitulo.add(lblTitulo);
 		
 		JPanel panBotones = new JPanel();
-		panBotones.setBackground(new Color(169, 204, 227));
+		panBotones.setBackground(new Color(255, 255, 255));
 		panPrincipal.add(panBotones, BorderLayout.SOUTH);
 		panBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
@@ -84,7 +85,7 @@ public class VentanaModCuenta extends JFrame {
 		panBotones.add(btnActualizar);
 		
 		JPanel panCentro = new JPanel();
-		panCentro.setBackground(new Color(235, 245, 251));
+		panCentro.setBackground(new Color(255, 255, 255));
 		panPrincipal.add(panCentro, BorderLayout.CENTER);
 		panCentro.setLayout(null);
 		
