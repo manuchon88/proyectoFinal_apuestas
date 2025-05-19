@@ -13,6 +13,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class VentanaApuestas extends JFrame {
 
@@ -43,7 +44,7 @@ public class VentanaApuestas extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaApuestas() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Rectangle bounds = env.getMaximumWindowBounds().getBounds();
         setBounds(bounds);
@@ -116,6 +117,22 @@ public class VentanaApuestas extends JFrame {
 		panCentroCentro.add(textFieldEquipo2);
 		
 		JComboBox comboBoxCompeticion = new JComboBox();
+
+		String[] listaFutbol = {"Champions", "Mundial de Clubes", "La Liga", "Serie A", "Premier League"};
+		String[] listaBasket = {"NBA", "Europa", "FIBA", "A", "O"};
+
+		if (textFieldTipoApuesta.getText().trim().equalsIgnoreCase("Futbol")) {
+		    comboBoxCompeticion.setModel(new DefaultComboBoxModel(listaFutbol));
+		} else if (textFieldTipoApuesta.getText().trim().equalsIgnoreCase("Basketball")) {
+		    comboBoxCompeticion.setModel(new DefaultComboBoxModel(listaBasket));
+		} else {
+		    String[] listaMixta = new String[listaFutbol.length + listaBasket.length];
+		    System.arraycopy(listaFutbol, 0, listaMixta, 0, listaFutbol.length);
+		    System.arraycopy(listaBasket, 0, listaMixta, listaFutbol.length, listaBasket.length);
+		    comboBoxCompeticion.setModel(new DefaultComboBoxModel(listaMixta));
+		}
+
+		
 		comboBoxCompeticion.setBounds(368, 312, 244, 32);
 		panCentroCentro.add(comboBoxCompeticion);
 		

@@ -75,6 +75,22 @@ public class VentanaIniciarSesion extends JFrame {
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int estado = Apostador.VerificarInicioSesion(textFieldUsuario.getText(), new String(passwordField.getPassword()));
+				
+				int estadoAdmin = Administrador.VerificarInicioSesion(textFieldUsuario.getText(), new String(passwordField.getPassword()));
+				if (estadoAdmin == 2) {
+					JOptionPane.showMessageDialog(btnIngresar, "Bienvenido Administrador");
+					Administrador user = Administrador.iniciarSesion(textFieldUsuario.getText(), new String(passwordField.getPassword()));
+					VentanaAdministrador frame = new VentanaAdministrador(user.getNombre(), user.getCorreo(), user.getContrasenia());
+					frame.setVisible(true);
+					VentanaIniciarSesion.this.dispose();
+					return; 
+				} else if (estadoAdmin == 1) {
+					JOptionPane.showMessageDialog(btnIngresar, "Contraseña incorrecta para Administrador");
+					passwordField.setText("");
+					passwordField.requestFocusInWindow();
+					return;
+				}
+				
 				if (estado == 2) {
 					JOptionPane.showMessageDialog(btnIngresar, "Bienvenido de nuevo a UCBet");
 					Apostador user = Apostador.iniciarSesion(textFieldUsuario.getText(), new String(passwordField.getPassword()));
@@ -92,6 +108,8 @@ public class VentanaIniciarSesion extends JFrame {
 					textFieldUsuario.requestFocusInWindow();
 					passwordField.setText("");
 				}
+
+			
 			}
 		});
 		btnIngresar.setBackground(new Color(234, 242, 248));

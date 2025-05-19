@@ -252,6 +252,12 @@ public class VentanaPrincipal extends JFrame {
 		panDerAbajo.setLayout(new GridLayout(2, 1, 0, 0));
 		
 		JButton btnApuesta = new JButton("Apuesta");
+		btnApuesta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestas frame = new VentanaApuestas();
+				frame.setVisible(true);
+			}
+		});
 		panDerAbajo.add(btnApuesta);
 	}
 }

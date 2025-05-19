@@ -57,6 +57,30 @@ public class Administrador extends Usuario {
 		return  getNombre() + ", " + getCorreo() + ", " + getContrasenia();
 	}
 
+	public static int VerificarInicioSesion(String correoIngresado, String contraseniaIngresada) {
+    	ArrayList<Administrador> base = leerAdministradoresTxt(Archivos.archivosAdministradores);
+    	for (Administrador user : base) {
+			if (user.getCorreo().equals(correoIngresado)) {
+				if (user.getContrasenia().equals(contraseniaIngresada)) {
+					return 2; //2 = Usuario y contraseña correctos
+				} else {
+					return 1; //1 = Usuario existente, contraseña incorrecta
+				}
+			}
+		}
+    	return 0; //0 = Usuario no existe, tiene que crear cuenta
+    }
+	
+	public static Administrador iniciarSesion(String correoIngresado, String contraseniaIngresada) {
+    	ArrayList<Administrador> base = leerAdministradoresTxt(Archivos.archivosAdministradores);
+		for (Administrador admin : base) {
+			if (admin.getCorreo().equals(correoIngresado) && admin.getContrasenia().equals(contraseniaIngresada)) {
+				return admin;
+			}
+		}
+		return null;
+	}
+	
 	public boolean registrarAdministradoresTxt(String archivo) {
 		try {
 			PrintWriter escritor = new PrintWriter(new FileWriter(archivo,true));
