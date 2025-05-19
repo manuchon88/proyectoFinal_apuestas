@@ -178,6 +178,25 @@ public class VentanaAdministrador extends JFrame {
 		JButton btnResultadosEvento = new JButton("Resultados del Evento");
 		btnResultadosEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Object[] opciones = {"Fútbol", "Basketball"};
+				int seleccion = JOptionPane.showOptionDialog(
+					btnActualizarEvento,
+					"Selecciona el tipo de evento a actualizar:",
+					"Tipo de Evento",
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					opciones,
+					opciones[0]
+				);
+
+				if (seleccion == 0) {
+					VentanaResultadoEventoFutbol frame = new VentanaResultadoEventoFutbol();
+					frame.setVisible(true);
+				} else if (seleccion == 1) {
+					VentanaResultadoEventoBasketball frame = new VentanaResultadoEventoBasketball();
+					frame.setVisible(true);
+				}
 			}
 		});
 		btnResultadosEvento.setBounds(228, 162, 147, 23);

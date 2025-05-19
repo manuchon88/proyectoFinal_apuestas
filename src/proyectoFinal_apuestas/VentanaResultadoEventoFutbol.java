@@ -70,9 +70,37 @@ public class VentanaResultadoEventoFutbol extends JFrame {
 		panPrincipal.add(panBotones, BorderLayout.SOUTH);
 		
 		JButton btnRegistrarResultado = new JButton("Registrar Resultado");
+		btnRegistrarResultado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int goles1 = Integer.parseInt(textFieldGolesLocal.getText());
+					int goles2 = Integer.parseInt(textFieldGolesVisitante.getText());
+					int amarillas1 = Integer.parseInt(textFieldAmarillasLocal.getText());
+					int amarillas2 = Integer.parseInt(textFieldAmarillasVisitante.getText());
+					int rojas1 = Integer.parseInt(textFieldRojasLocal.getText());
+					int rojas2 = Integer.parseInt(textFieldRojasVisitante.getText());
+
+					ResultadoFutbol resultado = new ResultadoFutbol(goles1, goles2, amarillas1, amarillas2, rojas1, rojas2);
+					if (resultado.registrarResultadosFutbolTxt(Archivos.archivosResultadoFutbol)) {
+						System.out.println("Resultado registrado correctamente.");
+					} else {
+						System.out.println("Error al registrar resultado.");
+					}
+				} catch (NumberFormatException ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+
 		panBotones.add(btnRegistrarResultado);
 		
 		JButton btnCambiarEvento = new JButton("Cambiar Evento");
+		btnCambiarEvento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaResultadoEventoBasketball frame = new VentanaResultadoEventoBasketball();
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnCambiarEvento);
 		
 		JPanel panel = new JPanel();
