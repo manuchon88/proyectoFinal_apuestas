@@ -85,7 +85,7 @@ public class Apostador extends Usuario{
 			return false;
 		}
     	try {
-			PrintWriter escritor = new PrintWriter(new FileWriter(Archivos.archivosUsuarios, true));
+			PrintWriter escritor = new PrintWriter(new FileWriter(Archivos.archivosApostadores, true));
 			escritor.println(this.toString());
 			escritor.close();
 		} catch (IOException e) {
@@ -139,7 +139,7 @@ public class Apostador extends Usuario{
 	public static ArrayList<Apostador> leerApostadoresTxt() {
 		ArrayList<Apostador> base = new ArrayList<Apostador>();
 		try {
-			BufferedReader lector = new BufferedReader(new FileReader(Archivos.archivosUsuarios));
+			BufferedReader lector = new BufferedReader(new FileReader(Archivos.archivosApostadores));
 			String linea;
 			while ((linea = lector.readLine())!=null) {
 				String datos[] = linea.split(", ");
@@ -157,7 +157,7 @@ public class Apostador extends Usuario{
 	
 	public static boolean reescribirApostadoresTxt(ArrayList<Apostador> apostadores) {
 		try {
-			PrintWriter escritor = new PrintWriter(new FileWriter(Archivos.archivosUsuarios));
+			PrintWriter escritor = new PrintWriter(new FileWriter(Archivos.archivosApostadores));
 			for (Apostador apos : apostadores) {
 				escritor.println(apos.toString());
 			}

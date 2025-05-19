@@ -138,6 +138,16 @@ public class EventoBasketball extends Evento {
 	public void setFaltas2(int faltas2) {
 		this.faltas2 = faltas2;
 	}
+	
+	public int ganador() {
+		if (puntos1>puntos2) {
+			return 1;
+		}else if (puntos2>puntos1) {
+			return 2;
+		}else {
+			return 0;
+		}
+	}
 
 
 	public boolean registrarEventoBasketballTxt(String archivo) {
