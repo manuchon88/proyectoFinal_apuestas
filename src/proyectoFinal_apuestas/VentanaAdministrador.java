@@ -198,5 +198,20 @@ public class VentanaAdministrador extends JFrame {
 		});
 		btnResultadosEvento.setBounds(228, 162, 147, 23);
 		panCentro.add(btnResultadosEvento);
+		
+		JLabel lblApuestas = new JLabel("Crear apuesta: ");
+		lblApuestas.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblApuestas.setBounds(45, 198, 172, 20);
+		panCentro.add(lblApuestas);
+		
+		JButton btnCrearApuesta = new JButton("Crear apuesta");
+		btnCrearApuesta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaCrearApuesta frame = new VentanaCrearApuesta();
+				frame.setVisible(true);
+			}
+		});
+		btnCrearApuesta.setBounds(228, 195, 147, 23);
+		panCentro.add(btnCrearApuesta);
 	}
 }

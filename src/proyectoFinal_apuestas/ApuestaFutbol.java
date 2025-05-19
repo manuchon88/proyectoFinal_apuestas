@@ -15,7 +15,20 @@ import java.util.ArrayList;
 public class ApuestaFutbol extends Apuesta {
 	private PrediccionFutbol predict;
 	private EventoFutbol event;
-    public ApuestaFutbol(String descripcion, double cuota, PrediccionFutbol prediccion, EventoFutbol evento) {
+	private int tipoApuesta;
+    public int getTipoApuesta() {
+		return tipoApuesta;
+	}
+
+
+
+	public void setTipoApuesta(int tipoApuesta) {
+		this.tipoApuesta = tipoApuesta;
+	}
+
+
+
+	public ApuestaFutbol(String descripcion, double cuota, PrediccionFutbol prediccion, EventoFutbol evento) {
         super(descripcion, cuota);
         this.event = evento;
         this.predict = prediccion;
@@ -49,13 +62,17 @@ public class ApuestaFutbol extends Apuesta {
 
 	@Override
 	public String toString() {
-		return descripcion+", "+cuota+", "+predict.toString()+", "+event.toString();
+		if (predict == null) {
+			return descripcion+"#"+cuota+"#"+"null"+"#"+event.toString()+"#"+getTipoApuesta();			
+		}else {
+			return descripcion+"#"+cuota+"#"+predict.toString()+"#"+event.toString()+"#"+getTipoApuesta();						
+		}
 	}
 
 
 
 	public static ApuestaFutbol leerApuestaFut(String cadena) {
-		String[] datos = cadena.split(", ");
+		String[] datos = cadena.split("#");
 		return new ApuestaFutbol(datos[0], Double.parseDouble(datos[1]), PrediccionFutbol.leerPrediccion(datos[2]), EventoFutbol.leerEventFutbol(datos[3]));
 	}
 
@@ -108,7 +125,7 @@ public class ApuestaFutbol extends Apuesta {
 			BufferedReader lector = new BufferedReader(new FileReader(archivo));
 			String linea;
 			while ((linea = lector.readLine())!=null) {
-				String [] datos = linea.split(", ");
+				String [] datos = linea.split("#");
 				String descripcion = datos[0];
 				double cuota = Double.parseDouble(datos[1]);
 				
@@ -234,16 +251,16 @@ public class ApuestaFutbol extends Apuesta {
 		try {
 			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
 			for (ApuestaFutbol af : apuestaFutbol) {
-				String registro = af.getDescripcion() + ", " + af.getCuota() + ", " +
-						af.getPredict().getMonto() + ", " + af.getPredict().getGanador() + ", " +
-						af.getPredict().getGoles1() + ", " + af.getPredict().getGoles2() + ", " +
-						af.getPredict().getAmarillas1() + ", " + af.getPredict().getAmarillas2() + ", " +
-						af.getPredict().getRojas1() + ", " + af.getPredict().getRojas2() + ", " +
-						af.getEvent().getFecha().getYear() + ", " + af.getEvent().getFecha().getMonthValue() + ", " +
-						af.getEvent().getFecha().getDayOfMonth() + ", " + af.getEvent().getEquipo1() + ", " +
-						af.getEvent().getEquipo2() + ", " + af.getEvent().getGoles1() + ", " +
-						af.getEvent().getGoles2() + ", " + af.getEvent().getAmarillas1() + ", " +
-						af.getEvent().getAmarillas2() + ", " + af.getEvent().getRojas1() + ", " +
+				String registro = af.getDescripcion() + "#" + af.getCuota() + "#" +
+						af.getPredict().getMonto() + "#" + af.getPredict().getGanador() + "#" +
+						af.getPredict().getGoles1() + "#" + af.getPredict().getGoles2() + "#" +
+						af.getPredict().getAmarillas1() + "#" + af.getPredict().getAmarillas2() + "#" +
+						af.getPredict().getRojas1() + "#" + af.getPredict().getRojas2() + "#" +
+						af.getEvent().getFecha().getYear() + "#" + af.getEvent().getFecha().getMonthValue() + "#" +
+						af.getEvent().getFecha().getDayOfMonth() + "#" + af.getEvent().getEquipo1() + "#" +
+						af.getEvent().getEquipo2() + "#" + af.getEvent().getGoles1() + "#" +
+						af.getEvent().getGoles2() + "#" + af.getEvent().getAmarillas1() + "#" +
+						af.getEvent().getAmarillas2() + "#" + af.getEvent().getRojas1() + "#" +
 						af.getEvent().getRojas2();
 				escritor.println(registro);
 			}

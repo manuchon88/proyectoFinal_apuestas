@@ -6,6 +6,15 @@ import java.util.ArrayList;
 public class ApuestaBasketball extends Apuesta {
 	private PrediccionBasketball predict;
 	private EventoBasketball event;
+	private int tipo;
+
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
 
 	public ApuestaBasketball(String descripcion, double cuota, PrediccionBasketball prediccion, EventoBasketball evento) {
 		super(descripcion, cuota);
@@ -31,11 +40,17 @@ public class ApuestaBasketball extends Apuesta {
 
 	@Override
 	public String toString() {
-		return descripcion + ", " + cuota + ", " + predict.toString() + ", " + event.toString();
+		if (predict==null) {
+			return descripcion + "#" + cuota + "#" + "null" + "#" + event.toString()+"#"+ tipo;
+			
+		} else {
+			return descripcion + "#" + cuota + "#" + predict.toString() + "#" + event.toString()+"#"+ tipo;
+
+		}
 	}
 
 	public static ApuestaBasketball leerApuestaBasket(String cadena) {
-		String[] datos = cadena.split(", ");
+		String[] datos = cadena.split("#");
 		return new ApuestaBasketball(datos[0], Double.parseDouble(datos[1]), PrediccionBasketball.leerPrediccion(datos[2]),
 			EventoBasketball.leerEventBasketball(datos[3]));
 	}
@@ -73,7 +88,7 @@ public class ApuestaBasketball extends Apuesta {
 		try (BufferedReader lector = new BufferedReader(new FileReader(archivo))) {
 			String linea;
 			while ((linea = lector.readLine()) != null) {
-				String[] datos = linea.split(", ");
+				String[] datos = linea.split("#");
 				String descripcion = datos[0];
 				double cuota = Double.parseDouble(datos[1]);
 
@@ -183,16 +198,16 @@ public class ApuestaBasketball extends Apuesta {
 	static boolean reescribirApuestaBasketballTxt(ArrayList<ApuestaBasketball> apuestaBasketball, String archivo) {
 		try (PrintWriter escritor = new PrintWriter(new FileWriter(archivo))) {
 			for (ApuestaBasketball ab : apuestaBasketball) {
-				String registro = ab.getDescripcion() + ", " + ab.getCuota() + ", " +
-						ab.getPredict().getMonto() + ", " + ab.getPredict().getGanador() + ", " +
-						ab.getPredict().getPuntos1() + ", " + ab.getPredict().getPuntos2() + ", " +
-						ab.getPredict().getTriples1() + ", " + ab.getPredict().getTriples2() + ", " +
-						ab.getPredict().getFaltas1() + ", " + ab.getPredict().getFaltas2() + ", " +
-						ab.getEvent().getFecha().getYear() + ", " + ab.getEvent().getFecha().getMonthValue() + ", " +
-						ab.getEvent().getFecha().getDayOfMonth() + ", " + ab.getEvent().getEquipo1() + ", " +
-						ab.getEvent().getEquipo2() + ", " + ab.getEvent().getPuntos1() + ", " +
-						ab.getEvent().getPuntos2() + ", " + ab.getEvent().getTriples1() + ", " +
-						ab.getEvent().getTriples2() + ", " + ab.getEvent().getFaltas1() + ", " +
+				String registro = ab.getDescripcion() + "#" + ab.getCuota() + "#" +
+						ab.getPredict().getMonto() + "#" + ab.getPredict().getGanador() + "#" +
+						ab.getPredict().getPuntos1() + "#" + ab.getPredict().getPuntos2() + "#" +
+						ab.getPredict().getTriples1() + "#" + ab.getPredict().getTriples2() + "#" +
+						ab.getPredict().getFaltas1() + "#" + ab.getPredict().getFaltas2() + "#" +
+						ab.getEvent().getFecha().getYear() + "#" + ab.getEvent().getFecha().getMonthValue() + "#" +
+						ab.getEvent().getFecha().getDayOfMonth() + "#" + ab.getEvent().getEquipo1() + "#" +
+						ab.getEvent().getEquipo2() + "#" + ab.getEvent().getPuntos1() + "#" +
+						ab.getEvent().getPuntos2() + "#" + ab.getEvent().getTriples1() + "#" +
+						ab.getEvent().getTriples2() + "#" + ab.getEvent().getFaltas1() + "#" +
 						ab.getEvent().getFaltas2();
 				escritor.println(registro);
 			}

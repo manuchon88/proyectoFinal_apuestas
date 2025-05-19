@@ -28,7 +28,7 @@ public class Administrador extends Usuario {
 		}
     }
 	
-	public String crearApuesta(int deporte, String apuestaString) {
+	public static String crearApuesta(int deporte, String apuestaString) {
 		switch (deporte) {
 		case 1: {
 			return ApuestaFutbol.leerApuestaFut(apuestaString).toString();
