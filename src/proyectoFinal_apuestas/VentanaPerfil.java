@@ -10,6 +10,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToolBar;
@@ -136,6 +137,16 @@ public class VentanaPerfil extends JFrame {
 		panAbajo2.add(btnHistorial);
 		
 		JButton btnCerrarSesion = new JButton("Cerrar Sesión");
+		btnCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (user.cerrarSesion()) {
+					JOptionPane.showMessageDialog(btnCerrarSesion, "Sesión guardada conéxito");
+					System.exit(0);
+				} else {
+					JOptionPane.showMessageDialog(btnCerrarSesion, "Error al cerrar sesión");
+				}
+			}
+		});
 		btnCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panAbajo2.add(btnCerrarSesion);
 		
