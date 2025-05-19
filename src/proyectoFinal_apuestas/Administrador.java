@@ -1,5 +1,17 @@
 package proyectoFinal_apuestas;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 public class Administrador extends Usuario {
 
 	protected Administrador(String nombre, String correo, String contrasenia) {
@@ -38,4 +50,109 @@ public class Administrador extends Usuario {
 			throw new IllegalArgumentException("Unexpected value: " + deporte);
 		}
     }
+	
+	
+	@Override
+	public String toString() {
+		return  getNombre() + ", " + getCorreo() + ", " + getContrasenia();
+	}
+
+	public boolean registrarAdministradoresTxt(String archivo) {
+		try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(archivo,true));
+			String registro = toString();
+			escritor.println(registro);
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}	
+		return true;
+	}
+	
+	static ArrayList<Administrador> leerAdministradoresTxt (String archivo){
+		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
+		try {
+			BufferedReader lector = new BufferedReader(new FileReader(archivo));
+			String linea;
+			while ((linea = lector.readLine())!=null) {
+				String [] datos = linea.split(", ");
+				String nombre = datos[0];
+				String correo = datos[1];
+				String contrasenia = datos[2];
+				
+				administradores.add(new Administrador(nombre, correo, contrasenia));
+			}
+			lector.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Ha ocurrido un error al encontrar el archivo");
+		}catch (IOException e) {
+			System.out.println("Ha ocurrido un error al recibir los datos");
+		}
+	
+		return administradores;
+	}
+	
+	public boolean registrarAdministradoresBin(String archivo) {
+		try {	
+			DataOutputStream escritor =  new DataOutputStream(new FileOutputStream(archivo,true));
+			escritor.writeUTF(getNombre());
+			escritor.writeUTF(getCorreo());
+			escritor.writeUTF(getContrasenia());
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		return true;
+	}
+	
+	static ArrayList<Administrador> leerAdministradoresBin(String archivo){
+		ArrayList<Administrador> administradores =  new ArrayList<Administrador>();
+		
+		try {
+			DataInputStream lector =  new DataInputStream(new FileInputStream(archivo));
+			while(lector.available()!=0) {
+				String nombre = lector.readUTF();
+				String correo = lector.readUTF();
+				String contrasenia = lector.readUTF();
+				
+				administradores.add(new Administrador(nombre, correo, contrasenia));
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Ha ocurrido un error al encontrar el archivo");
+		}catch (IOException e) {
+			System.out.println("Ha ocurrido un error al recibir los datos");
+		}
+		return administradores;
+	}
+	
+	static boolean reescribirAdministradoresTxt(ArrayList<Administrador> administradores, String archivo) {
+		try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
+			for (Administrador aa : administradores) {
+				String registro = aa.getNombre() + ", " +  aa.getCorreo() + ", " + aa.getContrasenia();
+				escritor.println(registro);
+			}
+			escritor.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+	
+	static boolean reescribirAdministradoresBin(ArrayList<Administrador> administradores, String archivo) {
+		try {
+			DataOutputStream escritor =  new DataOutputStream(new FileOutputStream(archivo));
+			for (Administrador aa : administradores) {
+				escritor.writeUTF(aa.getNombre());
+				escritor.writeUTF(aa.getCorreo());
+				escritor.writeUTF(aa.getContrasenia());
+			}
+			escritor.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
 }
