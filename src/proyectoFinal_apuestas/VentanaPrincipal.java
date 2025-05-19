@@ -24,6 +24,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal extends JFrame {
@@ -44,6 +48,11 @@ public class VentanaPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaPrincipal(Apostador user) {
+		ArrayList<EventoFutbol> eventosFutbol = EventoFutbol.leerEventosFutbolTxt(Archivos.archivosEventosFutbol);
+		ArrayList<EventoBasketball> eventosBasket = EventoBasketball.leerEventosBasketballTxt(Archivos.archivosEventosBasketball);
+		
+
+		
 		setTitle("UCBet");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -169,39 +178,111 @@ public class VentanaPrincipal extends JFrame {
 		panBotones.add(lblBasketball);
 		
 		JButton btnChampions = new JButton("Champions");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnChampions);
 		
 		JButton btnNBA = new JButton("NBA");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnNBA);
 		
 		JButton btnMundialClubes = new JButton("Mundial de Clubes");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnMundialClubes);
 		
 		JButton btnEuroLeague = new JButton("Euro League");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnEuroLeague);
 		
 		JButton btnLaLiga = new JButton("La Liga");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnLaLiga);
 		
 		JButton btnACB = new JButton("ACB");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnACB);
 		
 		JButton btnSerieA = new JButton("Serie A");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnSerieA);
 		
 		JButton btnFIBA = new JButton("FIBA");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnFIBA);
 		
 		JButton btnBundesliga = new JButton("Bundesliga");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnBundesliga);
 		
 		JButton btnNCAA = new JButton("NCAA");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnNCAA);
 		
 		JButton btnPremier = new JButton("Premier League");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnPremier);
 		
 		JButton btnOtros = new JButton("OTROS");
+		btnChampions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestas frame = new VentanaApuestas();
+				frame.setVisible(true);
+			}
+		});
 		panBotones.add(btnOtros);
 		
 		JPanel panCentroAbajo = new JPanel();
@@ -218,15 +299,29 @@ public class VentanaPrincipal extends JFrame {
 		JPanel panEventos = new JPanel();
 		panEventos.setLayout(new GridLayout(5, 3, 10, 10)); 
 
-		for (int i = 0; i < 5; i++) {
-		    JTextField textFieldTipoEvento = new JTextField("Nombre evento");
-		    JTextField textFieldEquipos = new JTextField("Equipo 1" + " vs " + "Equipo 2");
+		
+		
+		String eventosModelo[] = new String[eventosFutbol.size()];
+		for(int i=0; i<eventosFutbol.size();i++) {
+			eventosModelo[i] = eventosFutbol.get(i).toString();
+		}
+		
+		for (EventoFutbol evento : eventosFutbol) {
+		    JTextField textFieldTipoEvento = new JTextField("FÚTBOL");
+		    textFieldTipoEvento.setEditable(false);
+
+		    String equipos = evento.getEquipo1() + " vs " + evento.getEquipo2();
+		    JTextField textFieldEquipos = new JTextField(equipos);
+		    textFieldEquipos.setEditable(false);
+
 		    JButton btnSeleccionar = new JButton("Seleccionar tipo de apuesta");
 
-//		    ENVIAR A LA VENTANA DE APUESTA CON LOS NOMBRES Y EL TIPO DE APUESTA YA PUESTOS
-//		    btnSeleccionar.addActionListener();
-//	        String tipo = txtTipoEvento.getText();
-//	        String equipos = txtEquipos.getText();
+		    btnSeleccionar.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		        	VentanaApuestasConPartido frame = new VentanaApuestasConPartido(textFieldTipoEvento.getText(), textFieldEquipos.getText(), user);
+    				frame.setVisible(true);
+		        }
+		    });
 
 		    panEventos.add(textFieldTipoEvento);
 		    panEventos.add(textFieldEquipos);

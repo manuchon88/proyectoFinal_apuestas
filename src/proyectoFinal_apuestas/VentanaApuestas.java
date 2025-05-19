@@ -86,10 +86,10 @@ public class VentanaApuestas extends JFrame {
 		panCentro.add(panCentroCentro, BorderLayout.CENTER);
 		panCentroCentro.setLayout(null);
 		
-		JLabel lblTipoApuesta = new JLabel("Tipo de Apuesta: ");
-		lblTipoApuesta.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblTipoApuesta.setBounds(118, 65, 200, 32);
-		panCentroCentro.add(lblTipoApuesta);
+		JLabel lblTipoEvento = new JLabel("Tipo de Evento:");
+		lblTipoEvento.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTipoEvento.setBounds(118, 65, 200, 32);
+		panCentroCentro.add(lblTipoEvento);
 		
 		textFieldTipoApuesta = new JTextField();
 		textFieldTipoApuesta.setBounds(368, 68, 244, 32);
