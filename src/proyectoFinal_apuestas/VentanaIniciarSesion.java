@@ -77,7 +77,9 @@ public class VentanaIniciarSesion extends JFrame {
 				int estado = Apostador.VerificarInicioSesion(textFieldUsuario.getText(), new String(passwordField.getPassword()));
 				if (estado == 2) {
 					JOptionPane.showMessageDialog(btnIngresar, "Bienvenido de nuevo a UCBet");
-					VentanaPrincipal frame = new VentanaPrincipal();
+					Apostador user = Apostador.iniciarSesion(textFieldUsuario.getText(), new String(passwordField.getPassword()));
+					VentanaPrincipal frame = new VentanaPrincipal(user);
+					//VentanaPerfil frame = new VentanaPerfil(user);
 					frame.setVisible(true);
 					VentanaIniciarSesion.this.dispose();
 				}else if (estado == 1) {

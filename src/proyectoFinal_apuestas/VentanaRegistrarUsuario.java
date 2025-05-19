@@ -78,7 +78,7 @@ public class VentanaRegistrarUsuario extends JFrame {
 				Apostador user = new Apostador(textFieldUsuario.getText(), textFieldCorreo.getText(), new String(passwordField.getPassword()));
 				if (user.registrarse()) {
 					JOptionPane.showMessageDialog(btnRegistrar, "Usuario registrado con éxito\n"+"Bienvenido a UCBet");
-					VentanaPrincipal frame = new VentanaPrincipal();
+					VentanaPrincipal frame = new VentanaPrincipal(user);
 					frame.setVisible(true);
 					VentanaRegistrarUsuario.this.dispose();
 				} else {

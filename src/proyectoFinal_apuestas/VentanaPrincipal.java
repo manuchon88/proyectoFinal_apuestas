@@ -1,6 +1,7 @@
 package proyectoFinal_apuestas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.BoxLayout;
@@ -21,6 +23,8 @@ import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -33,22 +37,13 @@ public class VentanaPrincipal extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPrincipal frame = new VentanaPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPrincipal() {
+	public VentanaPrincipal(Apostador user) {
 		setTitle("UCBet");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -66,12 +61,39 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panPrincipal, BorderLayout.CENTER);
 		panPrincipal.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panTitulo = new JPanel();
-		panPrincipal.add(panTitulo, BorderLayout.NORTH);
+		JPanel header = new JPanel();
+		header.setBackground(new Color(45, 104, 184));
+		panPrincipal.add(header, BorderLayout.NORTH);
+		header.setLayout(new GridLayout(1, 2, 5, 15));
 		
-		JLabel lblTitulo = new JLabel("UCBet");
-		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 25));
-		panTitulo.add(lblTitulo);
+		JLabel UCBetTITLE = new JLabel("UCBet");
+		UCBetTITLE.setForeground(new Color(255, 232, 0));
+		UCBetTITLE.setFont(new Font("Tahoma", Font.BOLD, 25));
+		UCBetTITLE.setHorizontalAlignment(SwingConstants.LEFT);
+		header.add(UCBetTITLE);
+		
+		JPanel panHeadDer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		panHeadDer.setBackground(new Color(45, 104, 184));
+		header.add(panHeadDer);
+		
+		
+		JLabel lblSaldo = new JLabel();
+		lblSaldo.setText("Bs. "+user.getSaldo());
+		lblSaldo.setForeground(new Color(255,255,255));
+		lblSaldo.setHorizontalAlignment(SwingConstants.RIGHT);
+		panHeadDer.add(lblSaldo);
+		
+		JButton btnPerfil = new JButton();
+		btnPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaPerfil frame = new VentanaPerfil(user);
+				frame.setVisible(true);
+			}
+		});
+		btnPerfil.setText(user.getNombre());
+		btnPerfil.setBackground(new Color(45, 104, 184));
+		btnPerfil.setForeground(new Color(255, 255, 255));
+		panHeadDer.add(btnPerfil);
 		
 		JPanel panIzquierda = new JPanel();
 		panPrincipal.add(panIzquierda, BorderLayout.WEST);
@@ -110,9 +132,9 @@ public class VentanaPrincipal extends JFrame {
 		panIzqCentro.add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
-		JLabel lblSaldo = new JLabel("Saldo:");
-		lblSaldo.setBounds(37, 69, 36, 14);
-		panIzqCentro.add(lblSaldo);
+		JLabel lblSaldo2 = new JLabel("Saldo:");
+		lblSaldo2.setBounds(37, 69, 36, 14);
+		panIzqCentro.add(lblSaldo2);
 		
 		textField = new JTextField();
 		textField.setBounds(10, 94, 81, 20);
