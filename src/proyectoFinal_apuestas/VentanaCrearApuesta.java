@@ -29,8 +29,10 @@ public class VentanaCrearApuesta extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 10));
 
 		JPanel panTitulo = new JPanel();
+		panTitulo.setBackground(new Color(45, 104, 184));
 		JLabel lblTitulo = new JLabel("Crear Nueva Apuesta");
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblTitulo.setForeground(new Color(255, 232, 0));
 		panTitulo.add(lblTitulo);
 		contentPane.add(panTitulo, BorderLayout.NORTH);
 
