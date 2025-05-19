@@ -1,1 +1,2 @@
-abel, abel123, 123, 0.0
+Manu, manu@gmail.com, manu123, 0.0
+lkj, lkj, lkj, 0.0

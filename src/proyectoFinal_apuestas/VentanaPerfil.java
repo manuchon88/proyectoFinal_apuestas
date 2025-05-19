@@ -46,7 +46,7 @@ public class VentanaPerfil extends JFrame {
 		ventana1.dispose();
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(550, 50, 500, 324);;
+        setBounds(550, 50, 500, 324);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -121,7 +121,13 @@ public class VentanaPerfil extends JFrame {
 		btnDepoReti.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panAbajo2.add(btnDepoReti);
 		
-		JButton btnEditarPerfil = new JButton("Editar Perfil");
+		JButton btnEditarPerfil = new JButton("Modificar Cuenta");
+		btnEditarPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaModCuenta frame = new VentanaModCuenta(user, VentanaPerfil.this);
+				frame.setVisible(true);
+			}
+		});
 		btnEditarPerfil.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panAbajo2.add(btnEditarPerfil);
 		

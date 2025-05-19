@@ -62,7 +62,7 @@ public class VentanaIniciarSesion extends JFrame {
 		panTitulo.setBackground(new Color(169, 204, 227));
 		panPrincipal.add(panTitulo, BorderLayout.NORTH);
 		
-		JLabel lblTitulo = new JLabel("Ingresar a Apuestas");
+		JLabel lblTitulo = new JLabel("Ingresar a UCBet");
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 22));
 		panTitulo.add(lblTitulo);
 		
@@ -112,7 +112,7 @@ public class VentanaIniciarSesion extends JFrame {
 		panPrincipal.add(panCentro, BorderLayout.CENTER);
 		panCentro.setLayout(null);
 		
-		JLabel lblUsuario = new JLabel("Usuario:");
+		JLabel lblUsuario = new JLabel("Correo:");
 		lblUsuario.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		lblUsuario.setBounds(51, 43, 90, 20);
 		panCentro.add(lblUsuario);
