@@ -86,7 +86,7 @@ public class VentanaPrincipal extends JFrame {
 		JButton btnPerfil = new JButton();
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaPerfil frame = new VentanaPerfil(user);
+				VentanaPerfil frame = new VentanaPerfil(user, VentanaPrincipal.this);
 				frame.setVisible(true);
 			}
 		});

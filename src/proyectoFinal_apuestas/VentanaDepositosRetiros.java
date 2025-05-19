@@ -1,50 +1,44 @@
 package proyectoFinal_apuestas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
-
-import java.awt.Color;
+import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.security.PublicKey;
 import java.awt.event.ActionEvent;
 
-public class VentanaPerfil extends JFrame {
+public class VentanaDepositosRetiros extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextField textFieldDepositar;
+	private JTextField textFieldRetirar;
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				
-			}
-		});
+		
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPerfil(Apostador user, VentanaPrincipal ventana1) {
-		ventana1.dispose();
-
+	public VentanaDepositosRetiros(Apostador user, VentanaPerfil ventana2) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(550, 50, 500, 324);;
 		contentPane = new JPanel();
@@ -88,60 +82,71 @@ public class VentanaPerfil extends JFrame {
 		JPanel panCenter = new JPanel(new GridLayout(2, 1));
 		panPrincipal.add(panCenter, BorderLayout.CENTER);
 		
-		JPanel panArriba = new JPanel(new GridLayout(1,2));
+		JPanel panArriba = new JPanel(new BorderLayout());
 		panCenter.add(panArriba);
-		
-		JLabel lblNombre = new JLabel(user.getNombre());
-		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 22));
-		panArriba.add(lblNombre);
-		
 		JLabel lblSaldoBig = new JLabel("Saldo: Bs. "+user.getSaldo());
 		lblSaldoBig.setFont(new Font("Tahoma", Font.PLAIN|Font.ITALIC, 22));
-		panArriba.add(lblSaldoBig);
+		lblSaldoBig.setHorizontalAlignment(SwingConstants.CENTER);
+		panArriba.add(lblSaldoBig, BorderLayout.CENTER);
 		
-		JPanel panAbajo = new JPanel(new GridLayout(2,1));
-		panCenter.add(panAbajo);
+		JPanel panOptions = new JPanel(new GridLayout(1, 2,8,8));
+		panCenter.add(panOptions);
 		
-		JSeparator separator = new JSeparator();
-		panAbajo.add(separator);
+		JPanel panDepositar = new JPanel(new GridLayout(2, 1));
+		panOptions.add(panDepositar);
 		
-		
-		
-		JPanel panAbajo2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		panAbajo.add(panAbajo2);
-		
-		JButton btnDepoReti	= new JButton("Depositar / Retirar");
-		btnDepoReti.addActionListener(new ActionListener() {
+		JButton btnDepositar = new JButton("Depositar");
+		btnDepositar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaDepositosRetiros frame = new VentanaDepositosRetiros(user, VentanaPerfil.this);
-				frame.setVisible(true);
-				
+				double montoDepositar = Double.parseDouble(textFieldDepositar.getText());
+				user.setSaldo(user.getSaldo()+montoDepositar);
+				lblSaldo.setText("Bs. "+user.getSaldo());
+				lblSaldoBig.setText("Bs. "+user.getSaldo());
+				textFieldDepositar.setText("");
 			}
 		});
-		btnDepoReti.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panAbajo2.add(btnDepoReti);
+		btnDepositar.setHorizontalAlignment(SwingConstants.CENTER);
+		btnDepositar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panDepositar.add(btnDepositar, BorderLayout.NORTH);
 		
-		JButton btnEditarPerfil = new JButton("Editar Perfil");
-		btnEditarPerfil.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panAbajo2.add(btnEditarPerfil);
+		textFieldDepositar = new JTextField();
+		textFieldDepositar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panDepositar.add(textFieldDepositar);
+		textFieldDepositar.setColumns(10);
 		
-		JButton btnHistorial = new JButton("Historial");
-		btnHistorial.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panAbajo2.add(btnHistorial);
 		
-		JButton btnCerrarSesion = new JButton("Cerrar Sesión");
-		btnCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panAbajo2.add(btnCerrarSesion);
+		
+		JPanel panRetirar = new JPanel(new GridLayout(2, 1));
+		panOptions.add(panRetirar);
+
+		JButton btnRetirar = new JButton("Retirar");
+		btnRetirar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				double montoRetirar = Double.parseDouble(textFieldRetirar.getText());
+				user.setSaldo(user.getSaldo()-montoRetirar);
+				lblSaldo.setText("Bs. "+user.getSaldo());
+				lblSaldoBig.setText("Bs. "+user.getSaldo());
+				textFieldRetirar.setText("");
+			}
+		});
+		btnRetirar.setHorizontalAlignment(SwingConstants.CENTER);
+		btnRetirar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panRetirar.add(btnRetirar, BorderLayout.NORTH);
+		
+		textFieldRetirar = new JTextField();
+		textFieldRetirar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panRetirar.add(textFieldRetirar);
+		textFieldRetirar.setColumns(10);
 		
 		addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 // Este método se llama DESPUÉS de que la ventana ha sido cerrada
-
-                VentanaPrincipal frame = new VentanaPrincipal(user);
-                frame.setVisible(true);
+        		ventana2.dispose();
             }
         });
+		
 	}
+	
 
 }
