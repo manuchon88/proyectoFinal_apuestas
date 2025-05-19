@@ -62,7 +62,7 @@ public class VentanaRegistrarUsuario extends JFrame {
 		panTitulo.setBackground(new Color(169, 204, 227));
 		panPrincipal.add(panTitulo, BorderLayout.NORTH);
 		
-		JLabel lblTitulo = new JLabel("Ingresar a Apuestas");
+		JLabel lblTitulo = new JLabel("Registrar Nuevo Usuario");
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 22));
 		panTitulo.add(lblTitulo);
 		
