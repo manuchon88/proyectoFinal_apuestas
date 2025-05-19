@@ -9,17 +9,21 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class VentanaRegistrarUsuario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldUsuario;
-	private JTextField textFieldContrasenia;
 	private JTextField textFieldCorreo;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -43,6 +47,7 @@ public class VentanaRegistrarUsuario extends JFrame {
 	public VentanaRegistrarUsuario() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 310);
+		setTitle("UCBet");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -68,6 +73,23 @@ public class VentanaRegistrarUsuario extends JFrame {
 		
 		
 		JButton btnRegistrar = new JButton("Registrarse");
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Apostador user = new Apostador(textFieldUsuario.getText(), textFieldCorreo.getText(), new String(passwordField.getPassword()));
+				if (user.registrarse()) {
+					JOptionPane.showMessageDialog(btnRegistrar, "Usuario registrado con éxito\n"+"Bienvenido a UCBet");
+					VentanaPrincipal frame = new VentanaPrincipal();
+					frame.setVisible(true);
+					VentanaRegistrarUsuario.this.dispose();
+				} else {
+					JOptionPane.showMessageDialog(btnRegistrar, "Registro fallido, vuelva a intentarlo");
+					textFieldCorreo.setText("");
+					textFieldUsuario.setText("");
+					passwordField.setText("");
+					textFieldUsuario.requestFocusInWindow();
+				}
+			}
+		});
 		panBotones.add(btnRegistrar);
 		
 		JPanel panCentro = new JPanel();
@@ -90,11 +112,6 @@ public class VentanaRegistrarUsuario extends JFrame {
 		panCentro.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 		
-		textFieldContrasenia = new JTextField();
-		textFieldContrasenia.setColumns(10);
-		textFieldContrasenia.setBounds(174, 131, 192, 20);
-		panCentro.add(textFieldContrasenia);
-		
 		JLabel lblCorreo = new JLabel("Correo:");
 		lblCorreo.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		lblCorreo.setBounds(51, 88, 90, 20);
@@ -104,6 +121,10 @@ public class VentanaRegistrarUsuario extends JFrame {
 		textFieldCorreo.setColumns(10);
 		textFieldCorreo.setBounds(174, 89, 192, 20);
 		panCentro.add(textFieldCorreo);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(174, 131, 192, 20);
+		panCentro.add(passwordField);
 	}
 
 }

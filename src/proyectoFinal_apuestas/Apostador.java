@@ -81,6 +81,9 @@ public class Apostador extends Usuario{
 
 	// ¿Para que es el registrar? 
     public boolean registrarse() {
+    	if (getNombre().equals("")||super.getContrasenia().equals("")||getNombre().equals("")) {
+			return false;
+		}
     	try {
 			PrintWriter escritor = new PrintWriter(new FileWriter(Archivos.archivosUsuarios, true));
 			escritor.println(this.toString());
