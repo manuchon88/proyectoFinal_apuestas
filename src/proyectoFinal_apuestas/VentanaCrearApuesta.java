@@ -81,7 +81,7 @@ public class VentanaCrearApuesta extends JFrame {
 		textFieldDescription = new JTextField();
 		panCentro.add(textFieldDescription);
 				
-		JLabel lblTipo = new JLabel("Cuota:");
+		JLabel lblTipo = new JLabel("Tipo de apuesta:");
 		panCentro.add(lblTipo);
 		
 		JComboBox<String> comboBoxTipo = new JComboBox<String>();
@@ -109,12 +109,19 @@ public class VentanaCrearApuesta extends JFrame {
 					if (bet.registrarApuestaFutbolTxt(Archivos.archivosApuestasFutbol)) {
 						JOptionPane.showMessageDialog(btnCrearApuesta, "Apuesta registrada");
 					} else {
-						JOptionPane.showMessageDialog(btnCrearApuesta, "Fallo registro");
+						JOptionPane.showMessageDialog(btnCrearApuesta, "Fallo de registro");
 					}
 				} else if (deporte==2) {
 					int indexBask = comboBoxEventos.getSelectedIndex()-1;
 					ApuestaBasketball bet = new ApuestaBasketball(textFieldDescription.getText(), Double.parseDouble(textFieldCuota.getText()), null, events2.get(indexBask));
-					bet.registrarApuestaBasketballTxt(Archivos.archivosApuestasBasketball);
+					bet.setTipo(comboBoxTipo.getSelectedIndex());
+					if (bet.registrarApuestaBasketballTxt(Archivos.archivosApuestasBasketball)) {
+						JOptionPane.showMessageDialog(btnCrearApuesta, "Apuesta registrada");
+						
+					} else {
+						JOptionPane.showMessageDialog(btnCrearApuesta, "Fallo de registro");
+
+					}
 				}
 			}
 		});
