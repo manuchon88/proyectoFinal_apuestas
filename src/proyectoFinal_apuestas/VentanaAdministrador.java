@@ -110,7 +110,6 @@ public class VentanaAdministrador extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				VentanaCrearEvento frame = new VentanaCrearEvento();
 				frame.setVisible(true);
-				VentanaAdministrador.this.dispose();
 			}
 		});
 		btnNuevoEvento.setBounds(228, 86, 147, 23);
@@ -159,11 +158,9 @@ public class VentanaAdministrador extends JFrame {
 				if (seleccion == 0) {
 					VentanaActualizarEventoFutbol frame = new VentanaActualizarEventoFutbol();
 					frame.setVisible(true);
-					VentanaAdministrador.this.dispose();
 				} else if (seleccion == 1) {
 					VentanaActualizarEventoBasketball frame = new VentanaActualizarEventoBasketball();
 					frame.setVisible(true);
-					VentanaAdministrador.this.dispose();
 				}
 			}
 		});
