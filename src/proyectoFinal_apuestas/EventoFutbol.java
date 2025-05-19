@@ -1,4 +1,6 @@
 package proyectoFinal_apuestas;
+import java.io.*;
+import java.util.ArrayList;
 
 public class EventoFutbol extends Evento{
 	private String equipo1, equipo2;
@@ -128,6 +130,142 @@ public class EventoFutbol extends Evento{
 		}else {
 			return 0;
 		}
+	}
+	
+	public boolean registrarEventosFutbolTxt(String archivo) {
+		try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(archivo,true));
+			String registro = toString();
+			escritor.println(registro);
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}	
+		return true;
+	}
+	
+	static ArrayList<EventoFutbol> leerEventosFutbolTxt (String archivo){
+		ArrayList<EventoFutbol> eventoFutbol = new ArrayList<EventoFutbol>();
+		try {
+			BufferedReader lector = new BufferedReader(new FileReader(archivo));
+			String linea;
+			while ((linea = lector.readLine())!=null) {
+				String [] datos = linea.split(", ");
+				int anio = Integer.parseInt(datos[0]);
+				int mes = Integer.parseInt(datos[1]); 
+				int dia = Integer.parseInt(datos[2]);
+				String equipo1 = datos[3];
+				String equipo2 =datos[4];
+				int goles1 = Integer.parseInt(datos[5]);
+				int goles2 = Integer.parseInt(datos[6]); 
+				int amarillas1 = Integer.parseInt(datos[7]);
+				int amarillas2 = Integer.parseInt(datos[8]);
+				int rojas1 = Integer.parseInt(datos[9]);
+				int rojas2 = Integer.parseInt(datos[10]);
+				
+				eventoFutbol.add(new EventoFutbol(anio, mes, dia, equipo1, equipo2, goles1, goles2,
+					 amarillas1, amarillas2, rojas1, rojas2));
+			}
+			lector.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Ha ocurrido un error al encontrar el archivo");
+		}catch (IOException e) {
+			System.out.println("Ha ocurrido un error al recibir los datos");
+		}
+	
+		return eventoFutbol;
+	}
+	
+	public boolean registrarEventosFutbolBin(String archivo) {
+		try {	
+			DataOutputStream escritor =  new DataOutputStream(new FileOutputStream(archivo,true));
+			escritor.writeInt(getFecha().getYear());
+			escritor.writeInt(getFecha().getMonthValue());
+			escritor.writeInt(getFecha().getDayOfMonth());
+			escritor.writeUTF(this.equipo1);
+			escritor.writeUTF(this.equipo2);
+			escritor.writeInt(this.goles1);
+			escritor.writeInt(this.goles2);
+			escritor.writeInt(this.amarillas1);
+			escritor.writeInt(this.amarillas2);
+			escritor.writeInt(this.rojas1);
+			escritor.writeInt(this.rojas2);
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		return true;
+	}
+	
+	static ArrayList<EventoFutbol> leerEventosFutbolBin(String archivo){
+		ArrayList<EventoFutbol> eventoFutbol =  new ArrayList<EventoFutbol>();
+		
+		try {
+			DataInputStream lector =  new DataInputStream(new FileInputStream(archivo));
+			while(lector.available()!=0) {
+				int anio = lector.readInt();
+				int mes = lector.readInt(); 
+				int dia = lector.readInt();
+				String equipo1 = lector.readUTF();
+				String equipo2 = lector.readUTF();
+				int goles1 = lector.readInt();
+				int goles2 = lector.readInt(); 
+				int amarillas1 = lector.readInt();
+				int amarillas2 = lector.readInt();
+				int rojas1 = lector.readInt();
+				int rojas2 = lector.readInt();
+				
+				eventoFutbol.add(new EventoFutbol(anio, mes, dia, equipo1, equipo2, goles1, goles2,
+						 amarillas1, amarillas2, rojas1, rojas2));
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Ha ocurrido un error al encontrar el archivo");
+		}catch (IOException e) {
+			System.out.println("Ha ocurrido un error al recibir los datos");
+		}
+		return eventoFutbol;
+	}
+	
+	static boolean reescribirEventosFutbolTxt(ArrayList<EventoFutbol> eventosFutbol, String archivo) {
+		try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
+			for (EventoFutbol ef : eventosFutbol) {
+				String registro = ef.getFecha().getYear() + ", " + ef.getFecha().getMonthValue() + ", " + 
+						ef.getFecha().getDayOfMonth() + ", " + ef.getEquipo1() + ", " + ef.getEquipo2() + ", " +
+						ef.getGoles1() + ", " + ef.getGoles2() + ", " + ef.getAmarillas1() + ef.getAmarillas2() + ", " +
+						ef.getRojas1() + ", " + ef.getRojas2();
+				escritor.println(registro);
+			}
+			escritor.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+	
+	static boolean reescribirEventosFutbolBin(ArrayList<EventoFutbol> eventosFutbol, String archivo) {
+		try {
+			DataOutputStream escritor =  new DataOutputStream(new FileOutputStream(archivo));
+			for (EventoFutbol ef : eventosFutbol) {
+				escritor.writeInt(ef.getFecha().getYear());
+				escritor.writeInt(ef.getFecha().getMonthValue());
+				escritor.writeInt(ef.getFecha().getDayOfMonth());
+				escritor.writeUTF(ef.getEquipo1());
+				escritor.writeUTF(ef.getEquipo2());
+				escritor.writeInt(ef.getGoles1());
+				escritor.writeInt(ef.getGoles2());
+				escritor.writeInt(ef.getAmarillas1());
+				escritor.writeInt(ef.getAmarillas2());
+				escritor.writeInt(ef.getRojas1());
+				escritor.writeInt(ef.getRojas2());
+			}
+			escritor.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
 	}
 
 }

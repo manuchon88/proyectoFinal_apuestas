@@ -1,5 +1,17 @@
 package proyectoFinal_apuestas;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 public class EventoBasketball extends Evento {
 	private String equipo1, equipo2;
 	private int puntos1, puntos2, triples1, triples2, faltas1, faltas2;
@@ -128,7 +140,141 @@ public class EventoBasketball extends Evento {
 	}
 
 
+	public boolean registrarEventoBasketballTxt(String archivo) {
+		try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(archivo,true));
+			String registro = toString();
+			escritor.println(registro);
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}	
+		return true;
+	}
 	
+	static ArrayList<EventoBasketball> leerEventosBasketballTxt (String archivo){
+		ArrayList<EventoBasketball> eventoBasketball = new ArrayList<EventoBasketball>();
+		try {
+			BufferedReader lector = new BufferedReader(new FileReader(archivo));
+			String linea;
+			while ((linea = lector.readLine())!=null) {
+				String [] datos = linea.split(", ");
+				int anio = Integer.parseInt(datos[0]);
+				int mes = Integer.parseInt(datos[1]); 
+				int dia = Integer.parseInt(datos[2]);
+				String equipo1 = datos[3];
+				String equipo2 =datos[4];
+				int puntos1 = Integer.parseInt(datos[5]);
+				int puntos2 = Integer.parseInt(datos[6]); 
+				int triples1 = Integer.parseInt(datos[7]);
+				int triples2 = Integer.parseInt(datos[8]);
+				int faltas1 = Integer.parseInt(datos[9]);
+				int faltas2 = Integer.parseInt(datos[10]);
+				
+				eventoBasketball.add(new EventoBasketball(anio, mes, dia, equipo1, equipo2, puntos1, puntos2,
+						triples1, triples2, faltas1, faltas2));
+			}
+			lector.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Ha ocurrido un error al encontrar el archivo");
+		}catch (IOException e) {
+			System.out.println("Ha ocurrido un error al recibir los datos");
+		}
+	
+		return eventoBasketball;
+	}
+	
+	public boolean registrarEventosBasketballBin(String archivo) {
+		try {	
+			DataOutputStream escritor =  new DataOutputStream(new FileOutputStream(archivo,true));
+			escritor.writeInt(getFecha().getYear());
+			escritor.writeInt(getFecha().getMonthValue());
+			escritor.writeInt(getFecha().getDayOfMonth());
+			escritor.writeUTF(this.equipo1);
+			escritor.writeUTF(this.equipo2);
+			escritor.writeInt(this.puntos1);
+			escritor.writeInt(this.puntos2);
+			escritor.writeInt(this.triples1);
+			escritor.writeInt(this.triples2);
+			escritor.writeInt(this.faltas1);
+			escritor.writeInt(this.faltas2);
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		return true;
+	}
+	
+	static ArrayList<EventoBasketball> leerRecintosBin(String archivo){
+		ArrayList<EventoBasketball> eventoBasketball =  new ArrayList<EventoBasketball>();
+		
+		try {
+			DataInputStream lector =  new DataInputStream(new FileInputStream(archivo));
+			while(lector.available()!=0) {
+				int anio = lector.readInt();
+				int mes = lector.readInt(); 
+				int dia = lector.readInt();
+				String equipo1 = lector.readUTF();
+				String equipo2 = lector.readUTF();
+				int puntos1 = lector.readInt();
+				int puntos2 = lector.readInt(); 
+				int triples1 = lector.readInt();
+				int triples2 = lector.readInt();
+				int faltas1 = lector.readInt();
+				int faltas2 = lector.readInt();
+				
+				eventoBasketball.add(new EventoBasketball(anio, mes, dia, equipo1, equipo2, puntos1, puntos2,
+						triples1, triples2, faltas1, faltas2));
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Ha ocurrido un error al encontrar el archivo");
+		}catch (IOException e) {
+			System.out.println("Ha ocurrido un error al recibir los datos");
+		}
+		return eventoBasketball;
+	}
+	
+	static boolean reescribirEventosFutbolTxt(ArrayList<EventoBasketball> eventosBasketball, String archivo) {
+		try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
+			for (EventoBasketball eb : eventosBasketball) {
+				String registro = eb.getFecha().getYear() + ", " + eb.getFecha().getMonthValue() + ", " + 
+						eb.getFecha().getDayOfMonth() + ", " + eb.getEquipo1() + ", " + eb.getEquipo2() + ", " +
+						eb.getPuntos1() + ", " + eb.getPuntos2() + ", " + eb.getTriples1() + eb.getTriples2() + ", " +
+						eb.getFaltas1() + ", " + eb.getFaltas2();
+				escritor.println(registro);
+			}
+			escritor.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+	
+	static boolean reescribirEventosFutbolBin(ArrayList<EventoBasketball> eventosBasketball, String archivo) {
+		try {
+			DataOutputStream escritor =  new DataOutputStream(new FileOutputStream(archivo));
+			for (EventoBasketball eb : eventosBasketball) {
+				escritor.writeInt(eb.getFecha().getYear());
+				escritor.writeInt(eb.getFecha().getMonthValue());
+				escritor.writeInt(eb.getFecha().getDayOfMonth());
+				escritor.writeUTF(eb.getEquipo1());
+				escritor.writeUTF(eb.getEquipo2());
+				escritor.writeInt(eb.getPuntos1());
+				escritor.writeInt(eb.getPuntos2());
+				escritor.writeInt(eb.getTriples1());
+				escritor.writeInt(eb.getTriples2());
+				escritor.writeInt(eb.getFaltas1());
+				escritor.writeInt(eb.getFaltas2());
+			}
+			escritor.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
 	
 	
 	
