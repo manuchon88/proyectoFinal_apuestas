@@ -229,7 +229,7 @@ public class VentanaPrincipal extends JFrame {
 		panDerecha.add(panDerAbajo, BorderLayout.SOUTH);
 		panDerAbajo.setLayout(new GridLayout(2, 1, 0, 0));
 		
-		JButton btnApuesta = new JButton("New button");
+		JButton btnApuesta = new JButton("Apuesta");
 		panDerAbajo.add(btnApuesta);
 	}
 }
