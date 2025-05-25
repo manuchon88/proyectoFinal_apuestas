@@ -232,10 +232,7 @@ public class EventoFutbol extends Evento{
 		try {
 			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
 			for (EventoFutbol ef : eventosFutbol) {
-				String registro = ef.getFecha().getYear() + ", " + ef.getFecha().getMonthValue() + ", " + 
-						ef.getFecha().getDayOfMonth() + ", " + ef.getEquipo1() + ", " + ef.getEquipo2() + ", " +
-						ef.getGoles1() + ", " + ef.getGoles2() + ", " + ef.getAmarillas1() + ef.getAmarillas2() + ", " +
-						ef.getRojas1() + ", " + ef.getRojas2();
+				String registro = ef.toString();
 				escritor.println(registro);
 			}
 			escritor.close();

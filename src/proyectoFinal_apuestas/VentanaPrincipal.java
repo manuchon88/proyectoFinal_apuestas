@@ -1,6 +1,6 @@
 package proyectoFinal_apuestas;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -13,7 +13,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 
-import javax.swing.JButton;
+import javax.swing.*;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
@@ -277,10 +277,11 @@ public class VentanaPrincipal extends JFrame {
 		panCAbA.add(lblFuturosEventos);
 		
 		JPanel panEventos = new JPanel();
-		panEventos.setLayout(new GridLayout(5, 3, 10, 10)); 
+		panEventos.setLayout(new GridLayout(1, 2, 10, 10)); 
+		//panEventos.setLayout(new GridLayout(5, 3, 10, 10)); 
 
 		
-		
+		/*
 		String eventosModelo[] = new String[eventosFutbol.size()];
 		for(int i=0; i<eventosFutbol.size();i++) {
 			eventosModelo[i] = eventosFutbol.get(i).toString();
@@ -306,10 +307,57 @@ public class VentanaPrincipal extends JFrame {
 		    panEventos.add(textFieldTipoEvento);
 		    panEventos.add(textFieldEquipos);
 		    panEventos.add(btnSeleccionar);
-		}
+		}*/
+		
+		JLabel lblFut = new JLabel("Futbol");
+		lblFut.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFut.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JPanel panEvents1 = new JPanel(new BorderLayout());
+		panEvents1.add(lblFut, BorderLayout.NORTH);
 
+		JPanel panFut = new JPanel();
+		JScrollPane ScrollFutbol = new JScrollPane(panFut);
+		panFut.setLayout(new BoxLayout(panFut, BoxLayout.Y_AXIS));
+		ScrollFutbol.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		ScrollFutbol.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		panEvents1.add(ScrollFutbol);
+		panEventos.add(panEvents1);
+		
+		
+		for (int i = 0; i < eventosFutbol.size(); i++) {
+			String text = eventosFutbol.get(i).getEquipo1()+" vs "+eventosFutbol.get(i).getEquipo2();
+			JButton btnEv = new JButton(text);
+			btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
+			panFut.add(btnEv);
+		}
+		
+		
+		JLabel lblBask = new JLabel("Basketball");
+		lblBask.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBask.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JPanel panEvents2 = new JPanel(new BorderLayout());
+		panEvents2.add(lblBask, BorderLayout.NORTH);
+		
+		JPanel panBask = new JPanel();
+		panBask.setLayout(new BoxLayout(panBask, BoxLayout.Y_AXIS));
+		JScrollPane ScrollBasket = new JScrollPane(panBask);
+		ScrollBasket.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		ScrollBasket.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		panEvents2.add(ScrollBasket);
+		panEventos.add(panEvents2);
+		for (int i = 0; i < eventosBasket.size(); i++) {
+			String text = eventosBasket.get(i).getEquipo1()+" vs "+eventosBasket.get(i).getEquipo2();
+			JButton btnEv = new JButton(text);
+			btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
+			panBask.add(btnEv);
+		}
+		
+		
 		panCentroAbajo.add(panEventos, BorderLayout.CENTER);
 
+		
+		//Eventos futuros--------------------------
+		
 		
 		JPanel panDerecha = new JPanel();
 		panPrincipal.add(panDerecha, BorderLayout.EAST);

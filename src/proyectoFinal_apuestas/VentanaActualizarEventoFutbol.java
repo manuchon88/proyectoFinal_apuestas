@@ -9,12 +9,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VentanaActualizarEventoFutbol extends JFrame {
@@ -29,10 +32,8 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 	private JTextField textFieldAmarillasVisitante;
 	private JTextField textFieldRojasLocal;
 	private JTextField textFieldRojasVisitante;
-	private JTextField textFieldDia;
-	private JTextField textFieldMes;
-	private JTextField textFieldAnio;
-
+	private int index;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -53,6 +54,7 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaActualizarEventoFutbol() {
+		ArrayList<EventoFutbol> eventsList = EventoFutbol.leerEventosFutbolTxt(Archivos.archivosEventosFutbol);
 		setTitle("Actualizar Evento UCBet");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 501, 501);
@@ -88,37 +90,31 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 		JButton btnActualizar = new JButton("Actualizar");
 		btnActualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					int dia = Integer.parseInt(textFieldDia.getText());
-					int mes = Integer.parseInt(textFieldMes.getText());
-					int anio = Integer.parseInt(textFieldAnio.getText());
-					String eq1 = textFieldNombreLocal.getText();
-					String eq2 = textFieldNombreVisitante.getText();
-					int goles1 = Integer.parseInt(textFieldGolesLocal.getText());
-					int goles2 = Integer.parseInt(textFieldGolesVisitante.getText());
-					int am1 = Integer.parseInt(textFieldAmarillasLocal.getText());
-					int am2 = Integer.parseInt(textFieldAmarillasVisitante.getText());
-					int roj1 = Integer.parseInt(textFieldRojasLocal.getText());
-					int roj2 = Integer.parseInt(textFieldRojasVisitante.getText());
-
-					EventoFutbol evento = new EventoFutbol(anio, mes, dia, eq1, eq2, goles1, goles2, am1, am2, roj1, roj2);
-					if (evento.registrarEventosFutbolTxt(Archivos.archivosEventosFutbol)) {
-						System.out.println("Evento registrado correctamente");
-					} else {
-						System.out.println("Error al registrar evento");
-					}
-				} catch (NumberFormatException ex) {
-					ex.printStackTrace();
+				eventsList.get(index).setAmarillas1(Integer.parseInt(textFieldAmarillasLocal.getText()));
+				eventsList.get(index).setAmarillas2(Integer.parseInt(textFieldAmarillasVisitante.getText()));
+				eventsList.get(index).setEquipo1(textFieldNombreLocal.getText());
+				eventsList.get(index).setEquipo2(textFieldNombreVisitante.getText());
+				eventsList.get(index).setGoles1(Integer.parseInt(textFieldGolesLocal.getText()));
+				eventsList.get(index).setGoles2(Integer.parseInt(textFieldGolesVisitante.getText()));
+				eventsList.get(index).setRojas1(Integer.parseInt(textFieldRojasLocal.getText()));
+				eventsList.get(index).setRojas2(Integer.parseInt(textFieldRojasVisitante.getText()));
+				if (EventoFutbol.reescribirEventosFutbolTxt(eventsList, Archivos.archivosEventosFutbol)) {
+					JOptionPane.showMessageDialog(btnActualizar, "Evento actualizado con éxito");
+					VentanaActualizarEventoFutbol.this.dispose();
+				} else {
+					JOptionPane.showMessageDialog(btnActualizar, "Error: No se pudo actualizar el evento");
 				}
 			}
 		});
+		
 		panBotones.add(btnActualizar);
 		
-		JButton btnCambiarEvento = new JButton("Cambiar Evento");
+		JButton btnCambiarEvento = new JButton("Cambiar a Basketball");
 		btnCambiarEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaActualizarEventoBasketball frame = new VentanaActualizarEventoBasketball();
 				frame.setVisible(true);
+				VentanaActualizarEventoFutbol.this.dispose();
 			}
 		});
 		panBotones.add(btnCambiarEvento);
@@ -127,9 +123,9 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 		panel.add(panCentro, BorderLayout.CENTER);
 		panCentro.setLayout(null);
 		
-		JLabel lblFecha = new JLabel("Fecha:");
+		JLabel lblFecha = new JLabel("Eventos:");
 		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblFecha.setBounds(20, 35, 145, 19);
+		lblFecha.setBounds(20, 35, 109, 19);
 		panCentro.add(lblFecha);
 		
 		JLabel lblEquipoLocal = new JLabel("Equipo Local:");
@@ -149,7 +145,7 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 		
 		JLabel lblEquipoVisitante = new JLabel("Equipo Visitante:");
 		lblEquipoVisitante.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblEquipoVisitante.setBounds(315, 83, 130, 19);
+		lblEquipoVisitante.setBounds(315, 83, 152, 19);
 		panCentro.add(lblEquipoVisitante);
 		
 		textFieldNombreVisitante = new JTextField();
@@ -202,31 +198,44 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 		textFieldRojasVisitante.setBounds(315, 258, 130, 20);
 		panCentro.add(textFieldRojasVisitante);
 		
-		textFieldDia = new JTextField();
-		textFieldDia.setBounds(139, 36, 86, 20);
-		panCentro.add(textFieldDia);
-		textFieldDia.setColumns(10);
+		JComboBox comboBoxEventos = new JComboBox();
+		comboBoxEventos.setBounds(139, 36, 306, 21);
+		panCentro.add(comboBoxEventos);
 		
-		textFieldMes = new JTextField();
-		textFieldMes.setColumns(10);
-		textFieldMes.setBounds(235, 36, 86, 20);
-		panCentro.add(textFieldMes);
+		String[] events = new String[eventsList.size()+1];
+		events[0]="Seleccionar Evento";
+		for (int i = 1; i < events.length; i++) {
+			events[i] = eventsList.get(i-1).toString();
+		}
+		comboBoxEventos.setModel(new DefaultComboBoxModel<String>(events));
+		comboBoxEventos.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				index = comboBoxEventos.getSelectedIndex()-1;
+				if (index==-1) {
+					textFieldNombreLocal.setText("");
+					textFieldNombreVisitante.setText("");
+					textFieldGolesLocal.setText("");
+					textFieldGolesVisitante.setText("");
+					textFieldAmarillasLocal.setText("");
+					textFieldAmarillasVisitante.setText("");
+					textFieldRojasLocal.setText("");
+					textFieldRojasVisitante.setText("");
+					
+				} else {
+					EventoFutbol partido  = eventsList.get(index);
+					textFieldNombreLocal.setText(partido.getEquipo1());
+					textFieldNombreVisitante.setText(partido.getEquipo2());
+					textFieldGolesLocal.setText(""+partido.getGoles1());
+					textFieldGolesVisitante.setText(""+partido.getGoles2());
+					textFieldAmarillasLocal.setText(""+partido.getAmarillas1());
+					textFieldAmarillasVisitante.setText(""+partido.getAmarillas2());
+					textFieldRojasLocal.setText(""+partido.getRojas1());
+					textFieldRojasVisitante.setText(""+partido.getRojas2());
+				}
+			}
+		});
 		
-		textFieldAnio = new JTextField();
-		textFieldAnio.setColumns(10);
-		textFieldAnio.setBounds(331, 36, 86, 20);
-		panCentro.add(textFieldAnio);
-		
-		JLabel lblDia = new JLabel("Día:");
-		lblDia.setBounds(170, 11, 46, 14);
-		panCentro.add(lblDia);
-		
-		JLabel lblMes = new JLabel("Mes:");
-		lblMes.setBounds(264, 11, 46, 14);
-		panCentro.add(lblMes);
-		
-		JLabel lblAnio = new JLabel("Año:");
-		lblAnio.setBounds(359, 11, 46, 14);
-		panCentro.add(lblAnio);
 	}
 }

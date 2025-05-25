@@ -246,14 +246,11 @@ public class EventoBasketball extends Evento {
 		return eventoBasketball;
 	}
 	
-	static boolean reescribirEventosFutbolTxt(ArrayList<EventoBasketball> eventosBasketball, String archivo) {
+	static boolean reescribirEventosBasketballTxt(ArrayList<EventoBasketball> eventosBasketball, String archivo) {
 		try {
 			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
 			for (EventoBasketball eb : eventosBasketball) {
-				String registro = eb.getFecha().getYear() + ", " + eb.getFecha().getMonthValue() + ", " + 
-						eb.getFecha().getDayOfMonth() + ", " + eb.getEquipo1() + ", " + eb.getEquipo2() + ", " +
-						eb.getPuntos1() + ", " + eb.getPuntos2() + ", " + eb.getTriples1() + eb.getTriples2() + ", " +
-						eb.getFaltas1() + ", " + eb.getFaltas2();
+				String registro = eb.toString();
 				escritor.println(registro);
 			}
 			escritor.close();
