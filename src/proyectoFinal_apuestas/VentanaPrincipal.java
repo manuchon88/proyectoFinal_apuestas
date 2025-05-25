@@ -175,14 +175,14 @@ public class VentanaPrincipal extends JFrame {
 		});
 		panBotones.add(btnNBA);
 		
-		JButton btnMundialClubes = new JButton("Mundial de Clubes");
-		btnMundialClubes.addActionListener(new ActionListener() {
+		JButton btnLibertadores = new JButton("Copa Libertadores");
+		btnLibertadores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnMundialClubes.getText(), user);
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnLibertadores.getText(), user);
 				frame.setVisible(true);
 			}
 		});
-		panBotones.add(btnMundialClubes);
+		panBotones.add(btnLibertadores);
 		
 		JButton btnEuroLeague = new JButton("Euro League");
 		btnEuroLeague.addActionListener(new ActionListener() {
@@ -200,7 +200,15 @@ public class VentanaPrincipal extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-		panBotones.add(btnLaLiga);
+		
+		JButton btnLigaBoliviana = new JButton("Premier league Boliviana");
+		btnLigaBoliviana.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnLigaBoliviana.getText(), user);
+				frame.setVisible(true);
+			}
+		});
+		panBotones.add(btnLigaBoliviana);
 		
 		JButton btnACB = new JButton("ACB");
 		btnACB.addActionListener(new ActionListener() {
@@ -210,6 +218,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		panBotones.add(btnACB);
+		panBotones.add(btnLaLiga);
 		
 		JButton btnSerieA = new JButton("Serie A");
 		btnSerieA.addActionListener(new ActionListener() {
@@ -218,7 +227,6 @@ public class VentanaPrincipal extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-		panBotones.add(btnSerieA);
 		
 		JButton btnFIBA = new JButton("FIBA");
 		btnFIBA.addActionListener(new ActionListener() {
@@ -228,15 +236,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		panBotones.add(btnFIBA);
-		
-		JButton btnBundesliga = new JButton("Bundesliga");
-		btnBundesliga.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnBundesliga.getText(), user);
-				frame.setVisible(true);
-			}
-		});
-		panBotones.add(btnBundesliga);
+		panBotones.add(btnSerieA);
 		
 		JButton btnNCAA = new JButton("NCAA");
 		btnNCAA.addActionListener(new ActionListener() {
@@ -325,7 +325,9 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		for (int i = 0; i < eventosFutbol.size(); i++) {
-			String text = eventosFutbol.get(i).getEquipo1()+" vs "+eventosFutbol.get(i).getEquipo2();
+			String[] torneos = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
+			String part = torneos[eventosFutbol.get(i).getTorneo()];
+			String text = eventosFutbol.get(i).getFecha()+" / "+part+" / "+eventosFutbol.get(i).getEquipo1()+" vs "+eventosFutbol.get(i).getEquipo2();
 			JButton btnEv = new JButton(text);
 			btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
 			panFut.add(btnEv);
@@ -346,7 +348,9 @@ public class VentanaPrincipal extends JFrame {
 		panEvents2.add(ScrollBasket);
 		panEventos.add(panEvents2);
 		for (int i = 0; i < eventosBasket.size(); i++) {
-			String text = eventosBasket.get(i).getEquipo1()+" vs "+eventosBasket.get(i).getEquipo2();
+			String[] torneos = {"NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"};
+			String part = torneos[eventosBasket.get(i).getTorneo()];
+			String text = eventosBasket.get(i).getFecha()+" / "+part+" / "+eventosBasket.get(i).getEquipo1()+" vs "+eventosBasket.get(i).getEquipo2();
 			JButton btnEv = new JButton(text);
 			btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
 			panBask.add(btnEv);

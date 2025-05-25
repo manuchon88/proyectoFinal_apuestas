@@ -21,7 +21,7 @@ public class Administrador extends Usuario {
 	public String crearEvento(int deporte, String datos) {
 		switch (deporte) {
 		case 1: {
-			return EventoFutbol.leerEventFutbol(datos).toString();
+			return EventoFutbol.leerToEvFutbol(datos).toString();
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + deporte);

@@ -73,7 +73,7 @@ public class ApuestaFutbol extends Apuesta {
 
 	public static ApuestaFutbol leerApuestaFut(String cadena) {
 		String[] datos = cadena.split("#");
-		return new ApuestaFutbol(datos[0], Double.parseDouble(datos[1]), PrediccionFutbol.leerPrediccion(datos[2]), EventoFutbol.leerEventFutbol(datos[3]));
+		return new ApuestaFutbol(datos[0], Double.parseDouble(datos[1]), PrediccionFutbol.leerPrediccion(datos[2]), EventoFutbol.leerToEvFutbol(datos[3]));
 	}
 
 	@Override

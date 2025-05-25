@@ -4,28 +4,29 @@ import java.util.ArrayList;
 
 public class EventoFutbol extends Evento{
 	private String equipo1, equipo2;
-	private int goles1, goles2, amarillas1, amarillas2, rojas1, rojas2;
+	private int torneo, goles1, goles2, amarillas1, amarillas2, rojas1, rojas2;
 	
 	
 	
 	@Override
 	public String toString() {
-		return getFecha().getYear()+", "+getFecha().getMonthValue()+", "+getFecha().getDayOfMonth()+", "+equipo1+", "+equipo2+", "+goles1+", "+goles2+", "+amarillas1+", "+amarillas2+", "+rojas1+", "+rojas2;
+		return getFecha().getYear()+", "+getFecha().getMonthValue()+", "+getFecha().getDayOfMonth()+", "+equipo1+", "+equipo2+", "+torneo+", "+goles1+", "+goles2+", "+amarillas1+", "+amarillas2+", "+rojas1+", "+rojas2;
 	}
 	
-	public static EventoFutbol leerEventFutbol(String cadena) {
+	public static EventoFutbol leerToEvFutbol(String cadena) {
 		String[] datos = cadena.split(", ");
-		return new EventoFutbol(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]), datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]), Integer.parseInt(datos[8]), Integer.parseInt(datos[9]), Integer.parseInt(datos[10]));
+		return new EventoFutbol(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]), datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]), Integer.parseInt(datos[8]), Integer.parseInt(datos[9]), Integer.parseInt(datos[10]), Integer.parseInt(datos[11]));
 	}
 	
 	
 
 
-	public EventoFutbol(int anio, int mes, int dia, String equipo1, String equipo2, int goles1, int goles2,
+	public EventoFutbol(int anio, int mes, int dia, String equipo1, String equipo2, int torneo, int goles1, int goles2,
 			int amarillas1, int amarillas2, int rojas1, int rojas2) {
 		super(anio, mes, dia);
 		this.equipo1 = equipo1;
 		this.equipo2 = equipo2;
+		this.torneo = torneo;
 		this.goles1 = goles1;
 		this.goles2 = goles2;
 		this.amarillas1 = amarillas1;
@@ -34,10 +35,11 @@ public class EventoFutbol extends Evento{
 		this.rojas2 = rojas2;
 	}
 
-	public EventoFutbol(int anio, int mes, int dia, String eq1, String eq2) {
+	public EventoFutbol(int anio, int mes, int dia, String eq1, String eq2, int torneo) {
 		super(anio, mes, dia);
 		this.equipo1 = eq1;
 		this.equipo2 = eq2;
+		this.torneo = torneo;
 		this.goles1 = 0;
 		this.goles2 = 0;
 		this.amarillas1 = 0;
@@ -45,8 +47,17 @@ public class EventoFutbol extends Evento{
 		this.rojas1 = 0;
 		this.rojas2 = 0;
 	}
-
 	
+	
+	
+	public int getTorneo() {
+		return torneo;
+	}
+
+	public void setTorneo(int torneo) {
+		this.torneo = torneo;
+	}
+
 	public void terminarEvento(String result) {
 		String[] datos = result.split(", ");
 		this.goles1 = Integer.parseInt(datos[0]);
@@ -151,21 +162,24 @@ public class EventoFutbol extends Evento{
 			BufferedReader lector = new BufferedReader(new FileReader(archivo));
 			String linea;
 			while ((linea = lector.readLine())!=null) {
-				String [] datos = linea.split(", ");
+				eventoFutbol.add(EventoFutbol.leerToEvFutbol(linea));
+				
+				/*String [] datos = linea.split(", ");
 				int anio = Integer.parseInt(datos[0]);
 				int mes = Integer.parseInt(datos[1]); 
 				int dia = Integer.parseInt(datos[2]);
 				String equipo1 = datos[3];
 				String equipo2 =datos[4];
-				int goles1 = Integer.parseInt(datos[5]);
-				int goles2 = Integer.parseInt(datos[6]); 
-				int amarillas1 = Integer.parseInt(datos[7]);
-				int amarillas2 = Integer.parseInt(datos[8]);
-				int rojas1 = Integer.parseInt(datos[9]);
-				int rojas2 = Integer.parseInt(datos[10]);
+				int torneo = Integer.parseInt(datos[5]);
+				int goles1 = Integer.parseInt(datos[6]);
+				int goles2 = Integer.parseInt(datos[7]); 
+				int amarillas1 = Integer.parseInt(datos[8]);
+				int amarillas2 = Integer.parseInt(datos[9]);
+				int rojas1 = Integer.parseInt(datos[10]);
+				int rojas2 = Integer.parseInt(datos[11]);
 				
-				eventoFutbol.add(new EventoFutbol(anio, mes, dia, equipo1, equipo2, goles1, goles2,
-					 amarillas1, amarillas2, rojas1, rojas2));
+				eventoFutbol.add(new EventoFutbol(anio, mes, dia, equipo1, equipo2, torneo, goles1, goles2,
+					 amarillas1, amarillas2, rojas1, rojas2));*/
 			}
 			lector.close();
 		} catch (FileNotFoundException e) {
@@ -185,6 +199,7 @@ public class EventoFutbol extends Evento{
 			escritor.writeInt(getFecha().getDayOfMonth());
 			escritor.writeUTF(this.equipo1);
 			escritor.writeUTF(this.equipo2);
+			escritor.writeInt(this.torneo);
 			escritor.writeInt(this.goles1);
 			escritor.writeInt(this.goles2);
 			escritor.writeInt(this.amarillas1);
@@ -210,6 +225,7 @@ public class EventoFutbol extends Evento{
 				int dia = lector.readInt();
 				String equipo1 = lector.readUTF();
 				String equipo2 = lector.readUTF();
+				int torneo = lector.readInt();
 				int goles1 = lector.readInt();
 				int goles2 = lector.readInt(); 
 				int amarillas1 = lector.readInt();
@@ -217,7 +233,7 @@ public class EventoFutbol extends Evento{
 				int rojas1 = lector.readInt();
 				int rojas2 = lector.readInt();
 				
-				eventoFutbol.add(new EventoFutbol(anio, mes, dia, equipo1, equipo2, goles1, goles2,
+				eventoFutbol.add(new EventoFutbol(anio, mes, dia, equipo1, equipo2, torneo, goles1, goles2,
 						 amarillas1, amarillas2, rojas1, rojas2));
 			}
 		} catch (FileNotFoundException e) {

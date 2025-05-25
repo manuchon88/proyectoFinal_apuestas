@@ -14,25 +14,26 @@ import java.util.ArrayList;
 
 public class EventoBasketball extends Evento {
 	private String equipo1, equipo2;
-	private int puntos1, puntos2, triples1, triples2, faltas1, faltas2;
+	private int torneo, puntos1, puntos2, triples1, triples2, faltas1, faltas2;
 	
 	
 	
 	@Override
 	public String toString() {
-		return getFecha().getYear()+", "+getFecha().getMonthValue()+", "+getFecha().getDayOfMonth()+", "+equipo1+", "+equipo2+", "+puntos1+", "+puntos2+", "+triples1+", "+triples2+", "+faltas1+", "+faltas2;
+		return getFecha().getYear()+", "+getFecha().getMonthValue()+", "+getFecha().getDayOfMonth()+", "+equipo1+", "+equipo2+", "+torneo+", "+puntos1+", "+puntos2+", "+triples1+", "+triples2+", "+faltas1+", "+faltas2;
 	}
 	
 	public static EventoBasketball leerEventBasketball(String cadena) {
 		String[] datos = cadena.split(", ");
-		return new EventoBasketball(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]), datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]), Integer.parseInt(datos[8]), Integer.parseInt(datos[9]), Integer.parseInt(datos[10]));
+		return new EventoBasketball(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]), datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]), Integer.parseInt(datos[8]), Integer.parseInt(datos[9]), Integer.parseInt(datos[10]), Integer.parseInt(datos[11]));
 	}
 
 
-	public EventoBasketball(int anio, int mes, int dia, String equipo1, String equipo2) {
+	public EventoBasketball(int anio, int mes, int dia, String equipo1, String equipo2, int torneo) {
 		super(anio, mes, dia);
 		this.equipo1 = equipo1;
 		this.equipo2 = equipo2;
+		this.torneo = torneo;
 		this.puntos1 = 0;
 		this.puntos2 = 0;
 		this.triples1 = 0;
@@ -43,11 +44,12 @@ public class EventoBasketball extends Evento {
 	
 
 	
-	public EventoBasketball(int anio, int mes, int dia, String equipo1, String equipo2, int puntos1, int puntos2,
+	public EventoBasketball(int anio, int mes, int dia, String equipo1, String equipo2, int torneo, int puntos1, int puntos2,
 			int triples1, int triples2, int faltas1, int faltas2) {
 		super(anio, mes, dia);
 		this.equipo1 = equipo1;
 		this.equipo2 = equipo2;
+		this.torneo = torneo;
 		this.puntos1 = puntos1;
 		this.puntos2 = puntos2;
 		this.triples1 = triples1;
@@ -65,6 +67,16 @@ public class EventoBasketball extends Evento {
 		this.triples2 = Integer.parseInt(datos[3]);
 		this.faltas1 = Integer.parseInt(datos[4]);
 		this.faltas2 = Integer.parseInt(datos[5]);
+	}
+	
+	
+
+	public int getTorneo() {
+		return torneo;
+	}
+
+	public void setTorneo(int torneo) {
+		this.torneo = torneo;
 	}
 
 	public int totalFaltas() {
@@ -169,7 +181,8 @@ public class EventoBasketball extends Evento {
 			BufferedReader lector = new BufferedReader(new FileReader(archivo));
 			String linea;
 			while ((linea = lector.readLine())!=null) {
-				String [] datos = linea.split(", ");
+				eventoBasketball.add(EventoBasketball.leerEventBasketball(linea));
+				/*String [] datos = linea.split(", ");
 				int anio = Integer.parseInt(datos[0]);
 				int mes = Integer.parseInt(datos[1]); 
 				int dia = Integer.parseInt(datos[2]);
@@ -183,7 +196,7 @@ public class EventoBasketball extends Evento {
 				int faltas2 = Integer.parseInt(datos[10]);
 				
 				eventoBasketball.add(new EventoBasketball(anio, mes, dia, equipo1, equipo2, puntos1, puntos2,
-						triples1, triples2, faltas1, faltas2));
+						triples1, triples2, faltas1, faltas2));*/
 			}
 			lector.close();
 		} catch (FileNotFoundException e) {
@@ -203,6 +216,7 @@ public class EventoBasketball extends Evento {
 			escritor.writeInt(getFecha().getDayOfMonth());
 			escritor.writeUTF(this.equipo1);
 			escritor.writeUTF(this.equipo2);
+			escritor.writeInt(this.torneo);
 			escritor.writeInt(this.puntos1);
 			escritor.writeInt(this.puntos2);
 			escritor.writeInt(this.triples1);
@@ -228,6 +242,7 @@ public class EventoBasketball extends Evento {
 				int dia = lector.readInt();
 				String equipo1 = lector.readUTF();
 				String equipo2 = lector.readUTF();
+				int torneo = lector.readInt();
 				int puntos1 = lector.readInt();
 				int puntos2 = lector.readInt(); 
 				int triples1 = lector.readInt();
@@ -235,7 +250,7 @@ public class EventoBasketball extends Evento {
 				int faltas1 = lector.readInt();
 				int faltas2 = lector.readInt();
 				
-				eventoBasketball.add(new EventoBasketball(anio, mes, dia, equipo1, equipo2, puntos1, puntos2,
+				eventoBasketball.add(new EventoBasketball(anio, mes, dia, equipo1, equipo2, torneo, puntos1, puntos2,
 						triples1, triples2, faltas1, faltas2));
 			}
 		} catch (FileNotFoundException e) {
