@@ -90,6 +90,7 @@ public class VentanaPerfil extends JFrame {
 		panPrincipal.add(panCenter, BorderLayout.CENTER);
 		
 		JPanel panArriba = new JPanel(new GridLayout(1,2));
+		panArriba.setBackground(new Color(235, 245, 251));
 		panCenter.add(panArriba);
 		
 		JLabel lblNombre = new JLabel(user.getNombre());
@@ -101,6 +102,7 @@ public class VentanaPerfil extends JFrame {
 		panArriba.add(lblSaldoBig);
 		
 		JPanel panAbajo = new JPanel(new GridLayout(2,1));
+		panAbajo.setBackground(new Color(235, 245, 251));
 		panCenter.add(panAbajo);
 		
 		JSeparator separator = new JSeparator();
@@ -109,6 +111,7 @@ public class VentanaPerfil extends JFrame {
 		
 		
 		JPanel panAbajo2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panAbajo2.setBackground(new Color(235, 245, 251));
 		panAbajo.add(panAbajo2);
 		
 		JButton btnDepoReti	= new JButton("Depositar / Retirar");

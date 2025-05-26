@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToggleButton;
+import javax.swing.UIManager;
 
 public class VentanaActualizarEventoBasketball extends JFrame {
 
@@ -54,6 +55,7 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 501, 501);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -73,6 +75,7 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panSubtitulo = new JPanel();
+		panSubtitulo.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		panel.add(panSubtitulo, BorderLayout.NORTH);
 		
 		JLabel lblSubtitulo = new JLabel("Actualizar Evento de Basketball");
@@ -80,6 +83,7 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 		panSubtitulo.add(lblSubtitulo);
 		
 		JPanel panBotones = new JPanel();
+		panBotones.setBackground(new Color(235, 245, 251));
 		panel.add(panBotones, BorderLayout.SOUTH);
 		
 		JButton btnActualizar = new JButton("Actualizar");
@@ -98,6 +102,7 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 		panBotones.add(btnCambiarEvento);
 		
 		JPanel panCentro = new JPanel();
+		panCentro.setBackground(new Color(235, 245, 251));
 		panel.add(panCentro, BorderLayout.CENTER);
 		panCentro.setLayout(null);
 		

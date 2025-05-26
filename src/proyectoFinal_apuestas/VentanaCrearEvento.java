@@ -22,6 +22,7 @@ public class VentanaCrearEvento extends JFrame {
 		setTitle("UCBet - Crear Evento");
 		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 10));
@@ -36,6 +37,7 @@ public class VentanaCrearEvento extends JFrame {
 		contentPane.add(panTitulo, BorderLayout.NORTH);
 
 		JPanel panCentro = new JPanel(new GridLayout(7, 2, 10, 10));
+		panCentro.setBackground(new Color(235, 245, 251));
 		contentPane.add(panCentro, BorderLayout.CENTER);
 
 		JLabel lblDeporte = new JLabel("Deporte:");
@@ -93,6 +95,7 @@ public class VentanaCrearEvento extends JFrame {
 		for (int i = 2025; i <= 2030; i++) comboBoxAnio.addItem(i);
 		
 		JPanel panBotones = new JPanel();
+		panBotones.setBackground(new Color(235, 245, 251));
 		JButton btnCrearEvento = new JButton("Crear Evento");
 		panBotones.add(btnCrearEvento);
 		contentPane.add(panBotones, BorderLayout.SOUTH);

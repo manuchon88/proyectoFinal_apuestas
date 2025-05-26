@@ -69,6 +69,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		setTitle("Apuesas Usuario");
 		setBounds(100, 100, 500, 664);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 10));
@@ -107,7 +108,12 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		
 		
 		
+<<<<<<< Updated upstream
 		JPanel panCentro = new JPanel(new GridLayout(15, 2, 10, 10));
+=======
+		JPanel panCentro = new JPanel(new GridLayout(14, 2, 10, 10));
+		panCentro.setBackground(new Color(235, 245, 251));
+>>>>>>> Stashed changes
 		contentPane.add(panCentro, BorderLayout.CENTER);
 
 		JLabel lblDeporte = new JLabel("Deporte:");
@@ -331,6 +337,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		
 		
 		JPanel panBotones = new JPanel();
+		panBotones.setBackground(new Color(235, 245, 251));
 		JButton btnApuesta = new JButton("Apuesta");
 		panBotones.add(btnApuesta);
 		contentPane.add(panBotones, BorderLayout.SOUTH);
@@ -552,6 +559,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 			 }
 		 }
 
+<<<<<<< Updated upstream
 		return partidos;
 	 }
 	 
@@ -595,3 +603,6 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		return apuestasEvento;
 	}
 }
+=======
+}
+>>>>>>> Stashed changes

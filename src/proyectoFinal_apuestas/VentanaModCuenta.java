@@ -40,6 +40,7 @@ public class VentanaModCuenta extends JFrame {
 		setBounds(550, 50, 500, 324);
 		setTitle("UCBet");
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -59,7 +60,7 @@ public class VentanaModCuenta extends JFrame {
 		panTitulo.add(lblTitulo);
 		
 		JPanel panBotones = new JPanel();
-		panBotones.setBackground(new Color(255, 255, 255));
+		panBotones.setBackground(new Color(235, 245, 251));
 		panPrincipal.add(panBotones, BorderLayout.SOUTH);
 		panBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
@@ -85,7 +86,7 @@ public class VentanaModCuenta extends JFrame {
 		panBotones.add(btnActualizar);
 		
 		JPanel panCentro = new JPanel();
-		panCentro.setBackground(new Color(255, 255, 255));
+		panCentro.setBackground(new Color(235, 245, 251));
 		panPrincipal.add(panCentro, BorderLayout.CENTER);
 		panCentro.setLayout(null);
 		
