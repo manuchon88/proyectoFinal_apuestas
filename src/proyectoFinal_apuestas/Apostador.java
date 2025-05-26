@@ -43,7 +43,7 @@ public class Apostador extends Usuario{
 		
     }
 
-    public void apostar(int deporte, String apuesta) {
+    public boolean apostar(int deporte, String apuesta) {
         switch (deporte) {
 		case 1: {
 			ApuestaFutbol bet = ApuestaFutbol.leerApuestaFut(apuesta);
@@ -53,8 +53,10 @@ public class Apostador extends Usuario{
 				historialApuestasFutbol.add(new ApuestaFutbol(bet.getDescripcion(), bet.getCuota(), bet.getEvent(), bet.getTipoApuesta(),bet.getPredict()));
 				System.out.println("Apuesta realizada. Monto: " + monto);
 				System.out.println("Saldo restante: " + saldo);
+				return true;
 			} else {
 				System.out.println("No se tiene el saldo necesario para apostar. Saldo disponible: " + saldo);
+				return false;
 			}
 			
 		}

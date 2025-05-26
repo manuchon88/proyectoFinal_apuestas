@@ -339,6 +339,20 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		JPanel panBotones = new JPanel();
 		panBotones.setBackground(new Color(235, 245, 251));
 		JButton btnApuesta = new JButton("Apuesta");
+		btnApuesta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (determinarDeporte(competencia).equals("Fútbol")) {
+					PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
+					apuest.setPredict(predict);
+					if (user.apostar(1, apuest.toString())) {						
+						JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
+					} else {
+						JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
+
+					}
+				}
+			}
+		});
 		panBotones.add(btnApuesta);
 		contentPane.add(panBotones, BorderLayout.SOUTH);
 
