@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -17,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JToggleButton;
 
 public class VentanaActualizarEventoBasketball extends JFrame {
 
@@ -80,22 +83,7 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 		panel.add(panBotones, BorderLayout.SOUTH);
 		
 		JButton btnActualizar = new JButton("Actualizar");
-		btnActualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eventsList.get(index).setFaltas1(Integer.parseInt(textFieldFaltasLocal.getText()));
-				eventsList.get(index).setFaltas2(Integer.parseInt(textFieldFaltasVisitante.getText()));
-				eventsList.get(index).setPuntos1(Integer.parseInt(textFieldPuntosLocal.getText()));
-				eventsList.get(index).setPuntos2(Integer.parseInt(textFieldPuntosVisitante.getText()));
-				eventsList.get(index).setTriples1(Integer.parseInt(textFieldTriplesLocal.getText()));
-				eventsList.get(index).setTriples2(Integer.parseInt(textFieldTriplesVisitante.getText()));
-				if (EventoBasketball.reescribirEventosBasketballTxt(eventsList, Archivos.archivosEventosBasketball)) {
-					JOptionPane.showMessageDialog(btnActualizar, "Evento actualizado con éxito");
-					VentanaActualizarEventoBasketball.this.dispose();
-				} else {
-					JOptionPane.showMessageDialog(btnActualizar, "Error: No se pudo actualizar el evento");
-				}
-			}
-		});
+		
 		
 		panBotones.add(btnActualizar);
 		
@@ -198,6 +186,16 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 			events[i] = eventsList.get(i-1).toString();
 		}
 		comboBoxEventos.setModel(new DefaultComboBoxModel<String>(events));
+		
+		JLabel lblTerminar = new JLabel("Terminar evento:");
+		lblTerminar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTerminar.setBounds(20, 293, 152, 19);
+		panCentro.add(lblTerminar);
+		
+		JToggleButton btnTerminar = new JToggleButton("Terminar Evento");
+		btnTerminar.setBounds(182, 290, 216, 34);
+		
+		panCentro.add(btnTerminar);
 		comboBoxEventos.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -212,7 +210,7 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 					textFieldTriplesVisitante.setText("");
 					textFieldFaltasLocal.setText("");
 					textFieldFaltasVisitante.setText("");
-					
+					btnTerminar.setSelected(false);
 				} else {
 					EventoBasketball partido  = eventsList.get(index);
 					textFieldNombreLocal.setText(partido.getEquipo1());
@@ -223,9 +221,32 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 					textFieldTriplesVisitante.setText(""+partido.getTriples2());
 					textFieldFaltasLocal.setText(""+partido.getFaltas1());
 					textFieldFaltasVisitante.setText(""+partido.getFaltas2());
+					btnTerminar.setSelected(partido.isTerminado());
 				}
 			}
 		});
 		
+		btnActualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventsList.get(index).setFaltas1(Integer.parseInt(textFieldFaltasLocal.getText()));
+				eventsList.get(index).setFaltas2(Integer.parseInt(textFieldFaltasVisitante.getText()));
+				eventsList.get(index).setPuntos1(Integer.parseInt(textFieldPuntosLocal.getText()));
+				eventsList.get(index).setPuntos2(Integer.parseInt(textFieldPuntosVisitante.getText()));
+				eventsList.get(index).setTriples1(Integer.parseInt(textFieldTriplesLocal.getText()));
+				eventsList.get(index).setTriples2(Integer.parseInt(textFieldTriplesVisitante.getText()));
+				if (btnTerminar.isSelected()) {
+					eventsList.get(index).setTerminado(true);
+				}else {
+					eventsList.get(index).setTerminado(false);					
+				}
+				
+				if (EventoBasketball.reescribirEventosBasketballTxt(eventsList, Archivos.archivosEventosBasketball)) {
+					JOptionPane.showMessageDialog(btnActualizar, "Evento actualizado con éxito");
+					VentanaActualizarEventoBasketball.this.dispose();
+				} else {
+					JOptionPane.showMessageDialog(btnActualizar, "Error: No se pudo actualizar el evento");
+				}
+			}
+		});
 	}
 }

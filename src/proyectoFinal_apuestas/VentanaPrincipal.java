@@ -326,11 +326,13 @@ public class VentanaPrincipal extends JFrame {
 		
 		for (int i = 0; i < eventosFutbol.size(); i++) {
 			String[] torneos = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
-			String part = torneos[eventosFutbol.get(i).getTorneo()];
-			String text = eventosFutbol.get(i).getFecha()+" / "+part+" / "+eventosFutbol.get(i).getEquipo1()+" vs "+eventosFutbol.get(i).getEquipo2();
-			JButton btnEv = new JButton(text);
-			btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
-			panFut.add(btnEv);
+			if (!eventosFutbol.get(i).isTerminado()) {
+				String part = torneos[eventosFutbol.get(i).getTorneo()];
+				String text = eventosFutbol.get(i).getFecha()+" / "+part+" / "+eventosFutbol.get(i).getEquipo1()+" vs "+eventosFutbol.get(i).getEquipo2();
+				JButton btnEv = new JButton(text);
+				btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
+				panFut.add(btnEv);				
+			}
 		}
 		
 		
@@ -349,11 +351,13 @@ public class VentanaPrincipal extends JFrame {
 		panEventos.add(panEvents2);
 		for (int i = 0; i < eventosBasket.size(); i++) {
 			String[] torneos = {"NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"};
-			String part = torneos[eventosBasket.get(i).getTorneo()];
-			String text = eventosBasket.get(i).getFecha()+" / "+part+" / "+eventosBasket.get(i).getEquipo1()+" vs "+eventosBasket.get(i).getEquipo2();
-			JButton btnEv = new JButton(text);
-			btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
-			panBask.add(btnEv);
+			if (!eventosBasket.get(i).isTerminado()) {
+				String part = torneos[eventosBasket.get(i).getTorneo()];
+				String text = eventosBasket.get(i).getFecha()+" / "+part+" / "+eventosBasket.get(i).getEquipo1()+" vs "+eventosBasket.get(i).getEquipo2();
+				JButton btnEv = new JButton(text);
+				btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
+				panBask.add(btnEv);				
+			}
 		}
 		
 		

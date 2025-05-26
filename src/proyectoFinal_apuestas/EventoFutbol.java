@@ -5,24 +5,25 @@ import java.util.ArrayList;
 public class EventoFutbol extends Evento{
 	private String equipo1, equipo2;
 	private int torneo, goles1, goles2, amarillas1, amarillas2, rojas1, rojas2;
+	private boolean terminado;
 	
 	
 	
 	@Override
 	public String toString() {
-		return getFecha().getYear()+", "+getFecha().getMonthValue()+", "+getFecha().getDayOfMonth()+", "+equipo1+", "+equipo2+", "+torneo+", "+goles1+", "+goles2+", "+amarillas1+", "+amarillas2+", "+rojas1+", "+rojas2;
+		return getFecha().getYear()+", "+getFecha().getMonthValue()+", "+getFecha().getDayOfMonth()+", "+equipo1+", "+equipo2+", "+torneo+", "+goles1+", "+goles2+", "+amarillas1+", "+amarillas2+", "+rojas1+", "+rojas2+", "+ terminado;
 	}
 	
 	public static EventoFutbol leerToEvFutbol(String cadena) {
 		String[] datos = cadena.split(", ");
-		return new EventoFutbol(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]), datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]), Integer.parseInt(datos[8]), Integer.parseInt(datos[9]), Integer.parseInt(datos[10]), Integer.parseInt(datos[11]));
+		return new EventoFutbol(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]), datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]), Integer.parseInt(datos[8]), Integer.parseInt(datos[9]), Integer.parseInt(datos[10]), Integer.parseInt(datos[11]), Boolean.parseBoolean(datos[12]));
 	}
 	
 	
 
 
 	public EventoFutbol(int anio, int mes, int dia, String equipo1, String equipo2, int torneo, int goles1, int goles2,
-			int amarillas1, int amarillas2, int rojas1, int rojas2) {
+			int amarillas1, int amarillas2, int rojas1, int rojas2, boolean terminado) {
 		super(anio, mes, dia);
 		this.equipo1 = equipo1;
 		this.equipo2 = equipo2;
@@ -33,6 +34,7 @@ public class EventoFutbol extends Evento{
 		this.amarillas2 = amarillas2;
 		this.rojas1 = rojas1;
 		this.rojas2 = rojas2;
+		this.terminado = terminado;
 	}
 
 	public EventoFutbol(int anio, int mes, int dia, String eq1, String eq2, int torneo) {
@@ -46,6 +48,7 @@ public class EventoFutbol extends Evento{
 		this.amarillas2 = 0;
 		this.rojas1 = 0;
 		this.rojas2 = 0;
+		this.terminado = false;
 	}
 	
 	
@@ -206,6 +209,7 @@ public class EventoFutbol extends Evento{
 			escritor.writeInt(this.amarillas2);
 			escritor.writeInt(this.rojas1);
 			escritor.writeInt(this.rojas2);
+			escritor.writeBoolean(this.terminado);
 			escritor.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -232,9 +236,10 @@ public class EventoFutbol extends Evento{
 				int amarillas2 = lector.readInt();
 				int rojas1 = lector.readInt();
 				int rojas2 = lector.readInt();
+				Boolean term = lector.readBoolean();
 				
 				eventoFutbol.add(new EventoFutbol(anio, mes, dia, equipo1, equipo2, torneo, goles1, goles2,
-						 amarillas1, amarillas2, rojas1, rojas2));
+						 amarillas1, amarillas2, rojas1, rojas2, term));
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Ha ocurrido un error al encontrar el archivo");
@@ -280,5 +285,15 @@ public class EventoFutbol extends Evento{
 		}
 		return true;
 	}
+
+	public boolean isTerminado() {
+		return terminado;
+	}
+
+	public void setTerminado(boolean terminado) {
+		this.terminado = terminado;
+	}
+	
+	
 
 }

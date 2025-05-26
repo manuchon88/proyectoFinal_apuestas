@@ -15,17 +15,18 @@ import java.util.ArrayList;
 public class EventoBasketball extends Evento {
 	private String equipo1, equipo2;
 	private int torneo, puntos1, puntos2, triples1, triples2, faltas1, faltas2;
+	private boolean terminado;
 	
 	
 	
 	@Override
 	public String toString() {
-		return getFecha().getYear()+", "+getFecha().getMonthValue()+", "+getFecha().getDayOfMonth()+", "+equipo1+", "+equipo2+", "+torneo+", "+puntos1+", "+puntos2+", "+triples1+", "+triples2+", "+faltas1+", "+faltas2;
+		return getFecha().getYear()+", "+getFecha().getMonthValue()+", "+getFecha().getDayOfMonth()+", "+equipo1+", "+equipo2+", "+torneo+", "+puntos1+", "+puntos2+", "+triples1+", "+triples2+", "+faltas1+", "+faltas2+", "+terminado;
 	}
 	
 	public static EventoBasketball leerEventBasketball(String cadena) {
 		String[] datos = cadena.split(", ");
-		return new EventoBasketball(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]), datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]), Integer.parseInt(datos[8]), Integer.parseInt(datos[9]), Integer.parseInt(datos[10]), Integer.parseInt(datos[11]));
+		return new EventoBasketball(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]), datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]), Integer.parseInt(datos[8]), Integer.parseInt(datos[9]), Integer.parseInt(datos[10]), Integer.parseInt(datos[11]), Boolean.parseBoolean(datos[12]));
 	}
 
 
@@ -40,12 +41,13 @@ public class EventoBasketball extends Evento {
 		this.triples2 = 0;
 		this.faltas1 = 0;
 		this.faltas2 = 0;
+		this.terminado = false;
 	}
 	
 
 	
 	public EventoBasketball(int anio, int mes, int dia, String equipo1, String equipo2, int torneo, int puntos1, int puntos2,
-			int triples1, int triples2, int faltas1, int faltas2) {
+			int triples1, int triples2, int faltas1, int faltas2, boolean terminado) {
 		super(anio, mes, dia);
 		this.equipo1 = equipo1;
 		this.equipo2 = equipo2;
@@ -56,6 +58,7 @@ public class EventoBasketball extends Evento {
 		this.triples2 = triples2;
 		this.faltas1 = faltas1;
 		this.faltas2 = faltas2;
+		this.terminado = terminado;
 	}
 
 
@@ -223,6 +226,7 @@ public class EventoBasketball extends Evento {
 			escritor.writeInt(this.triples2);
 			escritor.writeInt(this.faltas1);
 			escritor.writeInt(this.faltas2);
+			escritor.writeBoolean(this.terminado);
 			escritor.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -249,9 +253,10 @@ public class EventoBasketball extends Evento {
 				int triples2 = lector.readInt();
 				int faltas1 = lector.readInt();
 				int faltas2 = lector.readInt();
+				Boolean term = lector.readBoolean();
 				
 				eventoBasketball.add(new EventoBasketball(anio, mes, dia, equipo1, equipo2, torneo, puntos1, puntos2,
-						triples1, triples2, faltas1, faltas2));
+						triples1, triples2, faltas1, faltas2, term));
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Ha ocurrido un error al encontrar el archivo");
@@ -296,6 +301,14 @@ public class EventoBasketball extends Evento {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean isTerminado() {
+		return terminado;
+	}
+
+	public void setTerminado(boolean terminado) {
+		this.terminado = terminado;
 	}
 	
 	
