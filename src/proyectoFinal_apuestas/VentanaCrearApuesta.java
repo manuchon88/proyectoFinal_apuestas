@@ -17,8 +17,8 @@ public class VentanaCrearApuesta extends JFrame {
 	private JTextField textFieldCuota;
 
 	public VentanaCrearApuesta() {
-		ArrayList<EventoFutbol> events1 = EventoFutbol.leerEventosFutbolTxt(Archivos.archivosEventosFutbol);
-		ArrayList<EventoBasketball> events2 = EventoBasketball.leerEventosBasketballTxt(Archivos.archivosEventosBasketball);
+		ArrayList<EventoFutbol> eventsFut = EventoFutbol.leerEventosFutbolTxt(Archivos.archivosEventosFutbol);
+		ArrayList<EventoBasketball> eventsBask = EventoBasketball.leerEventosBasketballTxt(Archivos.archivosEventosBasketball);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("UCBet - Crear Evento");
@@ -51,16 +51,16 @@ public class VentanaCrearApuesta extends JFrame {
 				// TODO Auto-generated method stub
 				deporte = comboBoxDeporte.getSelectedIndex();
 				if (deporte == 1) {
-					String[] listedEvents = new String[events1.size()];
+					String[] listedEvents = new String[eventsFut.size()];
 					for (int i = 0; i < listedEvents.length; i++) {
-						listedEvents[i] = events1.get(i).toString();
+						listedEvents[i] = eventsFut.get(i).toString();
 					}
 					comboBoxEventos.setModel(new DefaultComboBoxModel<String>(listedEvents));
 					
 				}else if (deporte == 2) {
-					String[] listedEvents = new String[events2.size()];
+					String[] listedEvents = new String[eventsBask.size()];
 					for (int i = 0; i < listedEvents.length; i++) {
-						listedEvents[i] = events2.get(i).toString();
+						listedEvents[i] = eventsBask.get(i).toString();
 					}
 					comboBoxEventos.setModel(new DefaultComboBoxModel<String>(listedEvents));
 				}else if (deporte==0) {
@@ -76,19 +76,35 @@ public class VentanaCrearApuesta extends JFrame {
 		comboBoxEventos.setModel(new DefaultComboBoxModel(new String[] {}));
 		panCentro.add(comboBoxEventos);
 		
-		
-		
-		JLabel lblDescripcion = new JLabel("Descripción:");
-		panCentro.add(lblDescripcion);
-		textFieldDescription = new JTextField();
-		panCentro.add(textFieldDescription);
-				
 		JLabel lblTipo = new JLabel("Tipo de apuesta:");
 		panCentro.add(lblTipo);
 		
 		JComboBox<String> comboBoxTipo = new JComboBox<String>();
 		comboBoxTipo.setModel(new DefaultComboBoxModel(new String[] {"Seleccione tipo", "1", "2", "3"}));
 		panCentro.add(comboBoxTipo);
+		comboBoxTipo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (comboBoxTipo.getSelectedIndex()==1) {
+					textFieldDescription.setText("Ganador o empate");
+				} else if (comboBoxTipo.getSelectedIndex()==2){
+					textFieldDescription.setText("Goles");
+				}else if (comboBoxTipo.getSelectedIndex()==3) {
+					textFieldDescription.setText("Estadísticas completas");
+				}else if (comboBoxTipo.getSelectedIndex()==0) {
+					textFieldDescription.setText("");
+				}
+				textFieldDescription.setEditable(false);
+			}
+		});
+		
+		
+		JLabel lblDescripcion = new JLabel("Descripción:");
+		panCentro.add(lblDescripcion);
+		textFieldDescription = new JTextField();
+		panCentro.add(textFieldDescription);
 
 		JLabel lblCuota = new JLabel("Cuota:");
 		panCentro.add(lblCuota);
@@ -106,17 +122,15 @@ public class VentanaCrearApuesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (deporte==1) {
 					int indexFut = comboBoxEventos.getSelectedIndex();
-					ApuestaFutbol bet = new ApuestaFutbol(textFieldDescription.getText(), Double.parseDouble(textFieldCuota.getText()), null, events1.get(indexFut));
-					bet.setTipoApuesta(comboBoxTipo.getSelectedIndex());
+					ApuestaFutbol bet = new ApuestaFutbol(textFieldDescription.getText(), Double.parseDouble(textFieldCuota.getText()), eventsFut.get(indexFut), comboBoxTipo.getSelectedIndex());
 					if (bet.registrarApuestaFutbolTxt(Archivos.archivosApuestasFutbol)) {
 						JOptionPane.showMessageDialog(btnCrearApuesta, "Apuesta registrada");
 					} else {
 						JOptionPane.showMessageDialog(btnCrearApuesta, "Fallo de registro");
 					}
 				} else if (deporte==2) {
-					int indexBask = comboBoxEventos.getSelectedIndex()-1;
-					ApuestaBasketball bet = new ApuestaBasketball(textFieldDescription.getText(), Double.parseDouble(textFieldCuota.getText()), null, events2.get(indexBask));
-					bet.setTipo(comboBoxTipo.getSelectedIndex());
+					int indexBask = comboBoxEventos.getSelectedIndex();
+					ApuestaBasketball bet = new ApuestaBasketball(textFieldDescription.getText(), Double.parseDouble(textFieldCuota.getText()), eventsBask.get(indexBask), comboBoxTipo.getSelectedIndex());
 					if (bet.registrarApuestaBasketballTxt(Archivos.archivosApuestasBasketball)) {
 						JOptionPane.showMessageDialog(btnCrearApuesta, "Apuesta registrada");
 						
@@ -125,6 +139,9 @@ public class VentanaCrearApuesta extends JFrame {
 
 					}
 				}
+				comboBoxDeporte.setSelectedIndex(0);
+				comboBoxTipo.setSelectedIndex(0);
+				textFieldCuota.setText("");
 			}
 		});
 	}

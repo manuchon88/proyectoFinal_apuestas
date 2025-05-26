@@ -16,6 +16,8 @@ public class ApuestaFutbol extends Apuesta {
 	private PrediccionFutbol predict;
 	private EventoFutbol event;
 	private int tipoApuesta;
+	
+	
     public int getTipoApuesta() {
 		return tipoApuesta;
 	}
@@ -26,9 +28,13 @@ public class ApuestaFutbol extends Apuesta {
 		this.tipoApuesta = tipoApuesta;
 	}
 
+	public ApuestaFutbol(String descripcion, double cuota, EventoFutbol evento, int tipo) {
+		super(descripcion, cuota);
+		this.event = evento;
+		this.tipoApuesta = tipo;
+	}
 
-
-	public ApuestaFutbol(String descripcion, double cuota, PrediccionFutbol prediccion, EventoFutbol evento) {
+	public ApuestaFutbol(String descripcion, double cuota, EventoFutbol evento, int tipo, PrediccionFutbol prediccion) {
         super(descripcion, cuota);
         this.event = evento;
         this.predict = prediccion;
@@ -62,18 +68,18 @@ public class ApuestaFutbol extends Apuesta {
 
 	@Override
 	public String toString() {
-		if (predict == null) {
-			return descripcion+"#"+cuota+"#"+"null"+"#"+event.toString()+"#"+getTipoApuesta();			
-		}else {
-			return descripcion+"#"+cuota+"#"+predict.toString()+"#"+event.toString()+"#"+getTipoApuesta();						
-		}
+		return descripcion+"#"+cuota+"#"+event+"#"+tipoApuesta+"#"+predict;
 	}
 
 
 
 	public static ApuestaFutbol leerApuestaFut(String cadena) {
 		String[] datos = cadena.split("#");
-		return new ApuestaFutbol(datos[0], Double.parseDouble(datos[1]), PrediccionFutbol.leerPrediccion(datos[2]), EventoFutbol.leerToEvFutbol(datos[3]));
+		if (datos[4].equals("null")) {
+			return new ApuestaFutbol(datos[0], Double.parseDouble(datos[1]), EventoFutbol.leerToEvFutbol(datos[2]), Integer.parseInt(datos[3]));
+		} else {
+			return new ApuestaFutbol(datos[0], Double.parseDouble(datos[1]), EventoFutbol.leerToEvFutbol(datos[2]), Integer.parseInt(datos[3]), PrediccionFutbol.leerPrediccion(datos[4]));
+		}
 	}
 
 	@Override
@@ -125,7 +131,8 @@ public class ApuestaFutbol extends Apuesta {
 			BufferedReader lector = new BufferedReader(new FileReader(archivo));
 			String linea;
 			while ((linea = lector.readLine())!=null) {
-				String [] datos = linea.split("#");
+				apuestaFutbol.add(ApuestaFutbol.leerApuestaFut(linea));
+				/*String [] datos = linea.split("#");
 				String descripcion = datos[0];
 				double cuota = Double.parseDouble(datos[1]);
 				
@@ -156,7 +163,7 @@ public class ApuestaFutbol extends Apuesta {
 				EventoFutbol evento = new EventoFutbol(anio, mes, dia, equipo1, equipo2, goles_1, goles_2,
 						amarillas_1, amarillas_2, rojas_1, rojas_2);
 				
-				apuestaFutbol.add(new ApuestaFutbol(descripcion, cuota, prediccion, evento));
+				apuestaFutbol.add(new ApuestaFutbol(descripcion, cuota, prediccion, evento));*/
 			}
 			lector.close();
 		} catch (FileNotFoundException e) {
@@ -202,7 +209,7 @@ public class ApuestaFutbol extends Apuesta {
 		return true;
 	}
 	
-	static ArrayList<ApuestaFutbol> leerApuestaFutbolBin(String archivo){
+	/*static ArrayList<ApuestaFutbol> leerApuestaFutbolBin(String archivo){
 		ArrayList<ApuestaFutbol> apuestaFutbol =  new ArrayList<ApuestaFutbol>();
 		
 		try {
@@ -245,7 +252,7 @@ public class ApuestaFutbol extends Apuesta {
 			System.out.println("Ha ocurrido un error al recibir los datos");
 		}
 		return apuestaFutbol;
-	}
+	}*/
 	
 	static boolean reescribirApuestaFutbolTxt(ArrayList<ApuestaFutbol> apuestaFutbol, String archivo) {
 		try {

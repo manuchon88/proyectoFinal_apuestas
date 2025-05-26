@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println(Apostador.leerApostadoresTxt());
+		ArrayList<ApuestaFutbol> apues = ApuestaFutbol.leerApuestaFutbolTxt(Archivos.archivosApuestasFutbol);
+		//System.out.println(VentanaApuestasConCompetencia.apuestasFut(apues.get(0).getEvent()));
 	}
 
 }

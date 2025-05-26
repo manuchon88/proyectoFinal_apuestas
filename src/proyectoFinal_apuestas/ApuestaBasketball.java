@@ -16,10 +16,17 @@ public class ApuestaBasketball extends Apuesta {
 		this.tipo = tipo;
 	}
 
-	public ApuestaBasketball(String descripcion, double cuota, PrediccionBasketball prediccion, EventoBasketball evento) {
+	public ApuestaBasketball(String descripcion, double cuota, EventoBasketball evento, int tipo) {
+		super(descripcion, cuota);
+		this.event = evento;
+		this.tipo = tipo;
+	}
+	
+	public ApuestaBasketball(String descripcion, double cuota, EventoBasketball evento, int tipo, PrediccionBasketball prediccion) {
 		super(descripcion, cuota);
 		this.predict = prediccion;
 		this.event = evento;
+		this.tipo = tipo;
 	}
 
 	public PrediccionBasketball getPredict() {
@@ -40,19 +47,16 @@ public class ApuestaBasketball extends Apuesta {
 
 	@Override
 	public String toString() {
-		if (predict==null) {
-			return descripcion + "#" + cuota + "#" + "null" + "#" + event.toString()+"#"+ tipo;
-			
-		} else {
-			return descripcion + "#" + cuota + "#" + predict.toString() + "#" + event.toString()+"#"+ tipo;
-
-		}
+		return descripcion + "#" + cuota + "#" + event+"#"+ tipo + "#" + predict;
 	}
 
 	public static ApuestaBasketball leerApuestaBasket(String cadena) {
 		String[] datos = cadena.split("#");
-		return new ApuestaBasketball(datos[0], Double.parseDouble(datos[1]), PrediccionBasketball.leerPrediccion(datos[2]),
-			EventoBasketball.leerEventBasketball(datos[3]));
+		if (datos[4].equals("null")) {
+			return new ApuestaBasketball(datos[0], Double.parseDouble(datos[1]), EventoBasketball.leerEventBasketball(datos[2]), Integer.parseInt(datos[3]));
+		} else {
+			return new ApuestaBasketball(datos[0], Double.parseDouble(datos[1]), EventoBasketball.leerEventBasketball(datos[2]), Integer.parseInt(datos[3]), PrediccionBasketball.leerPrediccion(datos[4]));
+		}
 	}
 
 	@Override
@@ -88,7 +92,8 @@ public class ApuestaBasketball extends Apuesta {
 		try (BufferedReader lector = new BufferedReader(new FileReader(archivo))) {
 			String linea;
 			while ((linea = lector.readLine()) != null) {
-				String[] datos = linea.split("#");
+				apuestaBasketball.add(ApuestaBasketball.leerApuestaBasket(linea));
+				/*String[] datos = linea.split("#");
 				String descripcion = datos[0];
 				double cuota = Double.parseDouble(datos[1]);
 
@@ -118,7 +123,7 @@ public class ApuestaBasketball extends Apuesta {
 				EventoBasketball evento = new EventoBasketball(anio, mes, dia, equipo1, equipo2, puntos_1, puntos_2,
 						triples_1, triples_2, faltas_1, faltas_2);
 
-				apuestaBasketball.add(new ApuestaBasketball(descripcion, cuota, prediccion, evento));
+				apuestaBasketball.add(new ApuestaBasketball(descripcion, cuota, prediccion, evento));*/
 			}
 		} catch (IOException e) {
 			System.out.println("Ha ocurrido un error al recibir los datos");
@@ -157,7 +162,7 @@ public class ApuestaBasketball extends Apuesta {
 		return true;
 	}
 
-	static ArrayList<ApuestaBasketball> leerApuestaBasketballBin(String archivo) {
+	/*static ArrayList<ApuestaBasketball> leerApuestaBasketballBin(String archivo) {
 		ArrayList<ApuestaBasketball> apuestaBasketball = new ArrayList<>();
 		try (DataInputStream lector = new DataInputStream(new FileInputStream(archivo))) {
 			while (lector.available() != 0) {
@@ -193,7 +198,7 @@ public class ApuestaBasketball extends Apuesta {
 			System.out.println("Ha ocurrido un error al recibir los datos");
 		}
 		return apuestaBasketball;
-	}
+	}*/
 
 	static boolean reescribirApuestaBasketballTxt(ArrayList<ApuestaBasketball> apuestaBasketball, String archivo) {
 		try (PrintWriter escritor = new PrintWriter(new FileWriter(archivo))) {
