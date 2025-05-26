@@ -107,13 +107,8 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		
 		
 		
-		
-<<<<<<< Updated upstream
 		JPanel panCentro = new JPanel(new GridLayout(15, 2, 10, 10));
-=======
-		JPanel panCentro = new JPanel(new GridLayout(14, 2, 10, 10));
 		panCentro.setBackground(new Color(235, 245, 251));
->>>>>>> Stashed changes
 		contentPane.add(panCentro, BorderLayout.CENTER);
 
 		JLabel lblDeporte = new JLabel("Deporte:");
@@ -573,7 +568,6 @@ public class VentanaApuestasConCompetencia extends JFrame {
 			 }
 		 }
 
-<<<<<<< Updated upstream
 		return partidos;
 	 }
 	 
@@ -617,6 +611,3 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		return apuestasEvento;
 	}
 }
-=======
-}
->>>>>>> Stashed changes
