@@ -157,7 +157,7 @@ public class VentanaPrincipal extends JFrame {
 		lblBasketball.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panBotones.add(lblBasketball);
 		
-		JButton btnChampions = new JButton("Champions");
+		JButton btnChampions = new JButton("Champions league");
 		btnChampions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaApuestasConCompetencia frame = new VentanaApuestasConCompetencia(btnChampions.getText(), user);
@@ -259,7 +259,7 @@ public class VentanaPrincipal extends JFrame {
 		JButton btnOtros = new JButton("OTROS");
 		btnOtros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaApuestas frame = new VentanaApuestas();
+				VentanaApuestas frame = new VentanaApuestas(user);
 				frame.setVisible(true);
 			}
 		});
@@ -385,7 +385,7 @@ public class VentanaPrincipal extends JFrame {
 		JButton btnApuesta = new JButton("Apuesta");
 		btnApuesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaApuestas frame = new VentanaApuestas();
+				VentanaApuestas frame = new VentanaApuestas(user);
 				frame.setVisible(true);
 			}
 		});
