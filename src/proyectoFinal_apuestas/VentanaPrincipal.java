@@ -327,11 +327,22 @@ public class VentanaPrincipal extends JFrame {
 		for (int i = 0; i < eventosFutbol.size(); i++) {
 			String[] torneos = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
 			if (!eventosFutbol.get(i).isTerminado()) {
-				String part = torneos[eventosFutbol.get(i).getTorneo()];
-				String text = eventosFutbol.get(i).getFecha()+" / "+part+" / "+eventosFutbol.get(i).getEquipo1()+" vs "+eventosFutbol.get(i).getEquipo2();
+				final String equipo1DelEvento = eventosFutbol.get(i).getEquipo1();
+		        final String equipo2DelEvento = eventosFutbol.get(i).getEquipo2();
+				final String part = torneos[eventosFutbol.get(i).getTorneo()];
+				String text = eventosFutbol.get(i).getFecha()+" / "+part+" / "+ equipo1DelEvento +" vs " + equipo2DelEvento;
 				JButton btnEv = new JButton(text);
 				btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
-				panFut.add(btnEv);				
+				panFut.add(btnEv);	
+				btnEv.addActionListener(new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		                
+		                VentanaApuestasConPartido ventanaPartido = new VentanaApuestasConPartido(equipo1DelEvento, equipo2DelEvento, part, user);
+		                ventanaPartido.setVisible(true);
+		                
+		            }
+		        });
 			}
 		}
 		
@@ -352,11 +363,22 @@ public class VentanaPrincipal extends JFrame {
 		for (int i = 0; i < eventosBasket.size(); i++) {
 			String[] torneos = {"NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"};
 			if (!eventosBasket.get(i).isTerminado()) {
-				String part = torneos[eventosBasket.get(i).getTorneo()];
-				String text = eventosBasket.get(i).getFecha()+" / "+part+" / "+eventosBasket.get(i).getEquipo1()+" vs "+eventosBasket.get(i).getEquipo2();
+				final String equipo1DelEvento = eventosBasket.get(i).getEquipo1();
+		        final String equipo2DelEvento = eventosFutbol.get(i).getEquipo2();
+				final String part = torneos[eventosBasket.get(i).getTorneo()];
+				String text = eventosBasket.get(i).getFecha()+" / "+part+" / "+equipo1DelEvento+" vs "+equipo2DelEvento;
 				JButton btnEv = new JButton(text);
 				btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
-				panBask.add(btnEv);				
+				panBask.add(btnEv);	
+				btnEv.addActionListener(new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) { 
+		                
+		                VentanaApuestasConPartido ventanaPartido = new VentanaApuestasConPartido(equipo1DelEvento, equipo2DelEvento, part, user);
+		                ventanaPartido.setVisible(true);
+		                
+		            }
+		        });
 			}
 		}
 		
