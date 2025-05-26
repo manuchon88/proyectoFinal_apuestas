@@ -335,8 +335,19 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		btnApuesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (determinarDeporte(competencia).equals("Fútbol")) {
-					PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
-					apuest.setPredict(predict);
+					if (tipo ==3) {
+						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
+						apuest.setPredict(predict);
+					}else if (tipo==2) {
+						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()));
+						apuest.setPredict(predict);
+						
+					}else if (tipo==1) {
+						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1);
+						apuest.setPredict(predict);
+						
+					}
+					
 					if (user.apostar(1, apuest.toString())) {						
 						JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
 					} else {

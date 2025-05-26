@@ -36,6 +36,16 @@ public class PrediccionFutbol extends Prediccion {
 		this.rojas1 = rojas1;
 		this.rojas2 = rojas2;
 	}
+    public PrediccionFutbol(double monto, int ganador) {
+    	super(monto);
+    	this.ganador = ganador;
+    }
+    public PrediccionFutbol(double monto, int ganador, int goles1, int goles2) {
+    	super(monto);
+    	this.ganador = ganador;
+    	this.goles1 = goles1;
+    	this.goles2 = goles2;
+    }
 
 	public int getGoles1() {
 		return goles1;
