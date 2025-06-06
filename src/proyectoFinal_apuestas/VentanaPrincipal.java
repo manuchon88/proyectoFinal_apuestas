@@ -59,6 +59,7 @@ public class VentanaPrincipal extends JFrame {
 
         setBounds(bounds);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -107,6 +108,7 @@ public class VentanaPrincipal extends JFrame {
 		panIzquierda.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panIzqArriba = new JPanel();
+		panIzqArriba.setBackground(UIManager.getColor("activeCaption"));
 		panIzquierda.add(panIzqArriba, BorderLayout.NORTH);
 		
 		JLabel lblPerfil = new JLabel("Perfil");
@@ -114,19 +116,33 @@ public class VentanaPrincipal extends JFrame {
 		panIzqArriba.add(lblPerfil);
 		
 		JPanel panIzqAbajo = new JPanel();
+		panIzqAbajo.setBackground(UIManager.getColor("controlHighlight"));
 		panIzquierda.add(panIzqAbajo, BorderLayout.SOUTH);
 		panIzqAbajo.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		JButton btnSaldo = new JButton("Agregar Saldo");
+		btnSaldo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaPerfil frame = new VentanaPerfil(user, VentanaPrincipal.this);
+				frame.setVisible(true);
+			}
+		});
 		panIzqAbajo.add(btnSaldo);
 		
-		JButton btnHistorial = new JButton("Ver Historial");
-		panIzqAbajo.add(btnHistorial);
+//		JButton btnHistorial = new JButton("Ver Historial");
+//		panIzqAbajo.add(btnHistorial);
 		
 		JButton btnEditarPerfil = new JButton("Editar Perfil");
+		btnEditarPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaModCuenta frame = new VentanaModCuenta(user, new VentanaPerfil(user, VentanaPrincipal.this));
+				frame.setVisible(true);
+			}
+		});
 		panIzqAbajo.add(btnEditarPerfil);
 		
 		JPanel panIzqCentro = new JPanel();
+		panIzqCentro.setBackground(UIManager.getColor("controlHighlight"));
 		panIzquierda.add(panIzqCentro, BorderLayout.CENTER);
 		panIzqCentro.setLayout(null);
 		
@@ -139,6 +155,7 @@ public class VentanaPrincipal extends JFrame {
 		panCentroArriba.setLayout(new BorderLayout(20, 0));
 		
 		JPanel panCAA = new JPanel();
+		panCAA.setBackground(SystemColor.activeCaption);
 		panCentroArriba.add(panCAA, BorderLayout.NORTH);
 		
 		JLabel lblTipoApuesta = new JLabel("Tipos de Apuestas");
@@ -146,6 +163,7 @@ public class VentanaPrincipal extends JFrame {
 		panCAA.add(lblTipoApuesta);
 		
 		JPanel panBotones = new JPanel();
+		panBotones.setBackground(UIManager.getColor("inactiveCaption"));
 		panCentroArriba.add(panBotones, BorderLayout.CENTER);
 		panBotones.setLayout(new GridLayout(7, 2, 0, 0));
 		
@@ -270,6 +288,7 @@ public class VentanaPrincipal extends JFrame {
 		panCentroAbajo.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panCAbA = new JPanel();
+		panCAbA.setBackground(SystemColor.activeCaption);
 		panCentroAbajo.add(panCAbA, BorderLayout.NORTH);
 		
 		JLabel lblFuturosEventos = new JLabel("Futuros Eventos");
@@ -313,9 +332,11 @@ public class VentanaPrincipal extends JFrame {
 		lblFut.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFut.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JPanel panEvents1 = new JPanel(new BorderLayout());
+		panEvents1.setBackground(UIManager.getColor("inactiveCaption"));
 		panEvents1.add(lblFut, BorderLayout.NORTH);
 
 		JPanel panFut = new JPanel();
+		panFut.setBackground(UIManager.getColor("controlHighlight"));
 		JScrollPane ScrollFutbol = new JScrollPane(panFut);
 		panFut.setLayout(new BoxLayout(panFut, BoxLayout.Y_AXIS));
 		ScrollFutbol.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -351,9 +372,11 @@ public class VentanaPrincipal extends JFrame {
 		lblBask.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBask.setFont(new Font("Tahoma", Font.BOLD, 13));
 		JPanel panEvents2 = new JPanel(new BorderLayout());
+		panEvents2.setBackground(UIManager.getColor("inactiveCaption"));
 		panEvents2.add(lblBask, BorderLayout.NORTH);
 		
 		JPanel panBask = new JPanel();
+		panBask.setBackground(UIManager.getColor("controlHighlight"));
 		panBask.setLayout(new BoxLayout(panBask, BoxLayout.Y_AXIS));
 		JScrollPane ScrollBasket = new JScrollPane(panBask);
 		ScrollBasket.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -390,10 +413,12 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		JPanel panDerecha = new JPanel();
+		panDerecha.setBackground(UIManager.getColor("controlHighlight"));
 		panPrincipal.add(panDerecha, BorderLayout.EAST);
 		panDerecha.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panDerArriba = new JPanel();
+		panDerArriba.setBackground(UIManager.getColor("activeCaption"));
 		panDerecha.add(panDerArriba, BorderLayout.NORTH);
 		
 		JLabel lblApuestas = new JLabel("Apuestas");
@@ -401,6 +426,7 @@ public class VentanaPrincipal extends JFrame {
 		panDerArriba.add(lblApuestas);
 		
 		JPanel panDerAbajo = new JPanel();
+		panDerAbajo.setBackground(UIManager.getColor("controlHighlight"));
 		panDerecha.add(panDerAbajo, BorderLayout.SOUTH);
 		panDerAbajo.setLayout(new GridLayout(2, 1, 0, 0));
 		

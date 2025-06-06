@@ -62,7 +62,7 @@ public class VentanaApuestas extends JFrame {
 	public VentanaApuestas(Apostador user) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Apuesas Usuario");
-		setBounds(100, 100, 500, 664);
+		setBounds(10, 10, 500, 664);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);

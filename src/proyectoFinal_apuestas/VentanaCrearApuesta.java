@@ -24,6 +24,7 @@ public class VentanaCrearApuesta extends JFrame {
 		setTitle("UCBet - Crear Evento");
 		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 10));
@@ -37,6 +38,7 @@ public class VentanaCrearApuesta extends JFrame {
 		contentPane.add(panTitulo, BorderLayout.NORTH);
 
 		JPanel panCentro = new JPanel(new GridLayout(6, 2, 10, 10));
+		panCentro.setBackground(new Color(235, 245, 251));
 		contentPane.add(panCentro, BorderLayout.CENTER);
 
 		JLabel lblDeporte = new JLabel("Deporte:");
@@ -114,6 +116,7 @@ public class VentanaCrearApuesta extends JFrame {
 
 
 		JPanel panBotones = new JPanel();
+		panBotones.setBackground(new Color(235, 245, 251));
 		JButton btnCrearApuesta = new JButton("Crear Apuesta");
 		panBotones.add(btnCrearApuesta);
 		contentPane.add(panBotones, BorderLayout.SOUTH);

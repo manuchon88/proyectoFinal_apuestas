@@ -45,6 +45,7 @@ public class VentanaAdministrador extends JFrame {
 		setBounds(100, 100, 450, 384);
 		setTitle("UCBet");
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		setContentPane(contentPane);
@@ -64,6 +65,7 @@ public class VentanaAdministrador extends JFrame {
 		panTitulo.add(lblTitulo);
 		
 		JPanel panBotones = new JPanel();
+		panBotones.setBackground(new Color(235, 245, 251));
 		panPrincipal.add(panBotones, BorderLayout.SOUTH);
 		panBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		

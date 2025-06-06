@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.UIManager;
 
 public class VentanaResultadoEventoFutbol extends JFrame {
 
@@ -44,6 +45,7 @@ public class VentanaResultadoEventoFutbol extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 501, 396);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -63,6 +65,7 @@ public class VentanaResultadoEventoFutbol extends JFrame {
 		panPrincipal.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panSubtitulo = new JPanel();
+		panSubtitulo.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
 		panPrincipal.add(panSubtitulo, BorderLayout.NORTH);
 		
 		JLabel lblSubtitulo = new JLabel("Resultado Evento de Fútbol");
@@ -70,6 +73,7 @@ public class VentanaResultadoEventoFutbol extends JFrame {
 		panSubtitulo.add(lblSubtitulo);
 		
 		JPanel panBotones = new JPanel();
+		panBotones.setBackground(new Color(235, 245, 251));
 		panPrincipal.add(panBotones, BorderLayout.SOUTH);
 		
 		JButton btnRegistrarResultado = new JButton("Registrar Resultado");
@@ -107,6 +111,7 @@ public class VentanaResultadoEventoFutbol extends JFrame {
 		panBotones.add(btnCambiarEvento);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(235, 245, 251));
 		panel.setLayout(null);
 		panPrincipal.add(panel, BorderLayout.CENTER);
 		

@@ -39,9 +39,11 @@ public class VentanaDepositosRetiros extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaDepositosRetiros(Apostador user, VentanaPerfil ventana2) {
+		setTitle("UCBet - Saldo Usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(550, 50, 500, 324);;
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setLayout(new BorderLayout());
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -80,9 +82,11 @@ public class VentanaDepositosRetiros extends JFrame {
 		panHeadDer.add(btnPerfil);
 		
 		JPanel panCenter = new JPanel(new GridLayout(2, 1));
+		panCenter.setBackground(new Color(235, 245, 251));
 		panPrincipal.add(panCenter, BorderLayout.CENTER);
 		
 		JPanel panArriba = new JPanel(new BorderLayout());
+		panArriba.setBackground(new Color(235, 245, 251));
 		panCenter.add(panArriba);
 		JLabel lblSaldoBig = new JLabel("Saldo: Bs. "+user.getSaldo());
 		lblSaldoBig.setFont(new Font("Tahoma", Font.PLAIN|Font.ITALIC, 22));
@@ -90,6 +94,7 @@ public class VentanaDepositosRetiros extends JFrame {
 		panArriba.add(lblSaldoBig, BorderLayout.CENTER);
 		
 		JPanel panOptions = new JPanel(new GridLayout(1, 2,8,8));
+		panOptions.setBackground(new Color(235, 245, 251));
 		panCenter.add(panOptions);
 		
 		JPanel panDepositar = new JPanel(new GridLayout(2, 1));
