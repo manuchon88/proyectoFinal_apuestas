@@ -37,6 +37,7 @@ public class ApuestaFutbol extends Apuesta {
 	public ApuestaFutbol(String descripcion, double cuota, EventoFutbol evento, int tipo, PrediccionFutbol prediccion) {
         super(descripcion, cuota);
         this.event = evento;
+        this.tipoApuesta=tipo;
         this.predict = prediccion;
     }
     

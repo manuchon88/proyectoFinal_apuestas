@@ -51,6 +51,14 @@ public class Apostador extends Usuario{
 			if (saldo >= monto) {
 				saldo -= monto;
 				historialApuestasFutbol.add(new ApuestaFutbol(bet.getDescripcion(), bet.getCuota(), bet.getEvent(), bet.getTipoApuesta(),bet.getPredict()));
+				try {
+					PrintWriter escritor = new PrintWriter(new FileWriter(this.getCorreo()+"Hist.txt", true));
+					escritor.println(bet.toString());
+					escritor.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				System.out.println("Apuesta realizada. Monto: " + monto);
 				System.out.println("Saldo restante: " + saldo);
 				return true;

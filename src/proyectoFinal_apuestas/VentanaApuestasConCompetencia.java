@@ -154,6 +154,13 @@ public class VentanaApuestasConCompetencia extends JFrame {
 				if (indexPartido==-1) {
 					textFieldEquipo1.setText("");
 					textFieldEquipo2.setText("");
+					textFieldEstadistica1Equipo1.setText("");
+					textFieldEstadistica1Equipo2.setText("");
+					textFieldEstadistica2Equipo1.setText("");
+					textFieldEstadistica2Equipo2.setText("");
+					textFieldEstadistica3Equipo1.setText("");
+					textFieldEstadistica3Equipo2.setText("");
+					textFieldMontoApuesta.setText("");
 					lblCuotaApuesta.setText("");
 					comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<String>(new String[] {}));
 				} else {
@@ -205,7 +212,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				apuest = listApuestasFut.get(comboBoxTipoApuesta.getSelectedIndex());
-				if (comboBoxTipoApuesta.getSelectedIndex()+1 ==1) {
+				if (apuest.getTipoApuesta() ==1) {
 					tipo = 1;
 					textFieldEstadistica1Equipo1.setEditable(false);
 					textFieldEstadistica2Equipo1.setEditable(false);
@@ -214,7 +221,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 					textFieldEstadistica2Equipo2.setEditable(false);
 					textFieldEstadistica3Equipo2.setEditable(false);
 					lblCuotaApuesta.setText(""+apuest.getCuota());
-				}else if (comboBoxTipoApuesta.getSelectedIndex()+1==2) {
+				}else if (apuest.getTipoApuesta()==2) {
 					tipo=2;
 					textFieldEstadistica1Equipo1.setEditable(true);
 					textFieldEstadistica2Equipo1.setEditable(false);
@@ -224,7 +231,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 					textFieldEstadistica3Equipo2.setEditable(false);
 					lblCuotaApuesta.setText(""+apuest.getCuota());
 
-				}else if (comboBoxTipoApuesta.getSelectedIndex()+1==3) {
+				}else if (apuest.getTipoApuesta()==3) {
 					tipo=3;
 					textFieldEstadistica1Equipo1.setEditable(true);
 					textFieldEstadistica2Equipo1.setEditable(true);
@@ -349,9 +356,11 @@ public class VentanaApuestasConCompetencia extends JFrame {
 						apuest.setPredict(predict);
 						
 					}
-					
 					if (user.apostar(1, apuest.toString())) {						
 						JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
+						comboBoxPartidos.setSelectedIndex(0);
+						comboBoxGanador.setSelectedIndex(0);
+						comboBoxTipoApuesta.setSelectedIndex(0);
 					} else {
 						JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
 
