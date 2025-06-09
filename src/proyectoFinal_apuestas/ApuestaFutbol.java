@@ -84,8 +84,8 @@ public class ApuestaFutbol extends Apuesta {
 	}
 
 	@Override
-    public boolean isGanador(int tipo) {
-    	switch (tipo) {
+    public boolean isGanador() {
+    	switch (tipoApuesta) {
 		case 1: {
 			if (predict.getGanador()==event.ganador()) {
 				return true;
@@ -109,7 +109,7 @@ public class ApuestaFutbol extends Apuesta {
 			
 		}
 		default:
-			throw new IllegalArgumentException("Unexpected value: " + tipo);
+			throw new IllegalArgumentException("Unexpected value: " + tipoApuesta);
 		}
     }
 	
@@ -133,38 +133,7 @@ public class ApuestaFutbol extends Apuesta {
 			String linea;
 			while ((linea = lector.readLine())!=null) {
 				apuestaFutbol.add(ApuestaFutbol.leerApuestaFut(linea));
-				/*String [] datos = linea.split("#");
-				String descripcion = datos[0];
-				double cuota = Double.parseDouble(datos[1]);
 				
-				double monto = Double.parseDouble(datos[2]);
-				int ganador = Integer.parseInt(datos[3]);
-				int goles1 = Integer.parseInt(datos[4]);
-				int goles2 = Integer.parseInt(datos[5]); 
-				int amarillas1 = Integer.parseInt(datos[6]);
-				int amarillas2 = Integer.parseInt(datos[7]);
-				int rojas1 = Integer.parseInt(datos[8]);
-				int rojas2 = Integer.parseInt(datos[9]);
-				
-				int anio = Integer.parseInt(datos[10]);
-				int mes = Integer.parseInt(datos[11]); 
-				int dia = Integer.parseInt(datos[12]);
-				String equipo1 = datos[13];
-				String equipo2 =datos[14];
-				int goles_1 = Integer.parseInt(datos[15]);
-				int goles_2 = Integer.parseInt(datos[16]); 
-				int amarillas_1 = Integer.parseInt(datos[17]);
-				int amarillas_2 = Integer.parseInt(datos[18]);
-				int rojas_1 = Integer.parseInt(datos[19]);
-				int rojas_2 = Integer.parseInt(datos[20]);
-				
-				
-				PrediccionFutbol prediccion = new PrediccionFutbol(monto, ganador, goles1, goles2,
-						 amarillas1, amarillas2, rojas1, rojas2);
-				EventoFutbol evento = new EventoFutbol(anio, mes, dia, equipo1, equipo2, goles_1, goles_2,
-						amarillas_1, amarillas_2, rojas_1, rojas_2);
-				
-				apuestaFutbol.add(new ApuestaFutbol(descripcion, cuota, prediccion, evento));*/
 			}
 			lector.close();
 		} catch (FileNotFoundException e) {
@@ -259,17 +228,7 @@ public class ApuestaFutbol extends Apuesta {
 		try {
 			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
 			for (ApuestaFutbol af : apuestaFutbol) {
-				String registro = af.getDescripcion() + "#" + af.getCuota() + "#" +
-						af.getPredict().getMonto() + "#" + af.getPredict().getGanador() + "#" +
-						af.getPredict().getGoles1() + "#" + af.getPredict().getGoles2() + "#" +
-						af.getPredict().getAmarillas1() + "#" + af.getPredict().getAmarillas2() + "#" +
-						af.getPredict().getRojas1() + "#" + af.getPredict().getRojas2() + "#" +
-						af.getEvent().getFecha().getYear() + "#" + af.getEvent().getFecha().getMonthValue() + "#" +
-						af.getEvent().getFecha().getDayOfMonth() + "#" + af.getEvent().getEquipo1() + "#" +
-						af.getEvent().getEquipo2() + "#" + af.getEvent().getGoles1() + "#" +
-						af.getEvent().getGoles2() + "#" + af.getEvent().getAmarillas1() + "#" +
-						af.getEvent().getAmarillas2() + "#" + af.getEvent().getRojas1() + "#" +
-						af.getEvent().getRojas2();
+				String registro = af.toString();
 				escritor.println(registro);
 			}
 			escritor.close();

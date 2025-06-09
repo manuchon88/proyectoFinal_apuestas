@@ -581,7 +581,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		 for (int i = 0; i < torneos.length; i++) {
 			 if (torneos[i].equals(competencia)) {
 				 for (EventoFutbol ef : eventsFut) {
-					 if (ef.getTorneo() == i) {
+					 if (ef.getTorneo() == i && !ef.isTerminado()) {
 						 partidos.add(ef);
 					 }
 				 }
@@ -599,7 +599,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 			for (int i = 0; i < torneos.length; i++) {
 				if (torneos[i].equals(competencia)) {
 					for (EventoBasketball eb : eventsBask) {
-						if (eb.getTorneo()==i) {
+						if (eb.getTorneo()==i && !eb.isTerminado()) {
 							partidos.add(eb);
 						}
 					}

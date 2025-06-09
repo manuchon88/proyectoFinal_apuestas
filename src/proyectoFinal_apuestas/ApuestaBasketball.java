@@ -60,7 +60,7 @@ public class ApuestaBasketball extends Apuesta {
 	}
 
 	@Override
-	public boolean isGanador(int tipo) {
+	public boolean isGanador() {
 		switch (tipo) {
 			case 1:
 				return predict.getGanador() == event.ganador();

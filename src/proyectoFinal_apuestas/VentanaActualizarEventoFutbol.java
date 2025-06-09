@@ -253,7 +253,23 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 				eventsList.get(index).setRojas1(Integer.parseInt(textFieldRojasLocal.getText()));
 				eventsList.get(index).setRojas2(Integer.parseInt(textFieldRojasVisitante.getText()));
 				if (btnTerminar.isSelected()) {
+					ArrayList<Apostador> listaApostadores = Apostador.leerApostadoresTxt();
 					eventsList.get(index).setTerminado(true);
+					for (Apostador apos : listaApostadores) {
+						ArrayList<ApuestaFutbol>apuestas = apos.verHistorialFutbol();
+						for (ApuestaFutbol bet : apuestas) {
+							if (bet.getEvent().getFecha().equals(eventsList.get(index).getFecha()) && bet.getEvent().getEquipo1().equals(eventsList.get(index).getEquipo1()) && bet.getEvent().getEquipo2().equals(eventsList.get(index).getEquipo2())) {
+								bet.setEvent(eventsList.get(index));
+								if (bet.isGanador()) {
+									double saldo = apos.getSaldo();
+									double premio = bet.getCuota()*bet.getPredict().getMonto();
+									apos.setSaldo(saldo+premio);
+								}
+							}
+						}
+						apos.reescribirHistorialFutbol(apuestas);
+					}
+					Apostador.reescribirApostadoresTxt(listaApostadores);
 				}else {
 					eventsList.get(index).setTerminado(false);
 				}
@@ -264,6 +280,8 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(btnActualizar, "Error: No se pudo actualizar el evento");
 				}
+				
+				
 			}
 		});
 		

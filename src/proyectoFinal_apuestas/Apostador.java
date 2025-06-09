@@ -52,7 +52,7 @@ public class Apostador extends Usuario{
 				saldo -= monto;
 				historialApuestasFutbol.add(new ApuestaFutbol(bet.getDescripcion(), bet.getCuota(), bet.getEvent(), bet.getTipoApuesta(),bet.getPredict()));
 				try {
-					PrintWriter escritor = new PrintWriter(new FileWriter(this.getCorreo()+"Hist.txt", true));
+					PrintWriter escritor = new PrintWriter(new FileWriter("Hist#1#"+this.getCorreo()+".txt", true));
 					escritor.println(bet.toString());
 					escritor.close();
 				} catch (IOException e) {
@@ -73,17 +73,17 @@ public class Apostador extends Usuario{
 		}
     }
 
-    public void verHistorial() {
-        System.out.println("Historial de apuestas:");
-        if (historialApuestasFutbol.isEmpty()) {
-            System.out.println("No hay apuestas registradas.");
-        } else {
-            for (ApuestaFutbol a : historialApuestasFutbol) {
-                System.out.println("Descripcion: " + a.getDescripcion() + ", Evento: " + a.getEvent());
-            }
-        }
+    public ArrayList<ApuestaFutbol> verHistorialFutbol() {
+    	ArrayList<ApuestaFutbol> apuestas = ApuestaFutbol.leerApuestaFutbolTxt("Hist#1#"+this.getCorreo()+".txt");
+    	return apuestas;
     }
 
+    
+    public boolean reescribirHistorialFutbol(ArrayList<ApuestaFutbol> bets) {
+    	return ApuestaFutbol.reescribirApuestaFutbolTxt(bets, "Hist#1#"+this.getCorreo()+".txt");
+    }
+    
+    
     @Override
 	public String toString() {
 		return getNombre()+", "+getCorreo()+", "+getContrasenia()+", "+saldo;

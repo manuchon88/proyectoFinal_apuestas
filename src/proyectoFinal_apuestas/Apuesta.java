@@ -26,5 +26,5 @@ public abstract class Apuesta {
     }
 
 	
-	public abstract boolean isGanador(int tipo);
+	public abstract boolean isGanador();
 }
