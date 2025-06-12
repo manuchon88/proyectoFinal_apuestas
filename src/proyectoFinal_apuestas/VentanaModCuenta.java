@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
@@ -120,5 +122,13 @@ public class VentanaModCuenta extends JFrame {
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setBounds(211, 88, 192, 20);
 		panCentro.add(passwordField_1);
+		
+		addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+            	VentanaIniciarSesion frame = new VentanaIniciarSesion();
+                frame.setVisible(true);
+            }
+        });
 	}
 }

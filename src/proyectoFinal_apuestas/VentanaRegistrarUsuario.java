@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
@@ -127,6 +129,14 @@ public class VentanaRegistrarUsuario extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(174, 131, 192, 20);
 		panCentro.add(passwordField);
+		
+		addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+            	VentanaIniciarSesion frame = new VentanaIniciarSesion();
+                frame.setVisible(true);
+            }
+        });
 	}
 
 }
