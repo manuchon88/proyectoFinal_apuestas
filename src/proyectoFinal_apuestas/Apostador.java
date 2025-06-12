@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Apostador extends Usuario{
 	private double saldo;
 	private ArrayList<ApuestaFutbol> historialApuestasFutbol = new ArrayList<>();
+	private ArrayList<ApuestaBasketball> historialApuestasBasketball = new ArrayList<>();
 
 	public Apostador(String nombre, String correo, String contrasenia) {
 		super(nombre, correo, contrasenia);
@@ -52,7 +53,7 @@ public class Apostador extends Usuario{
 				saldo -= monto;
 				historialApuestasFutbol.add(new ApuestaFutbol(bet.getDescripcion(), bet.getCuota(), bet.getEvent(), bet.getTipoApuesta(),bet.getPredict()));
 				try {
-					PrintWriter escritor = new PrintWriter(new FileWriter("Hist#1#"+this.getCorreo()+".txt", true));
+					PrintWriter escritor = new PrintWriter(new FileWriter("Hist#Futbol#"+this.getCorreo()+".txt", true));
 					escritor.println(bet.toString());
 					escritor.close();
 				} catch (IOException e) {
@@ -67,6 +68,27 @@ public class Apostador extends Usuario{
 				return false;
 			}
 			
+		}case 2: {
+			ApuestaBasketball bet = ApuestaBasketball.leerApuestaBasket(apuesta);
+			double monto = bet.getPredict().getMonto();
+			if (saldo >= monto) {
+				saldo -= monto;
+				historialApuestasBasketball.add(new ApuestaBasketball(bet.getDescripcion(), bet.getCuota(), bet.getEvent(), bet.getTipo(),bet.getPredict()));
+				try {
+					PrintWriter escritor = new PrintWriter(new FileWriter("Hist#Basketball#"+this.getCorreo()+".txt", true));
+					escritor.println(bet.toString());
+					escritor.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("Apuesta realizada. Monto: " + monto);
+				System.out.println("Saldo restante: " + saldo);
+				return true;
+			} else {
+				System.out.println("No se tiene el saldo necesario para apostar. Saldo disponible: " + saldo);
+				return false;
+			}
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + deporte);
@@ -74,13 +96,23 @@ public class Apostador extends Usuario{
     }
 
     public ArrayList<ApuestaFutbol> verHistorialFutbol() {
-    	ArrayList<ApuestaFutbol> apuestas = ApuestaFutbol.leerApuestaFutbolTxt("Hist#1#"+this.getCorreo()+".txt");
+    	ArrayList<ApuestaFutbol> apuestas = ApuestaFutbol.leerApuestaFutbolTxt("Hist#Futbol#"+this.getCorreo()+".txt");
     	return apuestas;
     }
 
     
     public boolean reescribirHistorialFutbol(ArrayList<ApuestaFutbol> bets) {
-    	return ApuestaFutbol.reescribirApuestaFutbolTxt(bets, "Hist#1#"+this.getCorreo()+".txt");
+    	return ApuestaFutbol.reescribirApuestaFutbolTxt(bets, "Hist#Futbol#"+this.getCorreo()+".txt");
+    }
+
+    public ArrayList<ApuestaBasketball> verHistorialBasketball() {
+    	ArrayList<ApuestaBasketball> apuestas = ApuestaBasketball.leerApuestaBasketballTxt("Hist#Basketball#"+this.getCorreo()+".txt");
+    	return apuestas;
+    }
+    
+    
+    public boolean reescribirHistorialBasketball(ArrayList<ApuestaBasketball> bets) {
+    	return ApuestaBasketball.reescribirApuestaBasketballTxt(bets, "Hist#Basketball#"+this.getCorreo()+".txt");
     }
     
     

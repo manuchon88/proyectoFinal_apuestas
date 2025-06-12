@@ -240,7 +240,24 @@ public class VentanaActualizarEventoBasketball extends JFrame {
 				eventsList.get(index).setTriples1(Integer.parseInt(textFieldTriplesLocal.getText()));
 				eventsList.get(index).setTriples2(Integer.parseInt(textFieldTriplesVisitante.getText()));
 				if (btnTerminar.isSelected()) {
+					ArrayList<Apostador> listaApostadores = Apostador.leerApostadoresTxt();
 					eventsList.get(index).setTerminado(true);
+					for (Apostador apos : listaApostadores) {
+						ArrayList<ApuestaBasketball>apuestas = apos.verHistorialBasketball();
+						for (ApuestaBasketball bet : apuestas) {
+							if (bet.getEvent().getFecha().equals(eventsList.get(index).getFecha()) && bet.getEvent().getEquipo1().equals(eventsList.get(index).getEquipo1()) && bet.getEvent().getEquipo2().equals(eventsList.get(index).getEquipo2())) {
+								bet.setEvent(eventsList.get(index));
+								if (bet.isGanador()) {
+									double saldo = apos.getSaldo();
+									double premio = bet.getCuota()*bet.getPredict().getMonto();
+									apos.setSaldo(saldo+premio);
+								}
+							}
+						}
+						apos.reescribirHistorialBasketball(apuestas);
+					}
+					Apostador.reescribirApostadoresTxt(listaApostadores);
+
 				}else {
 					eventsList.get(index).setTerminado(false);					
 				}

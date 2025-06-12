@@ -28,6 +28,18 @@ public class PrediccionBasketball extends Prediccion {
 		this.faltas2 = faltas2;
 	}
 
+	public PrediccionBasketball(double monto, int ganador) {
+		super(monto);
+		this.ganador=ganador;
+	}
+	
+	public PrediccionBasketball(double monto, int ganador, int puntos1, int puntos2) {
+    	super(monto);
+    	this.ganador = ganador;
+    	this.puntos1 = puntos1;
+    	this.puntos2 = puntos2;
+    }
+	
 	public int getPuntos1() {
 		return puntos1;
 	}
@@ -102,17 +114,7 @@ public class PrediccionBasketball extends Prediccion {
 			BufferedReader lector = new BufferedReader(new FileReader(archivo));
 			String linea;
 			while ((linea = lector.readLine()) != null) {
-				String[] datos = linea.split(", ");
-				double monto = Double.parseDouble(datos[0]);
-				int ganador = Integer.parseInt(datos[1]);
-				int puntos1 = Integer.parseInt(datos[2]);
-				int puntos2 = Integer.parseInt(datos[3]);
-				int triples1 = Integer.parseInt(datos[4]);
-				int triples2 = Integer.parseInt(datos[5]);
-				int faltas1 = Integer.parseInt(datos[6]);
-				int faltas2 = Integer.parseInt(datos[7]);
-
-				prediccionBasketball.add(new PrediccionBasketball(monto, ganador, puntos1, puntos2, triples1, triples2, faltas1, faltas2));
+				prediccionBasketball.add(PrediccionBasketball.leerPrediccion(linea));
 			}
 			lector.close();
 		} catch (FileNotFoundException e) {
@@ -165,10 +167,7 @@ public class PrediccionBasketball extends Prediccion {
 	static boolean reescribirPrediccionesBasketballTxt(ArrayList<PrediccionBasketball> prediccionBasketball, String archivo) {
 		try (PrintWriter escritor = new PrintWriter(new FileWriter(archivo))) {
 			for (PrediccionBasketball pb : prediccionBasketball) {
-				String registro = pb.getMonto() + ", " + pb.getGanador() + ", " +
-						pb.getPuntos1() + ", " + pb.getPuntos2() + ", " +
-						pb.getTriples1() + ", " + pb.getTriples2() + ", " +
-						pb.getFaltas1() + ", " + pb.getFaltas2();
+				String registro = pb.toString();
 				escritor.println(registro);
 			}
 		} catch (IOException e) {

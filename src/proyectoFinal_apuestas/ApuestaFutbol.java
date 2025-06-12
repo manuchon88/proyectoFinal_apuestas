@@ -93,13 +93,13 @@ public class ApuestaFutbol extends Apuesta {
 				return false;
 			}
 		}case 2:{
-			if (predict.getGoles1()==event.getGoles1() && predict.getGoles2()==event.getGoles2()) {
+			if (predict.getGanador()==event.ganador()&&predict.getGoles1()==event.getGoles1() && predict.getGoles2()==event.getGoles2()) {
 				return true;
 			}else {
 				return false;
 			}
 		}case 3:{
-			if (predict.getGoles1()==event.getGoles1() && predict.getGoles2()==event.getGoles2() &&
+			if (predict.getGanador()==event.ganador()&&predict.getGoles1()==event.getGoles1() && predict.getGoles2()==event.getGoles2() &&
 					predict.getAmarillas1()==event.getAmarillas1()&&predict.getRojas1()==event.getRojas1()&&
 					predict.getAmarillas2()==event.getAmarillas2()&&predict.getRojas2()==event.getRojas2()) {
 				return true;

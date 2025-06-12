@@ -62,19 +62,30 @@ public class ApuestaBasketball extends Apuesta {
 	@Override
 	public boolean isGanador() {
 		switch (tipo) {
-			case 1:
-				return predict.getGanador() == event.ganador();
-			case 2:
-				return predict.getPuntos1() == event.getPuntos1() && predict.getPuntos2() == event.getPuntos2();
-			case 3:
-				return predict.getPuntos1() == event.getPuntos1()
-					&& predict.getPuntos2() == event.getPuntos2()
-					&& predict.getTriples1() == event.getTriples1()
-					&& predict.getFaltas1() == event.getFaltas1()
-					&& predict.getTriples2() == event.getTriples2()
-					&& predict.getFaltas2() == event.getFaltas2();
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + tipo);
+		case 1: {
+			if (predict.getGanador()==event.ganador()) {
+				return true;
+			} else {
+				return false;
+			}
+		}case 2:{
+			if (predict.getGanador()==event.ganador()&&predict.getPuntos1()==event.getPuntos1() && predict.getPuntos2()==event.getPuntos2()) {
+				return true;
+			}else {
+				return false;
+			}
+		}case 3:{
+			if (predict.getGanador()==event.ganador()&&predict.getPuntos1()==event.getPuntos1() && predict.getPuntos2()==event.getPuntos2() &&
+					predict.getTriples1()==event.getTriples1()&&predict.getFaltas1()==event.getFaltas1()&&
+					predict.getTriples2()==event.getTriples2()&&predict.getFaltas2()==event.getFaltas2()) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + tipo);
 		}
 	}
 
@@ -93,37 +104,7 @@ public class ApuestaBasketball extends Apuesta {
 			String linea;
 			while ((linea = lector.readLine()) != null) {
 				apuestaBasketball.add(ApuestaBasketball.leerApuestaBasket(linea));
-				/*String[] datos = linea.split("#");
-				String descripcion = datos[0];
-				double cuota = Double.parseDouble(datos[1]);
-
-				double monto = Double.parseDouble(datos[2]);
-				int ganador = Integer.parseInt(datos[3]);
-				int puntos1 = Integer.parseInt(datos[4]);
-				int puntos2 = Integer.parseInt(datos[5]);
-				int triples1 = Integer.parseInt(datos[6]);
-				int triples2 = Integer.parseInt(datos[7]);
-				int faltas1 = Integer.parseInt(datos[8]);
-				int faltas2 = Integer.parseInt(datos[9]);
-
-				int anio = Integer.parseInt(datos[10]);
-				int mes = Integer.parseInt(datos[11]);
-				int dia = Integer.parseInt(datos[12]);
-				String equipo1 = datos[13];
-				String equipo2 = datos[14];
-				int puntos_1 = Integer.parseInt(datos[15]);
-				int puntos_2 = Integer.parseInt(datos[16]);
-				int triples_1 = Integer.parseInt(datos[17]);
-				int triples_2 = Integer.parseInt(datos[18]);
-				int faltas_1 = Integer.parseInt(datos[19]);
-				int faltas_2 = Integer.parseInt(datos[20]);
-
-				PrediccionBasketball prediccion = new PrediccionBasketball(monto, ganador, puntos1, puntos2,
-						triples1, triples2, faltas1, faltas2);
-				EventoBasketball evento = new EventoBasketball(anio, mes, dia, equipo1, equipo2, puntos_1, puntos_2,
-						triples_1, triples_2, faltas_1, faltas_2);
-
-				apuestaBasketball.add(new ApuestaBasketball(descripcion, cuota, prediccion, evento));*/
+				
 			}
 		} catch (IOException e) {
 			System.out.println("Ha ocurrido un error al recibir los datos");
@@ -203,17 +184,7 @@ public class ApuestaBasketball extends Apuesta {
 	static boolean reescribirApuestaBasketballTxt(ArrayList<ApuestaBasketball> apuestaBasketball, String archivo) {
 		try (PrintWriter escritor = new PrintWriter(new FileWriter(archivo))) {
 			for (ApuestaBasketball ab : apuestaBasketball) {
-				String registro = ab.getDescripcion() + "#" + ab.getCuota() + "#" +
-						ab.getPredict().getMonto() + "#" + ab.getPredict().getGanador() + "#" +
-						ab.getPredict().getPuntos1() + "#" + ab.getPredict().getPuntos2() + "#" +
-						ab.getPredict().getTriples1() + "#" + ab.getPredict().getTriples2() + "#" +
-						ab.getPredict().getFaltas1() + "#" + ab.getPredict().getFaltas2() + "#" +
-						ab.getEvent().getFecha().getYear() + "#" + ab.getEvent().getFecha().getMonthValue() + "#" +
-						ab.getEvent().getFecha().getDayOfMonth() + "#" + ab.getEvent().getEquipo1() + "#" +
-						ab.getEvent().getEquipo2() + "#" + ab.getEvent().getPuntos1() + "#" +
-						ab.getEvent().getPuntos2() + "#" + ab.getEvent().getTriples1() + "#" +
-						ab.getEvent().getTriples2() + "#" + ab.getEvent().getFaltas1() + "#" +
-						ab.getEvent().getFaltas2();
+				String registro = ab.toString();
 				escritor.println(registro);
 			}
 		} catch (IOException e) {
