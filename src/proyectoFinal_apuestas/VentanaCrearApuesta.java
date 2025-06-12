@@ -92,7 +92,11 @@ public class VentanaCrearApuesta extends JFrame {
 				if (comboBoxTipo.getSelectedIndex()==1) {
 					textFieldDescription.setText("Ganador o empate");
 				} else if (comboBoxTipo.getSelectedIndex()==2){
-					textFieldDescription.setText("Goles");
+					if (deporte == 1) {
+						textFieldDescription.setText("Goles");						
+					} else if (deporte == 2){
+						textFieldDescription.setText("Puntos");
+					}
 				}else if (comboBoxTipo.getSelectedIndex()==3) {
 					textFieldDescription.setText("Estadísticas completas");
 				}else if (comboBoxTipo.getSelectedIndex()==0) {

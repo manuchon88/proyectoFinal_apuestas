@@ -1,0 +1,1 @@
+Ganador o empate#2.0#2025, 7, 23, Celtics, Lakers, 0, 50, 89, 9, 15, 4, 3, true#1#50.0, 2, 0, 0, 0, 0, 0, 0

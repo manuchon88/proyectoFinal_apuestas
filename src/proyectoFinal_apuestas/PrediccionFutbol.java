@@ -123,17 +123,7 @@ public class PrediccionFutbol extends Prediccion {
 			BufferedReader lector = new BufferedReader(new FileReader(archivo));
 			String linea;
 			while ((linea = lector.readLine())!=null) {
-				String [] datos = linea.split(", ");
-				double monto = Double.parseDouble(datos[0]);
-				int ganador = Integer.parseInt(datos[1]);
-				int goles1 = Integer.parseInt(datos[2]);
-				int goles2 = Integer.parseInt(datos[3]); 
-				int amarillas1 = Integer.parseInt(datos[4]);
-				int amarillas2 = Integer.parseInt(datos[5]);
-				int rojas1 = Integer.parseInt(datos[6]);
-				int rojas2 = Integer.parseInt(datos[7]);
-				
-				prediccionFutbol.add(new PrediccionFutbol(monto, ganador, goles1, goles2, amarillas1, amarillas2, rojas1, rojas2));
+				prediccionFutbol.add(PrediccionFutbol.leerPrediccion(linea));
 			}
 			lector.close();
 		} catch (FileNotFoundException e) {
@@ -194,9 +184,7 @@ public class PrediccionFutbol extends Prediccion {
 		try {
 			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
 			for (PrediccionFutbol pf : prediccionFutbol) {
-				String registro = pf.getMonto() + ", " + pf.getGanador() + ", " +
-						pf.getGoles1() + ", " + pf.getGoles2() + ", " + pf.getAmarillas1() + pf.getAmarillas2() + ", " +
-						pf.getRojas1() + ", " + pf.getRojas2();
+				String registro = pf.toString();
 				escritor.println(registro);
 			}
 			escritor.close();

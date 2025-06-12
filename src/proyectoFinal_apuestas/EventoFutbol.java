@@ -167,22 +167,6 @@ public class EventoFutbol extends Evento{
 			while ((linea = lector.readLine())!=null) {
 				eventoFutbol.add(EventoFutbol.leerToEvFutbol(linea));
 				
-				/*String [] datos = linea.split(", ");
-				int anio = Integer.parseInt(datos[0]);
-				int mes = Integer.parseInt(datos[1]); 
-				int dia = Integer.parseInt(datos[2]);
-				String equipo1 = datos[3];
-				String equipo2 =datos[4];
-				int torneo = Integer.parseInt(datos[5]);
-				int goles1 = Integer.parseInt(datos[6]);
-				int goles2 = Integer.parseInt(datos[7]); 
-				int amarillas1 = Integer.parseInt(datos[8]);
-				int amarillas2 = Integer.parseInt(datos[9]);
-				int rojas1 = Integer.parseInt(datos[10]);
-				int rojas2 = Integer.parseInt(datos[11]);
-				
-				eventoFutbol.add(new EventoFutbol(anio, mes, dia, equipo1, equipo2, torneo, goles1, goles2,
-					 amarillas1, amarillas2, rojas1, rojas2));*/
 			}
 			lector.close();
 		} catch (FileNotFoundException e) {

@@ -1,1 +1,2 @@
-Ganador o empate#3.0#2025, 3, 4, Bulls, Warrios, 0, 12, 100, 0, 0, 23, 3, false#1#null
+Ganador o empate#2.0#2025, 7, 23, Celtics, Lakers, 0, 0, 0, 0, 0, 0, 0, false#1#null
+Puntos#5.0#2025, 3, 4, Bulls, Warrios, 0, 0, 0, 0, 0, 0, 0, false#2#null
