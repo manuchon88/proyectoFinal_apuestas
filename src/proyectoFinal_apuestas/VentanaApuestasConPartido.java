@@ -28,8 +28,16 @@ public class VentanaApuestasConPartido extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JComboBox<String> comboBoxTipoApuesta;
+	private JComboBox<String> comboBoxTipoApuesta , comboBoxGanador;
 	private JTextField textFieldMontoApuesta;
+	private JLabel lblCuotaApuesta;
+	private int tipo;
+	private ApuestaBasketball apuestBask;
+	private ApuestaFutbol apuest;
+	private ArrayList<ApuestaFutbol> listApuestasFut;
+	private ArrayList<ApuestaBasketball> listApuestasBask;
+	
+	
 	JLabel lblEstadistica1Equipo1 = new JLabel("Estadística 1 Equipo 1:");
 	JTextField textFieldEstadistica1Equipo1 = new JTextField();
 	JLabel lblEstadistica1Equipo2 = new JLabel("Estadística 1 Equipo 2:");
@@ -56,9 +64,14 @@ public class VentanaApuestasConPartido extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaApuestasConPartido(String equipo1, String equipo2, String competencia, Apostador user) {
+	    listApuestasFut = new ArrayList<>();
+	    listApuestasBask = new ArrayList<>();
+	    comboBoxGanador = new JComboBox<>();
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Apuesas Usuario");
 		setBounds(100, 100, 500, 664);
+	    setLocation(0, 0);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -129,11 +142,103 @@ public class VentanaApuestasConPartido extends JFrame {
 		JLabel lblNombreEquipo2 = new JLabel(equipo2);
 		panCentro.add(lblNombreEquipo2);
 			
-
+		
 		JLabel lblTipoApuesta = new JLabel("Tipo de Apuesta:");
 		panCentro.add(lblTipoApuesta);
-		comboBoxTipoApuesta = new JComboBox<>(new String[] {"Seleccionar tipo de Apuesta", "Gana uno de los dos equipos", "Ganador y goles acertados", "Todas las estadísticas"});
+	    comboBoxTipoApuesta = new JComboBox<>();
 		panCentro.add(comboBoxTipoApuesta);
+		
+		if (determinarDeporte(competencia).equals("Fútbol")) {
+		    listApuestasFut = apuestasFut(equipo1, equipo2);
+		    String[] values = new String[listApuestasFut.size()];
+		    for (int i = 0; i < values.length; i++) {
+		        values[i] = listApuestasFut.get(i).getDescripcion();
+		    }
+		    comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<String>(values));
+		    comboBoxGanador.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Ganador", "Empate", equipo1, equipo2}));
+
+		} else if (determinarDeporte(competencia).equals("Basketball")) {
+		    listApuestasBask = apuestasBask(equipo1, equipo2);
+		    String[] values = new String[listApuestasBask.size()];
+		    for (int i = 0; i < values.length; i++) {
+		        values[i] = listApuestasBask.get(i).getDescripcion();
+		    }
+		    comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<String>(values));
+		    comboBoxGanador.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Ganador", "Empate", equipo1, equipo2}));
+		}
+		
+		comboBoxTipoApuesta.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 if (comboBoxTipoApuesta.getSelectedIndex() >= 0) {
+				// TODO Auto-generated method stub
+				if (determinarDeporte(competencia).equals("Fútbol")) {
+					apuest = listApuestasFut.get(comboBoxTipoApuesta.getSelectedIndex());	
+					if (apuest.getTipoApuesta() ==1) {
+						tipo = 1;
+						textFieldEstadistica1Equipo1.setEditable(false);
+						textFieldEstadistica2Equipo1.setEditable(false);
+						textFieldEstadistica3Equipo1.setEditable(false);
+						textFieldEstadistica1Equipo2.setEditable(false);
+						textFieldEstadistica2Equipo2.setEditable(false);
+						textFieldEstadistica3Equipo2.setEditable(false);
+						lblCuotaApuesta.setText(""+apuest.getCuota());
+					}else if (apuest.getTipoApuesta()==2) {
+						tipo=2;
+						textFieldEstadistica1Equipo1.setEditable(true);
+						textFieldEstadistica2Equipo1.setEditable(false);
+						textFieldEstadistica3Equipo1.setEditable(false);
+						textFieldEstadistica1Equipo2.setEditable(true);
+						textFieldEstadistica2Equipo2.setEditable(false);
+						textFieldEstadistica3Equipo2.setEditable(false);
+						lblCuotaApuesta.setText(""+apuest.getCuota());
+					}else if (apuest.getTipoApuesta()==3) {
+						tipo=3;
+						textFieldEstadistica1Equipo1.setEditable(true);
+						textFieldEstadistica2Equipo1.setEditable(true);
+						textFieldEstadistica3Equipo1.setEditable(true);
+						textFieldEstadistica1Equipo2.setEditable(true);
+						textFieldEstadistica2Equipo2.setEditable(true);
+						textFieldEstadistica3Equipo2.setEditable(true);
+						lblCuotaApuesta.setText(""+apuest.getCuota());
+					}
+				} else {
+					apuestBask = listApuestasBask.get(comboBoxTipoApuesta.getSelectedIndex());
+					if (apuestBask.getTipo() ==1) {
+						tipo = 1;
+						textFieldEstadistica1Equipo1.setEditable(false);
+						textFieldEstadistica2Equipo1.setEditable(false);
+						textFieldEstadistica3Equipo1.setEditable(false);
+						textFieldEstadistica1Equipo2.setEditable(false);
+						textFieldEstadistica2Equipo2.setEditable(false);
+						textFieldEstadistica3Equipo2.setEditable(false);
+						lblCuotaApuesta.setText(""+apuestBask.getCuota());
+					}else if (apuestBask.getTipo()==2) {
+						tipo=2;
+						textFieldEstadistica1Equipo1.setEditable(true);
+						textFieldEstadistica2Equipo1.setEditable(false);
+						textFieldEstadistica3Equipo1.setEditable(false);
+						textFieldEstadistica1Equipo2.setEditable(true);
+						textFieldEstadistica2Equipo2.setEditable(false);
+						textFieldEstadistica3Equipo2.setEditable(false);
+						lblCuotaApuesta.setText(""+apuestBask.getCuota());
+					}else if (apuestBask.getTipo()==3) {
+						tipo=3;
+						textFieldEstadistica1Equipo1.setEditable(true);
+						textFieldEstadistica2Equipo1.setEditable(true);
+						textFieldEstadistica3Equipo1.setEditable(true);
+						textFieldEstadistica1Equipo2.setEditable(true);
+						textFieldEstadistica2Equipo2.setEditable(true);
+						textFieldEstadistica3Equipo2.setEditable(true);
+						lblCuotaApuesta.setText(""+apuestBask.getCuota());
+					}
+				}
+			}else {
+                JOptionPane.showMessageDialog(null, "No hay apuestas disponibles para este partido.", "Error", JOptionPane.WARNING_MESSAGE);
+            	}
+			}
+		});
 
 		
 
@@ -141,23 +246,9 @@ public class VentanaApuestasConPartido extends JFrame {
 		panCentro.add(lblCuota);
 		
 		
-		JLabel lblCuotaApuesta = new JLabel("");
+		lblCuotaApuesta = new JLabel("");
 		panCentro.add(lblCuotaApuesta);
 
-			comboBoxTipoApuesta.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if (comboBoxTipoApuesta.getSelectedIndex()==1) {
-					lblCuotaApuesta.setText("1.5");	
-				}else if (comboBoxTipoApuesta.getSelectedIndex()==2) {
-					lblCuotaApuesta.setText("3.0");
-				} else if (comboBoxTipoApuesta.getSelectedIndex()==3) {
-					lblCuotaApuesta.setText("20.0");
-				}
-			}
-		});
 		
 		JLabel lblMonto = new JLabel("Monto Apostado:");
 		panCentro.add(lblMonto);
@@ -168,8 +259,8 @@ public class VentanaApuestasConPartido extends JFrame {
 		JLabel lblElegirEquipoGanador = new JLabel("Equipo Ganador:");
 		panCentro.add(lblElegirEquipoGanador);
 		
-		JComboBox comboBoxGanador = new JComboBox();
-		comboBoxGanador.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Ganador", lblNombreEquipo1.getText(), lblNombreEquipo2.getText()}));	
+		comboBoxGanador = new JComboBox();
+		comboBoxGanador.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar Ganador", equipo1, equipo2}));	
 		panCentro.add(comboBoxGanador);
 		
 		
@@ -235,182 +326,79 @@ public class VentanaApuestasConPartido extends JFrame {
 		
 		JPanel panBotones = new JPanel();
 		panBotones.setBackground(new Color(235, 245, 251));
-		JButton btnApuesta = new JButton("Apuesta");
-		panBotones.add(btnApuesta);
-		contentPane.add(panBotones, BorderLayout.SOUTH);
-
+		
+		JButton btnApuesta = new JButton("APOSTAR");
+		btnApuesta.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnApuesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String eq1 = lblNombreEquipo1.getText().trim();
-				String eq2 = lblNombreEquipo2.getText().trim();
-
-				if (eq1.isEmpty() || eq2.isEmpty()) {
-					JOptionPane.showMessageDialog(btnApuesta, "Debe ingresar nombres de ambos equipos.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				if (comboBoxTipoApuesta.getSelectedIndex() == 0) { 
-				    JOptionPane.showMessageDialog(btnApuesta, "Debe seleccionar un tipo de apuesta.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-				    return;
-				}
-				if (comboBoxGanador.getSelectedIndex() == 0) {
-					JOptionPane.showMessageDialog(btnApuesta, "Debe seleccionar un equipo ganador.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-
-				double montoAp = 0;
-				try {
-					String montoText = textFieldMontoApuesta.getText().trim();
-					if (montoText.isEmpty()) {
-						JOptionPane.showMessageDialog(btnApuesta, "Debe ingresar el monto de la apuesta.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-					montoAp = Double.parseDouble(montoText);
-					if (montoAp <= 0) {
-						JOptionPane.showMessageDialog(btnApuesta, "El monto de la apuesta debe ser mayor que cero.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-				} catch (NumberFormatException nfe) {
-					JOptionPane.showMessageDialog(btnApuesta, "El monto de la apuesta debe ser un número válido.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				int tipoAp = comboBoxTipoApuesta.getSelectedIndex()-1;
-				double cuota =  Double.parseDouble(lblCuotaApuesta.getText()); 
-				int eqGanador = comboBoxGanador.getSelectedIndex() - 1;
-				
-				int est1eq1 = 0, est1eq2 = 0, est2eq1 = 0, est2eq2 = 0, est3eq1 = 0, est3eq2 = 0;
-
-
-				if (tipoAp == 1 || tipoAp == 2) {
-					String s1e1 = textFieldEstadistica1Equipo1.getText().trim();
-					String s1e2 = textFieldEstadistica1Equipo2.getText().trim();
-
-					if (s1e1.isEmpty() || s1e2.isEmpty()) {
-						JOptionPane.showMessageDialog(btnApuesta, "Debe ingresar valores para " + lblEstadistica1Equipo1.getText().replace(":", "") + " y " + lblEstadistica1Equipo2.getText().replace(":", "") + ".", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-
-					try {
-						est1eq1 = Integer.parseInt(s1e1);
-						est1eq2 = Integer.parseInt(s1e2);
-						if (est1eq1 < 0 || est1eq2 < 0) {
-							JOptionPane.showMessageDialog(btnApuesta, "Las estadísticas (" + lblEstadistica1Equipo1.getText().replace(":", "") + ") no pueden ser negativas.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-					} catch (NumberFormatException nfe) {
-						JOptionPane.showMessageDialog(btnApuesta, "Los campos '" + lblEstadistica1Equipo1.getText().replace(":", "") + "' deben ser números válidos.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-				}
-				
-				if (tipoAp == 2) {
-					String s2e1 = textFieldEstadistica2Equipo1.getText().trim();
-					String s2e2 = textFieldEstadistica2Equipo2.getText().trim();
-					String s3e1 = textFieldEstadistica3Equipo1.getText().trim();
-					String s3e2 = textFieldEstadistica3Equipo2.getText().trim();
-
-					if (s2e1.isEmpty() || s2e2.isEmpty() || s3e1.isEmpty() || s3e2.isEmpty()) {
-						JOptionPane.showMessageDialog(btnApuesta, "Debe ingresar valores para todas las estadísticas requeridas (Estadística 2 y 3).", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-
-					try {
-						est2eq1 = Integer.parseInt(s2e1);
-						if (est2eq1 < 0) {
-							JOptionPane.showMessageDialog(btnApuesta, lblEstadistica2Equipo1.getText().replace(":", "") + " no puede ser negativo.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-					} catch (NumberFormatException nfe) {
-						JOptionPane.showMessageDialog(btnApuesta, lblEstadistica2Equipo1.getText().replace(":", "") + " debe ser un número válido.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-
-					try {
-						est2eq2 = Integer.parseInt(s2e2);
-						if (est2eq2 < 0) {
-							JOptionPane.showMessageDialog(btnApuesta, lblEstadistica2Equipo2.getText().replace(":", "") + " no puede ser negativo.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-					} catch (NumberFormatException nfe) {
-						JOptionPane.showMessageDialog(btnApuesta, lblEstadistica2Equipo2.getText().replace(":", "") + " debe ser un número válido.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-
-					try {
-						est3eq1 = Integer.parseInt(s3e1);
-						if (est3eq1 < 0) {
-							JOptionPane.showMessageDialog(btnApuesta, lblEstadistica3Equipo1.getText().replace(":", "") + " no puede ser negativo.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-					} catch (NumberFormatException nfe) {
-						JOptionPane.showMessageDialog(btnApuesta, lblEstadistica3Equipo1.getText().replace(":", "") + " debe ser un número válido.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-
-					try {
-						est3eq2 = Integer.parseInt(s3e2);
-						if (est3eq2 < 0) {
-							JOptionPane.showMessageDialog(btnApuesta, lblEstadistica3Equipo2.getText().replace(":", "") + " no puede ser negativo.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-					} catch (NumberFormatException nfe) {
-						JOptionPane.showMessageDialog(btnApuesta, lblEstadistica3Equipo2.getText().replace(":", "") + " debe ser un número válido.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-						return;
-					}
-				}
-
-				boolean exito = false;
 				if (determinarDeporte(competencia).equals("Fútbol")) {
-					if (tipoAp == 0) {
-						PrediccionFutbol predictFut = new PrediccionFutbol(montoAp,eqGanador,0,0,0,0,0,0);
-						exito = predictFut.registrarPrediccionesFutbolTxt(Archivos.archivosPrediccionesFutbol);
-					} else if (tipoAp == 1) {
-						PrediccionFutbol predictFut = new PrediccionFutbol(montoAp,eqGanador,est1eq1,est1eq2,0,0,0,0);
-						exito = predictFut.registrarPrediccionesFutbolTxt(Archivos.archivosPrediccionesFutbol);
-					} else if (tipoAp == 2) {
-						PrediccionFutbol predictFut = new PrediccionFutbol(montoAp,eqGanador,est1eq1,est1eq2,est2eq1,est2eq2,est3eq1,est3eq2);
-						exito = predictFut.registrarPrediccionesFutbolTxt(Archivos.archivosPrediccionesFutbol);
+					if (tipo ==3) {
+						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
+						apuest.setPredict(predict);
+					}else if (tipo==2) {
+						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()));
+						apuest.setPredict(predict);
+						
+					}else if (tipo==1) {
+						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1);
+						apuest.setPredict(predict);
+						
 					}
-				}else if (determinarDeporte(competencia).equals("Basketball")) {
-					if (tipoAp == 0) {
-						PrediccionBasketball predictBas = new PrediccionBasketball(montoAp,eqGanador,0,0,0,0,0,0);
-						exito = predictBas.registrarPrediccionesBasketballTxt(Archivos.archivosPrediccionesBasketball);
-					} else if (tipoAp == 1) {
-						PrediccionBasketball predictBas = new PrediccionBasketball(montoAp,eqGanador,est1eq1,est1eq2,0,0,0,0);
-						exito = predictBas.registrarPrediccionesBasketballTxt(Archivos.archivosPrediccionesBasketball);
-					} else if (tipoAp == 2) {
-						PrediccionBasketball predictBas = new PrediccionBasketball(montoAp,eqGanador,est1eq1,est1eq2,est2eq1,est2eq2,est3eq1,est3eq2);
-						exito = predictBas.registrarPrediccionesBasketballTxt(Archivos.archivosPrediccionesBasketball);
-				    }
-				}
-				
+					if (user.apostar(1, apuest.toString())) {						
+						JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
+						comboBoxGanador.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccionar Ganador"}));
+						comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<>(new String[]{}));
+			            textFieldMontoApuesta.setText("");
+			            lblCuotaApuesta.setText("");
+			            textFieldEstadistica1Equipo1.setText("");
+			            textFieldEstadistica1Equipo2.setText("");
+						textFieldEstadistica2Equipo1.setText("");
+						textFieldEstadistica2Equipo2.setText("");
+			            textFieldEstadistica3Equipo1.setText("");
+			            textFieldEstadistica3Equipo2.setText("");
+			            
+					} else {
+						JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
 
-				if (exito) {
-					JOptionPane.showMessageDialog(btnApuesta, "Predicción realizada correctamente.");
-					dispose();
-				} else {
-					JOptionPane.showMessageDialog(btnApuesta, "Error al realizar Predicción.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}else {
+					if (tipo ==3) {
+						PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
+						apuestBask.setPredict(predict);
+					}else if (tipo==2) {
+						PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()));
+						apuestBask.setPredict(predict);
+						
+					}else if (tipo==1) {
+						PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1);
+						apuestBask.setPredict(predict);
+						
+					}
+					if (user.apostar(2, apuestBask.toString())) {						
+						JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
+						comboBoxGanador.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccionar Ganador"}));
+						comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<>(new String[]{}));
+			            textFieldMontoApuesta.setText("");
+			            lblCuotaApuesta.setText("");
+			            textFieldEstadistica1Equipo1.setText("");
+			            textFieldEstadistica1Equipo2.setText("");
+						textFieldEstadistica2Equipo1.setText("");
+						textFieldEstadistica2Equipo2.setText("");
+			            textFieldEstadistica3Equipo1.setText("");
+			            textFieldEstadistica3Equipo2.setText("");
+					} else {
+						JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
+						
+					}
+					
 				}
-				
-				
 			}
 		});
+		panBotones.add(btnApuesta);
+		contentPane.add(panBotones, BorderLayout.SOUTH);
 	}
-//	private void actualizarComboBoxGanador(JComboBox<String> combo, String equipo1, String equipo2) {
-//		combo.removeAllItems();
-//		combo.addItem("Seleccionar Ganador"); 
-//		if (!equipo1.isEmpty()) {
-//			combo.addItem(equipo1);
-//		}
-//		if (!equipo2.isEmpty()) {
-//			combo.addItem(equipo2);
-//		}
-//		combo.revalidate(); 
-//		combo.repaint();
-//	
-//	}
 	
-	 public String determinarDeporte(String nombreCompetencia) {
+	public String determinarDeporte(String nombreCompetencia) {
 		ArrayList<String> competenciasFutbol = new ArrayList<>();
         competenciasFutbol.add("Champions league");
         competenciasFutbol.add("Copa Libertadores");
@@ -440,5 +428,31 @@ public class VentanaApuestasConPartido extends JFrame {
 
         return "Ninguno";
     }
+	
+	 
+	public ArrayList<ApuestaFutbol> apuestasFut(String equipo1, String equipo2) {
+	    ArrayList<ApuestaFutbol> apuestasRegistradas = ApuestaFutbol.leerApuestaFutbolTxt(Archivos.archivosApuestasFutbol);
+	    ArrayList<ApuestaFutbol> apuestasEvento = new ArrayList<ApuestaFutbol>();
+	    for (ApuestaFutbol apuesta : apuestasRegistradas) {
+	        if (apuesta.getEvent().getEquipo1().equals(equipo1) && 
+	            apuesta.getEvent().getEquipo2().equals(equipo2)) {
+	            apuestasEvento.add(apuesta);
+	        }
+	    }
+	    return apuestasEvento;
+	}
+		
+	public ArrayList<ApuestaBasketball> apuestasBask(String equipo1, String equipo2) {
+	    ArrayList<ApuestaBasketball> apuestasRegistradas = ApuestaBasketball.leerApuestaBasketballTxt(Archivos.archivosApuestasBasketball);
+	    ArrayList<ApuestaBasketball> apuestasEvento = new ArrayList<ApuestaBasketball>();
+	    for (ApuestaBasketball apuesta : apuestasRegistradas) {
+	        if (apuesta.getEvent().getEquipo1().equals(equipo1) && 
+	            apuesta.getEvent().getEquipo2().equals(equipo2)) {
+	            apuestasEvento.add(apuesta);
+	        }
+	    }
+	    return apuestasEvento;
+	}
+	
 
 }

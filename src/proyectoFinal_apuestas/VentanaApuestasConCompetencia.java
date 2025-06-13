@@ -71,6 +71,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Apuesas Usuario");
 		setBounds(100, 100, 500, 664);
+	    setLocation(0, 0);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(235, 245, 251));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));

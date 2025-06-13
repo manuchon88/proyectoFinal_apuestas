@@ -387,7 +387,7 @@ public class VentanaPrincipal extends JFrame {
 			String[] torneos = {"NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"};
 			if (!eventosBasket.get(i).isTerminado()) {
 				final String equipo1DelEvento = eventosBasket.get(i).getEquipo1();
-		        final String equipo2DelEvento = eventosFutbol.get(i).getEquipo2();
+		        final String equipo2DelEvento = eventosBasket.get(i).getEquipo2();
 				final String part = torneos[eventosBasket.get(i).getTorneo()];
 				String text = eventosBasket.get(i).getFecha()+" / "+part+" / "+equipo1DelEvento+" vs "+equipo2DelEvento;
 				JButton btnEv = new JButton(text);
