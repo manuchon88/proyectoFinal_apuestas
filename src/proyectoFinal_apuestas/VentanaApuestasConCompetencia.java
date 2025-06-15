@@ -26,9 +26,8 @@ public class VentanaApuestasConCompetencia extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldEquipo2;
-	private JComboBox<String> comboBoxTipoApuesta;
+	private JComboBox<String> comboBoxTipoApuesta, comboBoxPartidos, comboBoxGanador;
 	private JTextField textFieldMontoApuesta;
-	private JComboBox comboBoxPartidos, comboBoxGanador;
 	private JLabel lblCuotaApuesta;
 	private int indexPartido;
 	private ArrayList<ApuestaFutbol> listApuestasFut;
@@ -168,6 +167,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 					textFieldMontoApuesta.setText("");
 					lblCuotaApuesta.setText("");
 					comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<String>(new String[] {}));
+					comboBoxGanador.setModel(new DefaultComboBoxModel<String>(new String[] {}));
 				} else {
 					if (determinarDeporte(competencia).equals("Fútbol")) {
 						listApuestasFut = apuestasFut(listPartidosFut.get(indexPartido));
@@ -391,8 +391,8 @@ public class VentanaApuestasConCompetencia extends JFrame {
 					if (user.apostar(1, apuest.toString())) {						
 						JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
 						comboBoxPartidos.setSelectedIndex(0);
-						comboBoxGanador.setSelectedIndex(0);
-						comboBoxTipoApuesta.setSelectedIndex(0);
+						comboBoxGanador.setModel(new DefaultComboBoxModel<String>(new String[] {}));
+						comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<String>(new String[] {}));;
 					} else {
 						JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
 

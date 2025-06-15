@@ -5,3 +5,4 @@ Goles#3.0#2025, 6, 30, ABB, Always Ready, 2, 0, 0, 0, 0, 0, 0, false#2#null
 Ganador o empate#2.0#2025, 4, 4, Valencia, Sevilla, 3, 3, 0, 0, 0, 0, 0, false#1#null
 Goles#4.0#2025, 4, 4, Valencia, Sevilla, 3, 3, 0, 0, 0, 0, 0, false#2#null
 Estadísticas completas#6.0#2025, 4, 4, Valencia, Sevilla, 3, 3, 0, 0, 0, 0, 0, false#3#null
+Goles#5.0#2025, 5, 31, PSG, Inter Milan, 0, 0, 0, 0, 0, 0, 0, false#2#null

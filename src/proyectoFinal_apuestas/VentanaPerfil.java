@@ -136,6 +136,13 @@ public class VentanaPerfil extends JFrame {
 		panAbajo2.add(btnEditarPerfil);
 		
 		JButton btnHistorial = new JButton("Historial");
+		btnHistorial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaHistorial frame = new VentanaHistorial(user);
+				frame.setVisible(true);
+				
+			}
+		});
 		btnHistorial.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panAbajo2.add(btnHistorial);
 		
