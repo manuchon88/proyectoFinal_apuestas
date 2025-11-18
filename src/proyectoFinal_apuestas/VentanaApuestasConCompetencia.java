@@ -375,51 +375,58 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		btnApuesta.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnApuesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (determinarDeporte(competencia).equals("Fútbol")) {
-					if (tipo ==3) {
-						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
-						apuest.setPredict(predict);
-					}else if (tipo==2) {
-						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()));
-						apuest.setPredict(predict);
-						
-					}else if (tipo==1) {
-						PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1);
-						apuest.setPredict(predict);
-						
-					}
-					if (user.apostar(1, apuest.toString())) {						
-						JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
-						comboBoxPartidos.setSelectedIndex(0);
-						comboBoxGanador.setModel(new DefaultComboBoxModel<String>(new String[] {}));
-						comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<String>(new String[] {}));;
-					} else {
-						JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
-
-					}
-				}else {
-					if (tipo ==3) {
-						PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
-						apuestBask.setPredict(predict);
-					}else if (tipo==2) {
-						PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()));
-						apuestBask.setPredict(predict);
-						
-					}else if (tipo==1) {
-						PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1);
-						apuestBask.setPredict(predict);
-						
-					}
-					if (user.apostar(2, apuestBask.toString())) {						
-						JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
-						comboBoxPartidos.setSelectedIndex(0);
-						comboBoxGanador.setSelectedIndex(0);
-						comboBoxTipoApuesta.setSelectedIndex(0);
-					} else {
-						JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
+				try {
+					
+					if (determinarDeporte(competencia).equals("Fútbol")) {
+						if (tipo ==3) {
+							PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
+							apuest.setPredict(predict);
+						}else if (tipo==2) {
+							PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()));
+							apuest.setPredict(predict);
+							
+						}else if (tipo==1) {
+							PrediccionFutbol predict = new PrediccionFutbol(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1);
+							apuest.setPredict(predict);
+							
+						}
+						if (user.apostar(1, apuest.toString())) {						
+							JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
+							comboBoxPartidos.setSelectedIndex(0);
+							comboBoxGanador.setModel(new DefaultComboBoxModel<String>(new String[] {}));
+							comboBoxTipoApuesta.setModel(new DefaultComboBoxModel<String>(new String[] {}));;
+						} else {
+							JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
+							
+						}
+					}else {
+						if (tipo ==3) {
+							PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()), Integer.parseInt(textFieldEstadistica2Equipo1.getText()), Integer.parseInt(textFieldEstadistica2Equipo2.getText()), Integer.parseInt(textFieldEstadistica3Equipo1.getText()), Integer.parseInt(textFieldEstadistica3Equipo2.getText()));
+							apuestBask.setPredict(predict);
+						}else if (tipo==2) {
+							PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1, Integer.parseInt(textFieldEstadistica1Equipo1.getText()), Integer.parseInt(textFieldEstadistica1Equipo2.getText()));
+							apuestBask.setPredict(predict);
+							
+						}else if (tipo==1) {
+							PrediccionBasketball predict = new PrediccionBasketball(Double.parseDouble(textFieldMontoApuesta.getText()), comboBoxGanador.getSelectedIndex()-1);
+							apuestBask.setPredict(predict);
+							
+						}
+						if (user.apostar(2, apuestBask.toString())) {						
+							JOptionPane.showMessageDialog(btnApuesta, "Apuesta realizada");
+							comboBoxPartidos.setSelectedIndex(0);
+							comboBoxGanador.setSelectedIndex(0);
+							comboBoxTipoApuesta.setSelectedIndex(0);
+						} else {
+							JOptionPane.showMessageDialog(btnApuesta, "No se pudo apostar");
+							
+						}
 						
 					}
 					
+				} catch (IllegalArgumentException e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(btnApuesta, "Datos ingresados no válidos");
 				}
 			}
 		});
@@ -428,7 +435,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 
 		
 	}
-	private void actualizarComboBoxGanador(JComboBox<String> combo, String equipo1, String equipo2) {
+	/*private void actualizarComboBoxGanador(JComboBox<String> combo, String equipo1, String equipo2) {
 		combo.removeAllItems();
 		combo.addItem("Seleccionar Ganador"); 
 		if (!equipo1.isEmpty()) {
@@ -440,7 +447,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 		combo.revalidate(); 
 		combo.repaint();
 	
-	}
+	}*/
 	
 	 public String determinarDeporte(String nombreCompetencia) {
 		ArrayList<String> competenciasFutbol = new ArrayList<>();

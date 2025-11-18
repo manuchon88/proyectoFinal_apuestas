@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Apostador extends Usuario{
@@ -120,7 +121,13 @@ public class Apostador extends Usuario{
 	public String toString() {
 		return getNombre()+", "+getCorreo()+", "+getContrasenia()+", "+saldo;
 	}
-
+    
+    public static Apostador readApostador(String cadena) {
+    	String datos[] = cadena.split(", ");
+    	Apostador user = new Apostador(datos[0], datos[1], datos[2], Double.parseDouble(datos[3]));
+    	return user;
+    }
+    
 	// ¿Para que es el registrar? 
     public boolean registrarse() {
     	if (getNombre().equals("")||super.getContrasenia().equals("")||getNombre().equals("")) {
@@ -138,7 +145,7 @@ public class Apostador extends Usuario{
     	return true;
     }
 
-    public boolean cerrarSesion() {
+   public boolean cerrarSesion() {
     	ArrayList<Apostador> base = leerApostadoresTxt();
     	for (Apostador user : base) {
 			if (user.getCorreo().equals(this.getCorreo())) {
@@ -154,7 +161,48 @@ public class Apostador extends Usuario{
 		}
     }
 
-    public static int VerificarInicioSesion(String correoIngresado, String contraseniaIngresada) {
+    /*public boolean cerrarSesion() {
+    	HashMap<String, Apostador> base = leerApostadoresTxt();
+    	if (base.containsKey(this.getCorreo())) {
+			base.get
+		}
+    	for (Apostador user : base) {
+    		if (user.getCorreo().equals(this.getCorreo())) {
+    			user.setContrasenia(this.getContrasenia());
+    			user.setNombre(this.getNombre());
+    			user.setSaldo(this.getSaldo());
+    		}
+    	}
+    	if (reescribirApostadoresTxt(base)) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }*/
+
+   
+   //-------------------1era revisión estructura----------------
+   
+   public static HashMap<String, Apostador> LISTAApostadoresTxt() {
+		HashMap<String, Apostador> base = new HashMap<String, Apostador>();
+		try {
+			BufferedReader lector = new BufferedReader(new FileReader(Archivos.archivosApostadores));
+			String linea;
+			while ((linea = lector.readLine())!=null) {
+				Apostador apos = Apostador.readApostador(linea);
+				base.put(apos.getCorreo(), apos);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return base;
+	}
+   
+    /*public static int VerificarInicioSesion(String correoIngresado, String contraseniaIngresada) {
     	ArrayList<Apostador> base = leerApostadoresTxt();
     	for (Apostador user : base) {
 			if (user.getCorreo().equals(correoIngresado)) {
@@ -166,9 +214,22 @@ public class Apostador extends Usuario{
 			}
 		}
     	return 0; //0 = Usuario no existe, tiene que crear cuenta
+    }*/
+
+    public static int VerificarInicioSesion(String correoIngresado, String contraseniaIngresada) {
+    	HashMap<String, Apostador> base = LISTAApostadoresTxt();
+    	if (base.containsKey(correoIngresado)) {
+			if (base.get(correoIngresado).getContrasenia().equals(contraseniaIngresada)) {
+				return 2; //2 = Usuario y contraseña correctos
+			} else {
+				return 1; //1 = Usuario existente, contraseña incorrecta
+			}
+		}else {
+			return 0; //0 = Usuario no existe, tiene que crear cuenta
+		}
     }
 	
-    public static Apostador iniciarSesion(String correoIngresado, String contraseniaIngresada) {
+    /*public static Apostador iniciarSesion(String correoIngresado, String contraseniaIngresada) {
     	ArrayList<Apostador> base = leerApostadoresTxt();
 		for (Apostador apos : base) {
 			if (apos.getCorreo().equals(correoIngresado) && apos.getContrasenia().equals(contraseniaIngresada)) {
@@ -176,7 +237,18 @@ public class Apostador extends Usuario{
 			}
 		}
 		return null;
+	}*/
+
+    public static Apostador iniciarSesion(String correoIngresado, String contraseniaIngresada) {
+    	HashMap<String, Apostador> base = LISTAApostadoresTxt();
+    	if (base.get(correoIngresado).getContrasenia().equals(contraseniaIngresada)) {
+			return base.get(correoIngresado);
+		}else {
+			return null;			
+		}
 	}
+    
+    //-------------------------------------------
     
 	public static ArrayList<Apostador> leerApostadoresTxt() {
 		ArrayList<Apostador> base = new ArrayList<Apostador>();
@@ -196,6 +268,8 @@ public class Apostador extends Usuario{
 		}
 		return base;
 	}
+    
+
 	
 	public static boolean reescribirApostadoresTxt(ArrayList<Apostador> apostadores) {
 		try {

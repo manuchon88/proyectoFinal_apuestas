@@ -82,7 +82,7 @@ public class VentanaCrearApuesta extends JFrame {
 		panCentro.add(lblTipo);
 		
 		JComboBox<String> comboBoxTipo = new JComboBox<String>();
-		comboBoxTipo.setModel(new DefaultComboBoxModel(new String[] {"Seleccione tipo", "1", "2", "3"}));
+		comboBoxTipo.setModel(new DefaultComboBoxModel(new String[] {"Seleccione tipo", "Ganador o empate", "Goles", "Estadísticas completas"}));
 		panCentro.add(comboBoxTipo);
 		comboBoxTipo.addActionListener(new ActionListener() {
 			

@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Administrador extends Usuario {
 
@@ -57,44 +58,10 @@ public class Administrador extends Usuario {
 		return  getNombre() + ", " + getCorreo() + ", " + getContrasenia();
 	}
 
-	public static int VerificarInicioSesion(String correoIngresado, String contraseniaIngresada) {
-    	ArrayList<Administrador> base = leerAdministradoresTxt(Archivos.archivosAdministradores);
-    	for (Administrador user : base) {
-			if (user.getCorreo().equals(correoIngresado)) {
-				if (user.getContrasenia().equals(contraseniaIngresada)) {
-					return 2; //2 = Usuario y contraseña correctos
-				} else {
-					return 1; //1 = Usuario existente, contraseña incorrecta
-				}
-			}
-		}
-    	return 0; //0 = Usuario no existe, tiene que crear cuenta
-    }
+	//--------------- 1er avance proyecto estructuras ----------------------
 	
-	public static Administrador iniciarSesion(String correoIngresado, String contraseniaIngresada) {
-    	ArrayList<Administrador> base = leerAdministradoresTxt(Archivos.archivosAdministradores);
-		for (Administrador admin : base) {
-			if (admin.getCorreo().equals(correoIngresado) && admin.getContrasenia().equals(contraseniaIngresada)) {
-				return admin;
-			}
-		}
-		return null;
-	}
 	
-	public boolean registrarAdministradoresTxt(String archivo) {
-		try {
-			PrintWriter escritor = new PrintWriter(new FileWriter(archivo,true));
-			String registro = toString();
-			escritor.println(registro);
-			escritor.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			return false;
-		}	
-		return true;
-	}
-	
-	static ArrayList<Administrador> leerAdministradoresTxt (String archivo){
+	/*static ArrayList<Administrador> leerAdministradoresTxt (String archivo){
 		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
 		try {
 			BufferedReader lector = new BufferedReader(new FileReader(archivo));
@@ -115,6 +82,96 @@ public class Administrador extends Usuario {
 		}
 	
 		return administradores;
+	}*/
+	
+	public static HashMap<String, Administrador> leerAdministradoresTxt (String archivo){
+		HashMap<String, Administrador> administradores = new HashMap<String, Administrador>();
+		try {
+			BufferedReader lector = new BufferedReader(new FileReader(archivo));
+			String linea;
+			while ((linea = lector.readLine())!=null) {
+				Administrador admi = Administrador.readAdmin(linea);
+				administradores.put(admi.getCorreo(), admi);
+				
+			}
+			lector.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Ha ocurrido un error al encontrar el archivo");
+		}catch (IOException e) {
+			System.out.println("Ha ocurrido un error al recibir los datos");
+		}
+		
+		return administradores;
+	}
+	
+	/*public static int VerificarInicioSesion(String correoIngresado, String contraseniaIngresada) {
+    	ArrayList<Administrador> base = leerAdministradoresTxt(Archivos.archivosAdministradores);
+    	for (Administrador user : base) {
+			if (user.getCorreo().equals(correoIngresado)) {
+				if (user.getContrasenia().equals(contraseniaIngresada)) {
+					return 2; //2 = Usuario y contraseña correctos
+				} else {
+					return 1; //1 = Usuario existente, contraseña incorrecta
+				}
+			}
+		}
+    	return 0; //0 = Usuario no existe, tiene que crear cuenta
+    }*/
+	
+	public static int VerificarInicioSesion(String correoIngresado, String contraseniaIngresada) {
+		HashMap<String, Administrador> base = leerAdministradoresTxt(Archivos.archivosAdministradores);
+		if (base.containsKey(correoIngresado)) {
+			if (base.get(correoIngresado).getContrasenia().equals(contraseniaIngresada)) {
+				return 2; //2 = Usuario y contraseña correctos
+			} else {
+				return 1; //1 = Usuario existente, contraseña incorrecta
+			}
+		}else {
+			return 0; //0 = Usuario no existe, tiene que crear cuenta
+		}
+	}
+	
+	/*public static Administrador iniciarSesion(String correoIngresado, String contraseniaIngresada) {
+    	ArrayList<Administrador> base = leerAdministradoresTxt(Archivos.archivosAdministradores);
+		for (Administrador admin : base) {
+			if (admin.getCorreo().equals(correoIngresado) && admin.getContrasenia().equals(contraseniaIngresada)) {
+				return admin;
+			}
+		}
+		return null;
+	}*/
+
+	public static Administrador iniciarSesion(String correoIngresado, String contraseniaIngresada) {
+		HashMap<String, Administrador> base = leerAdministradoresTxt(Archivos.archivosAdministradores);
+		if (base.get(correoIngresado).getContrasenia().equals(contraseniaIngresada)) {
+			return base.get(correoIngresado);
+		}else {
+			return null;			
+		}
+	}
+	
+	//--------------------------------------------------
+	
+	public static Administrador readAdmin(String linea) {
+		String [] datos = linea.split(", ");
+		String nombre = datos[0];
+		String correo = datos[1];
+		String contrasenia = datos[2];
+		return new Administrador(nombre, correo, contrasenia);
+	}
+	
+	
+	public boolean registrarAdministradoresTxt(String archivo) {
+		try {
+			PrintWriter escritor = new PrintWriter(new FileWriter(archivo,true));
+			String registro = toString();
+			escritor.println(registro);
+			escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}	
+		return true;
 	}
 	
 	public boolean registrarAdministradoresBin(String archivo) {

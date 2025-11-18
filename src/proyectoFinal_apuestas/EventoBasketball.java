@@ -62,7 +62,7 @@ public class EventoBasketball extends Evento {
 	}
 
 
-	public void terminarEvento(String result) {
+	/*public void terminarEvento(String result) {
 		String[] datos = result.split(", ");
 		this.puntos1 = Integer.parseInt(datos[0]);
 		this.puntos2 = Integer.parseInt(datos[1]);
@@ -70,7 +70,7 @@ public class EventoBasketball extends Evento {
 		this.triples2 = Integer.parseInt(datos[3]);
 		this.faltas1 = Integer.parseInt(datos[4]);
 		this.faltas2 = Integer.parseInt(datos[5]);
-	}
+	}*/
 	
 	
 

@@ -45,4 +45,5 @@ public abstract class Usuario {
 		this.contrasenia = contrasenia;
 	}
 	
+	
 }

@@ -61,7 +61,7 @@ public class EventoFutbol extends Evento{
 		this.torneo = torneo;
 	}
 
-	public void terminarEvento(String result) {
+	/*public void terminarEvento(String result) {
 		String[] datos = result.split(", ");
 		this.goles1 = Integer.parseInt(datos[0]);
 		this.goles2 = Integer.parseInt(datos[1]);
@@ -69,7 +69,7 @@ public class EventoFutbol extends Evento{
 		this.amarillas2 = Integer.parseInt(datos[3]);
 		this.rojas1 = Integer.parseInt(datos[4]);
 		this.rojas2 = Integer.parseInt(datos[5]);
-	}
+	}*/
 	
 
 	public int getAmarillas1() {

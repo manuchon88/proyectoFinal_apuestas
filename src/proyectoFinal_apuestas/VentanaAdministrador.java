@@ -169,41 +169,9 @@ public class VentanaAdministrador extends JFrame {
 		btnActualizarEvento.setBounds(228, 122, 147, 23);
 		panCentro.add(btnActualizarEvento);
 		
-		JLabel lblResultadosEvento = new JLabel("Resultados del Evento: ");
-		lblResultadosEvento.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblResultadosEvento.setBounds(45, 162, 172, 20);
-		panCentro.add(lblResultadosEvento);
-		
-		JButton btnResultadosEvento = new JButton("Resultados del Evento");
-		btnResultadosEvento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object[] opciones = {"Fútbol", "Basketball"};
-				int seleccion = JOptionPane.showOptionDialog(
-					btnActualizarEvento,
-					"Selecciona el tipo de evento a actualizar:",
-					"Tipo de Evento",
-					JOptionPane.DEFAULT_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
-					null,
-					opciones,
-					opciones[0]
-				);
-
-				if (seleccion == 0) {
-					VentanaResultadoEventoFutbol frame = new VentanaResultadoEventoFutbol();
-					frame.setVisible(true);
-				} else if (seleccion == 1) {
-					VentanaResultadoEventoBasketball frame = new VentanaResultadoEventoBasketball();
-					frame.setVisible(true);
-				}
-			}
-		});
-		btnResultadosEvento.setBounds(228, 162, 147, 23);
-		panCentro.add(btnResultadosEvento);
-		
 		JLabel lblApuestas = new JLabel("Crear apuesta: ");
 		lblApuestas.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblApuestas.setBounds(45, 198, 172, 20);
+		lblApuestas.setBounds(45, 165, 172, 20);
 		panCentro.add(lblApuestas);
 		
 		JButton btnCrearApuesta = new JButton("Crear apuesta");
@@ -213,7 +181,7 @@ public class VentanaAdministrador extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-		btnCrearApuesta.setBounds(228, 195, 147, 23);
+		btnCrearApuesta.setBounds(228, 165, 147, 23);
 		panCentro.add(btnCrearApuesta);
 	}
 }

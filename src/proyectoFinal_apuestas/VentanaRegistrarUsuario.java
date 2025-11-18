@@ -130,13 +130,13 @@ public class VentanaRegistrarUsuario extends JFrame {
 		passwordField.setBounds(174, 131, 192, 20);
 		panCentro.add(passwordField);
 		
-		addWindowListener(new WindowAdapter() {
+		/*addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
             	VentanaIniciarSesion frame = new VentanaIniciarSesion();
                 frame.setVisible(true);
             }
-        });
+        });*/
 	}
 
 }
