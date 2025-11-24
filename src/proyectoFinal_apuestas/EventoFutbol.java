@@ -1,12 +1,17 @@
 package proyectoFinal_apuestas;
 import java.io.*;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.TreeMap;
+import java.util.List;
+
 
 public class EventoFutbol extends Evento{
 	private String equipo1, equipo2;
 	private int torneo, goles1, goles2, amarillas1, amarillas2, rojas1, rojas2;
 	private boolean terminado;
-	
+    private static final TreeMap<LocalDate, ArrayList<EventoFutbol>> eventosPorFecha = new TreeMap<>();
+
 	
 	
 	@Override
@@ -146,37 +151,131 @@ public class EventoFutbol extends Evento{
 		}
 	}
 	
-	public boolean registrarEventosFutbolTxt(String archivo) {
-		try {
-			PrintWriter escritor = new PrintWriter(new FileWriter(archivo,true));
-			String registro = toString();
-			escritor.println(registro);
-			escritor.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			return false;
-		}	
-		return true;
-	}
+	// Nuevas funciones SEGUNDA PRESENTACIÓN ESTRUCTURA DE DATOS
+    public static TreeMap<LocalDate, ArrayList<EventoFutbol>> getEventosPorFecha() {
+        return eventosPorFecha;
+    }
+
+    public static List<EventoFutbol> getEventosEnFecha(LocalDate fecha) {
+        ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
+        ArrayList<EventoFutbol> resultado = new ArrayList<EventoFutbol>();
+
+        if (lista != null) {
+            for (EventoFutbol ev : lista) {
+                resultado.add(ev);
+            }
+        }
+
+        return resultado;
+    }
+
+
+    public static ArrayList<EventoFutbol> getEventosEntre(LocalDate desde, LocalDate hasta) {
+    	ArrayList<EventoFutbol> resultado = new ArrayList<EventoFutbol>();
+
+        for (LocalDate fecha : eventosPorFecha.keySet()) {
+            if (!fecha.isBefore(desde) && !fecha.isAfter(hasta)) {
+                ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
+                for (EventoFutbol ev : lista) {
+                    resultado.add(ev);
+                }
+            }
+        }
+
+        return resultado;
+    }
+
+    
+    public boolean registrarEventosFutbolTxt(String archivo) {
+        try {
+            PrintWriter escritor = new PrintWriter(new FileWriter(archivo, true));
+            String registro = toString();
+            escritor.println(registro);
+            escritor.close();
+
+            LocalDate fecha = getFecha();
+            ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
+
+            if (lista == null) {
+                lista = new ArrayList<>();
+                eventosPorFecha.put(fecha, lista);
+            }
+
+            lista.add(this);
+
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+
+
 	
-	static ArrayList<EventoFutbol> leerEventosFutbolTxt (String archivo){
-		ArrayList<EventoFutbol> eventoFutbol = new ArrayList<EventoFutbol>();
-		try {
-			BufferedReader lector = new BufferedReader(new FileReader(archivo));
-			String linea;
-			while ((linea = lector.readLine())!=null) {
-				eventoFutbol.add(EventoFutbol.leerToEvFutbol(linea));
-				
-			}
-			lector.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Ha ocurrido un error al encontrar el archivo");
-		}catch (IOException e) {
-			System.out.println("Ha ocurrido un error al recibir los datos");
-		}
+//	public boolean registrarEventosFutbolTxt(String archivo) {
+//		try {
+//			PrintWriter escritor = new PrintWriter(new FileWriter(archivo,true));
+//			String registro = toString();
+//			escritor.println(registro);
+//			escritor.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			return false;
+//		}	
+//		return true;
+//	}
 	
-		return eventoFutbol;
-	}
+    static ArrayList<EventoFutbol> leerEventosFutbolTxt(String archivo) {
+        ArrayList<EventoFutbol> eventoFutbol = new ArrayList<>();
+        eventosPorFecha.clear();
+
+        try {
+            BufferedReader lector = new BufferedReader(new FileReader(archivo));
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                EventoFutbol ef = EventoFutbol.leerToEvFutbol(linea);
+                eventoFutbol.add(ef);
+
+                LocalDate fecha = ef.getFecha();
+                ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
+
+                if (lista == null) {
+                    lista = new ArrayList<>();
+                    eventosPorFecha.put(fecha, lista);
+                }
+
+                lista.add(ef);
+            }
+            lector.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Ha ocurrido un error al encontrar el archivo");
+        } catch (IOException e) {
+            System.out.println("Ha ocurrido un error al recibir los datos");
+        }
+
+        return eventoFutbol;
+    }
+
+
+    
+//	static ArrayList<EventoFutbol> leerEventosFutbolTxt (String archivo){
+//		ArrayList<EventoFutbol> eventoFutbol = new ArrayList<EventoFutbol>();
+//		try {
+//			BufferedReader lector = new BufferedReader(new FileReader(archivo));
+//			String linea;
+//			while ((linea = lector.readLine())!=null) {
+//				eventoFutbol.add(EventoFutbol.leerToEvFutbol(linea));
+//				
+//			}
+//			lector.close();
+//		} catch (FileNotFoundException e) {
+//			System.out.println("Ha ocurrido un error al encontrar el archivo");
+//		}catch (IOException e) {
+//			System.out.println("Ha ocurrido un error al recibir los datos");
+//		}
+//	
+//		return eventoFutbol;
+//	}
 	
 	public boolean registrarEventosFutbolBin(String archivo) {
 		try {	
@@ -234,18 +333,47 @@ public class EventoFutbol extends Evento{
 	}
 	
 	static boolean reescribirEventosFutbolTxt(ArrayList<EventoFutbol> eventosFutbol, String archivo) {
-		try {
-			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
-			for (EventoFutbol ef : eventosFutbol) {
-				String registro = ef.toString();
-				escritor.println(registro);
-			}
-			escritor.close();
-		} catch (IOException e) {
-			return false;
-		}
-		return true;
+	    try {
+	        PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
+	        eventosPorFecha.clear();
+
+	        for (EventoFutbol ef : eventosFutbol) {
+	            String registro = ef.toString();
+	            escritor.println(registro);
+
+	            // Para el TreeMap
+	            LocalDate fecha = ef.getFecha();
+	            ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
+
+	            if (lista == null) {
+	                lista = new ArrayList<>();
+	                eventosPorFecha.put(fecha, lista);
+	            }
+
+	            lista.add(ef);
+	        }
+	        escritor.close();
+	    } catch (IOException e) {
+	        return false;
+	    }
+	    return true;
 	}
+
+
+	
+//	static boolean reescribirEventosFutbolTxt(ArrayList<EventoFutbol> eventosFutbol, String archivo) {
+//		try {
+//			PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
+//			for (EventoFutbol ef : eventosFutbol) {
+//				String registro = ef.toString();
+//				escritor.println(registro);
+//			}
+//			escritor.close();
+//		} catch (IOException e) {
+//			return false;
+//		}
+//		return true;
+//	}
 	
 	static boolean reescribirEventosFutbolBin(ArrayList<EventoFutbol> eventosFutbol, String archivo) {
 		try {

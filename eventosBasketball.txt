@@ -1,3 +1,4 @@
 2025, 7, 23, Celtics, Lakers, 0, 50, 89, 9, 15, 4, 3, true
 2025, 3, 4, Bulls, Warrios, 0, 0, 0, 0, 0, 0, 0, false
 2025, 6, 13, Real Madrid, Barcelona, 1, 0, 0, 0, 0, 0, 0, false
+2025, 4, 4, Lakers, Chicago, 0, 0, 0, 0, 0, 0, 0, false

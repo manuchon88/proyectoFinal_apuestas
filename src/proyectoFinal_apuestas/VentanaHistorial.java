@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,8 +40,64 @@ public class VentanaHistorial extends JFrame {
 	 */
 	public VentanaHistorial(Apostador user) {
 		
-		HistFutbol = user.verHistorialFutbol();
-		HistBasketball = user.verHistorialBasketball();
+	    HistFutbol = user.verHistorialFutbol();
+	    HistBasketball = user.verHistorialBasketball();
+	    // SEGUNDA PRESENTACIÓN ESTRUCTURA DE DATOS
+	    // ÁRBOL PARA APUESTAS DE FÚTBOL
+	    ArbolHistorialApuesta arbol_futbol = new ArbolHistorialApuesta();
+
+	    for (int i = 0; i < HistFutbol.size(); i++) {
+	        ApuestaFutbol bet = HistFutbol.get(i);
+	        arbol_futbol.insertar(bet.getEvent().getFecha(), bet);
+	    }
+
+	    ArrayList<Apuesta> listaOrdenadaFut = new ArrayList<Apuesta>();
+	    arbol_futbol.llenarListaOrdenadaDesc(listaOrdenadaFut);
+	    HistFutbol.clear();
+	    for (int i = 0; i < listaOrdenadaFut.size(); i++) {
+	        Apuesta ap = listaOrdenadaFut.get(i);
+	        HistFutbol.add((ApuestaFutbol) ap);
+	    }
+
+	    // ÁRBOL PARA APUESTAS DE BASKETBALL
+	    ArbolHistorialApuesta arbol_basket = new ArbolHistorialApuesta();
+
+	    for (int i = 0; i < HistBasketball.size(); i++) {
+	        ApuestaBasketball bet = HistBasketball.get(i);
+	        arbol_basket.insertar(bet.getEvent().getFecha(), bet);
+	    }
+
+	    ArrayList<Apuesta> listaOrdenadaBask = new ArrayList<Apuesta>();
+	    arbol_basket.llenarListaOrdenadaDesc(listaOrdenadaBask);
+	    HistBasketball.clear();
+	    for (int i = 0; i < listaOrdenadaBask.size(); i++) {
+	        Apuesta ap = listaOrdenadaBask.get(i);
+	        HistBasketball.add((ApuestaBasketball) ap); 
+	    }
+
+
+	    
+//	    for (int i = 0; i < HistFutbol.size() - 1; i++) {
+//	        for (int j = i + 1; j < HistFutbol.size(); j++) {
+//	            if (HistFutbol.get(i).getEvent().getFecha().compareTo(HistFutbol.get(j).getEvent().getFecha()) < 0) {
+//	            	
+//	                ApuestaFutbol temp = HistFutbol.get(i);
+//	                HistFutbol.set(i, HistFutbol.get(j));
+//	                HistFutbol.set(j, temp);
+//	            }
+//	        }
+//	    }
+//
+//	    for (int i = 0; i < HistBasketball.size() - 1; i++) {
+//	        for (int j = i + 1; j < HistBasketball.size(); j++) {
+//	            if (HistBasketball.get(i).getEvent().getFecha().compareTo(HistBasketball.get(j).getEvent().getFecha()) < 0) {
+//
+//	                ApuestaBasketball temp = HistBasketball.get(i);
+//	                HistBasketball.set(i, HistBasketball.get(j));
+//	                HistBasketball.set(j, temp);
+//	            }
+//	        }
+//	    }
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(500, 50, 700, 470);

@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.awt.event.ActionEvent;
+import java.util.TreeMap;
+
 
 public class VentanaPrincipal extends JFrame {
 
@@ -345,27 +347,58 @@ public class VentanaPrincipal extends JFrame {
 		panEventos.add(panEvents1);
 		
 		
-		for (int i = 0; i < eventosFutbol.size(); i++) {
-			String[] torneos = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
-			if (!eventosFutbol.get(i).isTerminado()) {
-				final String equipo1DelEvento = eventosFutbol.get(i).getEquipo1();
-		        final String equipo2DelEvento = eventosFutbol.get(i).getEquipo2();
-				final String part = torneos[eventosFutbol.get(i).getTorneo()];
-				String text = eventosFutbol.get(i).getFecha()+" / "+part+" / "+ equipo1DelEvento +" vs " + equipo2DelEvento;
-				JButton btnEv = new JButton(text);
-				btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
-				panFut.add(btnEv);	
-				btnEv.addActionListener(new ActionListener() {
-		            @Override
-		            public void actionPerformed(ActionEvent e) {
-		                
-		                VentanaApuestasConPartido ventanaPartido = new VentanaApuestasConPartido(equipo1DelEvento, equipo2DelEvento, part, user);
-		                ventanaPartido.setVisible(true);
-		                
-		            }
-		        });
-			}
+//		for (int i = 0; i < eventosFutbol.size(); i++) {
+//			String[] torneos = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
+//			if (!eventosFutbol.get(i).isTerminado()) {
+//				final String equipo1DelEvento = eventosFutbol.get(i).getEquipo1();
+//		        final String equipo2DelEvento = eventosFutbol.get(i).getEquipo2();
+//				final String part = torneos[eventosFutbol.get(i).getTorneo()];
+//				String text = eventosFutbol.get(i).getFecha()+" / "+part+" / "+ equipo1DelEvento +" vs " + equipo2DelEvento;
+//				JButton btnEv = new JButton(text);
+//				btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
+//				panFut.add(btnEv);	
+//				btnEv.addActionListener(new ActionListener() {
+//		            @Override
+//		            public void actionPerformed(ActionEvent e) {
+//		                
+//		                VentanaApuestasConPartido ventanaPartido = new VentanaApuestasConPartido(equipo1DelEvento, equipo2DelEvento, part, user);
+//		                ventanaPartido.setVisible(true);
+//		                
+//		            }
+//		        });
+//			}
+//		}
+		
+		// SEGUNDA PRESENTACIÓN ESTRUCTURA DE DATOS
+		String[] torneos_futbol = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
+
+		TreeMap<LocalDate, ArrayList<EventoFutbol>> mapaEventos = EventoFutbol.getEventosPorFecha();
+
+		for (LocalDate fecha : mapaEventos.keySet()) {
+		    ArrayList<EventoFutbol> lista = mapaEventos.get(fecha);
+
+		    for (EventoFutbol evento : lista) {
+		        if (!evento.isTerminado()) {
+		            final String equipo1DelEvento = evento.getEquipo1();
+		            final String equipo2DelEvento = evento.getEquipo2();
+		            final String part = torneos_futbol[evento.getTorneo()];
+		            String text = evento.getFecha() + " / " + part + " / " + equipo1DelEvento + " vs " + equipo2DelEvento;
+
+		            JButton btnEv = new JButton(text);
+		            btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
+		            panFut.add(btnEv);
+
+		            btnEv.addActionListener(new ActionListener() {
+		                @Override
+		                public void actionPerformed(ActionEvent e) {
+		                    VentanaApuestasConPartido ventanaPartido = new VentanaApuestasConPartido(equipo1DelEvento, equipo2DelEvento, part, user);
+		                    ventanaPartido.setVisible(true);
+		                }
+		            });
+		        }
+		    }
 		}
+
 		
 		
 		JLabel lblBask = new JLabel("Basketball");
@@ -383,27 +416,57 @@ public class VentanaPrincipal extends JFrame {
 		ScrollBasket.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panEvents2.add(ScrollBasket);
 		panEventos.add(panEvents2);
-		for (int i = 0; i < eventosBasket.size(); i++) {
-			String[] torneos = {"NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"};
-			if (!eventosBasket.get(i).isTerminado()) {
-				final String equipo1DelEvento = eventosBasket.get(i).getEquipo1();
-		        final String equipo2DelEvento = eventosBasket.get(i).getEquipo2();
-				final String part = torneos[eventosBasket.get(i).getTorneo()];
-				String text = eventosBasket.get(i).getFecha()+" / "+part+" / "+equipo1DelEvento+" vs "+equipo2DelEvento;
-				JButton btnEv = new JButton(text);
-				btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
-				panBask.add(btnEv);	
-				btnEv.addActionListener(new ActionListener() {
-		            @Override
-		            public void actionPerformed(ActionEvent e) { 
-		                
-		                VentanaApuestasConPartido ventanaPartido = new VentanaApuestasConPartido(equipo1DelEvento, equipo2DelEvento, part, user);
-		                ventanaPartido.setVisible(true);
-		                
+		
+		String[] torneos_Bask = {"NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"};
+		for (LocalDate fecha : EventoBasketball.getEventosPorFecha().keySet()) {
+		    ArrayList<EventoBasketball> lista = EventoBasketball.getEventosPorFecha().get(fecha);
+
+		    if (lista != null) {
+		        for (EventoBasketball ev : lista) {
+		            if (!ev.isTerminado()) {
+		                final String equipo1DelEvento = ev.getEquipo1();
+		                final String equipo2DelEvento = ev.getEquipo2();
+		                final String part = torneos_Bask[ev.getTorneo()];
+		                String text = ev.getFecha() + " / " + part + " / " + equipo1DelEvento + " vs " + equipo2DelEvento;
+
+		                JButton btnEv = new JButton(text);
+		                btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
+		                panBask.add(btnEv);
+
+		                btnEv.addActionListener(new ActionListener() {
+		                    @Override
+		                    public void actionPerformed(ActionEvent e) { 
+		                        VentanaApuestasConPartido ventanaPartido = new VentanaApuestasConPartido(equipo1DelEvento, equipo2DelEvento, part, user);
+		                        ventanaPartido.setVisible(true);
+		                    }
+		                });
 		            }
-		        });
-			}
+		        }
+		    }
 		}
+
+		
+//		for (int i = 0; i < eventosBasket.size(); i++) {
+//			String[] torneos = {"NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"};
+//			if (!eventosBasket.get(i).isTerminado()) {
+//				final String equipo1DelEvento = eventosBasket.get(i).getEquipo1();
+//		        final String equipo2DelEvento = eventosBasket.get(i).getEquipo2();
+//				final String part = torneos[eventosBasket.get(i).getTorneo()];
+//				String text = eventosBasket.get(i).getFecha()+" / "+part+" / "+equipo1DelEvento+" vs "+equipo2DelEvento;
+//				JButton btnEv = new JButton(text);
+//				btnEv.setAlignmentX(Component.CENTER_ALIGNMENT);
+//				panBask.add(btnEv);	
+//				btnEv.addActionListener(new ActionListener() {
+//		            @Override
+//		            public void actionPerformed(ActionEvent e) { 
+//		                
+//		                VentanaApuestasConPartido ventanaPartido = new VentanaApuestasConPartido(equipo1DelEvento, equipo2DelEvento, part, user);
+//		                ventanaPartido.setVisible(true);
+//		                
+//		            }
+//		        });
+//			}
+//		}
 		
 		
 		panCentroAbajo.add(panEventos, BorderLayout.CENTER);

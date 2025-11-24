@@ -3,3 +3,4 @@
 2025, 5, 31, PSG, Inter Milan, 0, 0, 0, 0, 0, 0, 0, false
 2025, 4, 4, Valencia, Sevilla, 3, 3, 0, 0, 0, 0, 0, true
 2025, 6, 17, Tottenham, Leicester, 5, 0, 0, 0, 0, 0, 0, false
+2025, 6, 1, Real Madrid, Barcelona, 3, 0, 0, 0, 0, 0, 0, false
