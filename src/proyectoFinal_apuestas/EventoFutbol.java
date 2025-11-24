@@ -156,7 +156,7 @@ public class EventoFutbol extends Evento{
         return eventosPorFecha;
     }
 
-    public static List<EventoFutbol> getEventosEnFecha(LocalDate fecha) {
+    public static ArrayList<EventoFutbol> getEventosEnFecha(LocalDate fecha) {
         ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
         ArrayList<EventoFutbol> resultado = new ArrayList<EventoFutbol>();
 

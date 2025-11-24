@@ -39,21 +39,21 @@ public class ArbolHistorialApuesta {
         }
     }
 
-    public void llenarListaOrdenadaDesc(ArrayList<Apuesta> destino) {
-        recorrerDesc(raiz, destino);
+    public void llenarListaOrdenadaDesc(ArrayList<Apuesta> lista_ordenadas) {
+        recorrerDesc(raiz, lista_ordenadas);
     }
 
-    private void recorrerDesc(NodoHistorialApuesta nodo, ArrayList<Apuesta> destino) {
+    private void recorrerDesc(NodoHistorialApuesta nodo, ArrayList<Apuesta> lista_ordenadas) {
         if (nodo == null) {
             return;
         }
 
-        recorrerDesc(nodo.der, destino);
+        recorrerDesc(nodo.der, lista_ordenadas);
         for (int i = 0; i < nodo.elementos.size(); i++) {
             Apuesta ap = nodo.elementos.get(i);
-            destino.add(ap);
+            lista_ordenadas.add(ap);
         }
 
-        recorrerDesc(nodo.izq, destino);
+        recorrerDesc(nodo.izq, lista_ordenadas);
     }
 }

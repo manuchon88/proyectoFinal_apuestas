@@ -53,11 +53,11 @@ public class VentanaHistorial extends JFrame {
 
 	    ArrayList<Apuesta> listaOrdenadaFut = new ArrayList<Apuesta>();
 	    arbol_futbol.llenarListaOrdenadaDesc(listaOrdenadaFut);
-	    HistFutbol.clear();
-	    for (int i = 0; i < listaOrdenadaFut.size(); i++) {
-	        Apuesta ap = listaOrdenadaFut.get(i);
-	        HistFutbol.add((ApuestaFutbol) ap);
-	    }
+//	    HistFutbol.clear();
+//	    for (int i = 0; i < listaOrdenadaFut.size(); i++) {
+//	        Apuesta ap = listaOrdenadaFut.get(i);
+//	        HistFutbol.add((ApuestaFutbol) ap);
+//	    }
 
 	    // ÁRBOL PARA APUESTAS DE BASKETBALL
 	    ArbolHistorialApuesta arbol_basket = new ArbolHistorialApuesta();
@@ -69,11 +69,11 @@ public class VentanaHistorial extends JFrame {
 
 	    ArrayList<Apuesta> listaOrdenadaBask = new ArrayList<Apuesta>();
 	    arbol_basket.llenarListaOrdenadaDesc(listaOrdenadaBask);
-	    HistBasketball.clear();
-	    for (int i = 0; i < listaOrdenadaBask.size(); i++) {
-	        Apuesta ap = listaOrdenadaBask.get(i);
-	        HistBasketball.add((ApuestaBasketball) ap); 
-	    }
+//	    HistBasketball.clear();
+//	    for (int i = 0; i < listaOrdenadaBask.size(); i++) {
+//	        Apuesta ap = listaOrdenadaBask.get(i);
+//	        HistBasketball.add((ApuestaBasketball) ap); 
+//	    }
 
 
 	    
@@ -149,7 +149,8 @@ public class VentanaHistorial extends JFrame {
 		ScrollFutbol.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panCenter.add(ScrollFutbol);
 		
-		for (ApuestaFutbol bet : HistFutbol) {
+		for (Apuesta ap : listaOrdenadaFut) {
+			ApuestaFutbol bet = (ApuestaFutbol) ap;
 			String[] torneos = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
 			String part = torneos[bet.getEvent().getTorneo()];
 			
@@ -286,7 +287,8 @@ public class VentanaHistorial extends JFrame {
 		ScrollBasketball.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panCenter.add(ScrollBasketball);
 		
-		for (ApuestaBasketball bet : HistBasketball) {
+		for (Apuesta ap : listaOrdenadaBask) {
+		    ApuestaBasketball bet = (ApuestaBasketball) ap;
 			String[] torneos = {"NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"};
 			String part = torneos[bet.getEvent().getTorneo()];
 			
