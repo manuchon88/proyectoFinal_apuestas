@@ -4,3 +4,7 @@
 2025, 4, 4, Valencia, Sevilla, 3, 3, 0, 0, 0, 0, 0, true
 2025, 6, 17, Tottenham, Leicester, 5, 0, 0, 0, 0, 0, 0, false
 2025, 6, 1, Real Madrid, Barcelona, 3, 0, 0, 0, 0, 0, 0, false
+2025, 5, 26, Flamengo, Palmeiras, 1, 0, 0, 0, 0, 0, 0, false
+2025, 5, 26, Inter, Lazio, 4, 0, 0, 0, 0, 0, 0, false
+2025, 5, 26, Bolivia, Mexico, 6, 0, 0, 0, 0, 0, 0, false
+2028, 5, 27, Arsenal, Chelsea, 0, 0, 0, 0, 0, 0, 0, false

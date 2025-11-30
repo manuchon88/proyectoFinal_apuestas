@@ -156,34 +156,34 @@ public class EventoFutbol extends Evento{
         return eventosPorFecha;
     }
 
-    public static ArrayList<EventoFutbol> getEventosEnFecha(LocalDate fecha) {
-        ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
-        ArrayList<EventoFutbol> resultado = new ArrayList<EventoFutbol>();
+//    public static ArrayList<EventoFutbol> getEventosEnFecha(LocalDate fecha) {
+//        ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
+//        ArrayList<EventoFutbol> resultado = new ArrayList<EventoFutbol>();
+//
+//        if (lista != null) {
+//            for (EventoFutbol ev : lista) {
+//                resultado.add(ev);
+//            }
+//        }
+//
+//        return resultado;
+//    }
 
-        if (lista != null) {
-            for (EventoFutbol ev : lista) {
-                resultado.add(ev);
-            }
-        }
 
-        return resultado;
-    }
-
-
-    public static ArrayList<EventoFutbol> getEventosEntre(LocalDate desde, LocalDate hasta) {
-    	ArrayList<EventoFutbol> resultado = new ArrayList<EventoFutbol>();
-
-        for (LocalDate fecha : eventosPorFecha.keySet()) {
-            if (!fecha.isBefore(desde) && !fecha.isAfter(hasta)) {
-                ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
-                for (EventoFutbol ev : lista) {
-                    resultado.add(ev);
-                }
-            }
-        }
-
-        return resultado;
-    }
+//    public static ArrayList<EventoFutbol> getEventosEntre(LocalDate desde, LocalDate hasta) {
+//    	ArrayList<EventoFutbol> resultado = new ArrayList<EventoFutbol>();
+//
+//        for (LocalDate fecha : eventosPorFecha.keySet()) {
+//            if (!fecha.isBefore(desde) && !fecha.isAfter(hasta)) {
+//                ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
+//                for (EventoFutbol ev : lista) {
+//                    resultado.add(ev);
+//                }
+//            }
+//        }
+//
+//        return resultado;
+//    }
 
     
     public boolean registrarEventosFutbolTxt(String archivo) {
@@ -237,6 +237,7 @@ public class EventoFutbol extends Evento{
                 eventoFutbol.add(ef);
 
                 LocalDate fecha = ef.getFecha();
+                
                 ArrayList<EventoFutbol> lista = eventosPorFecha.get(fecha);
 
                 if (lista == null) {
@@ -244,7 +245,7 @@ public class EventoFutbol extends Evento{
                     eventosPorFecha.put(fecha, lista);
                 }
 
-                lista.add(ef);
+               lista.add(ef);
             }
             lector.close();
         } catch (FileNotFoundException e) {

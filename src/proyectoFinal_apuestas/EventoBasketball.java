@@ -173,35 +173,35 @@ public class EventoBasketball extends Evento {
 	    return eventosPorFecha;
 	}
 
-	public static ArrayList<EventoBasketball> getEventosEnFecha(LocalDate fecha) {
-	    ArrayList<EventoBasketball> lista = eventosPorFecha.get(fecha);
-	    ArrayList<EventoBasketball> resultado = new ArrayList<EventoBasketball>();
-
-	    if (lista != null) {
-	        for (EventoBasketball ev : lista) {
-	            resultado.add(ev);
-	        }
-	    }
-
-	    return resultado;
-	}
-
-	public static ArrayList<EventoBasketball> getEventosEntre(LocalDate desde, LocalDate hasta) {
-		ArrayList<EventoBasketball> resultado = new ArrayList<EventoBasketball>();
-
-	    for (LocalDate fecha : eventosPorFecha.keySet()) {
-	        if (!fecha.isBefore(desde) && !fecha.isAfter(hasta)) {
-	            ArrayList<EventoBasketball> lista = eventosPorFecha.get(fecha);
-	            if (lista != null) {
-	                for (EventoBasketball ev : lista) {
-	                    resultado.add(ev);
-	                }
-	            }
-	        }
-	    }
-
-	    return resultado;
-	}
+//	public static ArrayList<EventoBasketball> getEventosEnFecha(LocalDate fecha) {
+//	    ArrayList<EventoBasketball> lista = eventosPorFecha.get(fecha);
+//	    ArrayList<EventoBasketball> resultado = new ArrayList<EventoBasketball>();
+//
+//	    if (lista != null) {
+//	        for (EventoBasketball ev : lista) {
+//	            resultado.add(ev);
+//	        }
+//	    }
+//
+//	    return resultado;
+//	}
+//
+//	public static ArrayList<EventoBasketball> getEventosEntre(LocalDate desde, LocalDate hasta) {
+//		ArrayList<EventoBasketball> resultado = new ArrayList<EventoBasketball>();
+//
+//	    for (LocalDate fecha : eventosPorFecha.keySet()) {
+//	        if (!fecha.isBefore(desde) && !fecha.isAfter(hasta)) {
+//	            ArrayList<EventoBasketball> lista = eventosPorFecha.get(fecha);
+//	            if (lista != null) {
+//	                for (EventoBasketball ev : lista) {
+//	                    resultado.add(ev);
+//	                }
+//	            }
+//	        }
+//	    }
+//
+//	    return resultado;
+//	}
 
 	public boolean registrarEventoBasketballTxt(String archivo) {
 	    try {
