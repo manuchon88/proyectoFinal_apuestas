@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JToggleButton;
@@ -61,6 +62,7 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 	 */
 	public VentanaActualizarEventoFutbol() {
 		ArrayList<EventoFutbol> eventsList = EventoFutbol.leerEventosFutbolTxt(Archivos.archivosEventosFutbol);
+		
 		setTitle("Actualizar Evento UCBet");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 501, 501);
@@ -195,12 +197,7 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 		comboBoxEventos.setBounds(139, 36, 306, 21);
 		panCentro.add(comboBoxEventos);
 		
-		String[] events = new String[eventsList.size()+1];
-		events[0]="Seleccionar Evento";
-		for (int i = 1; i < events.length; i++) {
-			events[i] = eventsList.get(i-1).toString();
-		}
-		comboBoxEventos.setModel(new DefaultComboBoxModel<String>(events));
+		
 		
 		JLabel lblTerminarEv = new JLabel("Terminar evento:");
 		lblTerminarEv.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -210,6 +207,56 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 		JToggleButton btnTerminar = new JToggleButton("Terminar Evento");
 		btnTerminar.setBounds(182, 290, 216, 34);
 		panCentro.add(btnTerminar);
+		
+		JLabel lblFecha_1 = new JLabel("Fechas:");
+		lblFecha_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblFecha_1.setBounds(20, 3, 109, 19);
+		panCentro.add(lblFecha_1);
+		
+		JComboBox comboBoxFechas = new JComboBox();
+		comboBoxFechas.setBounds(139, 4, 306, 21);
+		panCentro.add(comboBoxFechas);
+		for (LocalDate string : EventoFutbol.getEventosPorFecha().keySet()) {
+			System.out.println(string);
+		}
+		for (ArrayList<EventoFutbol> string : EventoFutbol.getEventosPorFecha().values()) {
+			System.out.println(string);
+		}
+		
+		String[] fechas = new String[EventoFutbol.getEventosPorFecha().size()+1];
+		fechas[0] = "Seleccionar fecha";
+		int ind = 1;
+		for (LocalDate fecha : EventoFutbol.getEventosPorFecha().keySet()) {
+			fechas[ind] = fecha.toString();
+			ind++;
+		}
+		comboBoxFechas.setModel(new DefaultComboBoxModel<String>(fechas));
+		String[] events = {"Seleccionar fecha"};
+		comboBoxEventos.setModel(new DefaultComboBoxModel<String>(events));
+		
+		comboBoxFechas.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				index = comboBoxFechas.getSelectedIndex()-1;
+				if (index == -1) {
+					String[] events = {"Seleccionar fecha"};
+					comboBoxEventos.setModel(new DefaultComboBoxModel<String>(events));
+				} else {
+					LocalDate fecha = LocalDate.parse((String) comboBoxFechas.getSelectedItem());
+					ArrayList<EventoFutbol> evs = EventoFutbol.getEventosPorFecha().get(fecha);
+					System.out.println(fecha);
+					System.out.println(evs);
+					String[] events = new String[evs.size()+1];
+					events[0]="Seleccionar Evento";
+					for (int i = 1; i < events.length; i++) {
+						events[i] = evs.get(i-1).toString();
+					}
+					comboBoxEventos.setModel(new DefaultComboBoxModel<String>(events));
+				}
+			}
+		});
 		
 		
 		comboBoxEventos.addActionListener(new ActionListener() {			
@@ -228,7 +275,9 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 					textFieldRojasVisitante.setText("");
 					btnTerminar.setSelected(false);
 				} else {
-					EventoFutbol partido  = eventsList.get(index);
+					LocalDate fecha = LocalDate.parse((String) comboBoxFechas.getSelectedItem());
+					ArrayList<EventoFutbol> evs = EventoFutbol.getEventosPorFecha().get(fecha);
+					EventoFutbol partido  = evs.get(index);
 					textFieldNombreLocal.setText(partido.getEquipo1());
 					textFieldNombreVisitante.setText(partido.getEquipo2());
 					textFieldGolesLocal.setText(""+partido.getGoles1());
@@ -244,22 +293,25 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 		
 		btnActualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventsList.get(index).setAmarillas1(Integer.parseInt(textFieldAmarillasLocal.getText()));
-				eventsList.get(index).setAmarillas2(Integer.parseInt(textFieldAmarillasVisitante.getText()));
-				eventsList.get(index).setEquipo1(textFieldNombreLocal.getText());
-				eventsList.get(index).setEquipo2(textFieldNombreVisitante.getText());
-				eventsList.get(index).setGoles1(Integer.parseInt(textFieldGolesLocal.getText()));
-				eventsList.get(index).setGoles2(Integer.parseInt(textFieldGolesVisitante.getText()));
-				eventsList.get(index).setRojas1(Integer.parseInt(textFieldRojasLocal.getText()));
-				eventsList.get(index).setRojas2(Integer.parseInt(textFieldRojasVisitante.getText()));
+				LocalDate fecha = LocalDate.parse((String) comboBoxFechas.getSelectedItem());
+				ArrayList<EventoFutbol> evs = EventoFutbol.getEventosPorFecha().get(fecha);
+				EventoFutbol partido  = evs.get(index);
+				partido.setAmarillas1(Integer.parseInt(textFieldAmarillasLocal.getText()));
+				partido.setAmarillas2(Integer.parseInt(textFieldAmarillasVisitante.getText()));
+				partido.setEquipo1(textFieldNombreLocal.getText());
+				partido.setEquipo2(textFieldNombreVisitante.getText());
+				partido.setGoles1(Integer.parseInt(textFieldGolesLocal.getText()));
+				partido.setGoles2(Integer.parseInt(textFieldGolesVisitante.getText()));
+				partido.setRojas1(Integer.parseInt(textFieldRojasLocal.getText()));
+				partido.setRojas2(Integer.parseInt(textFieldRojasVisitante.getText()));
 				if (btnTerminar.isSelected()) {
 					ArrayList<Apostador> listaApostadores = Apostador.leerApostadoresTxt();
-					eventsList.get(index).setTerminado(true);
+					partido.setTerminado(true);
 					for (Apostador apos : listaApostadores) {
 						ArrayList<ApuestaFutbol>apuestas = apos.verHistorialFutbol();
 						for (ApuestaFutbol bet : apuestas) {
-							if (bet.getEvent().getFecha().equals(eventsList.get(index).getFecha()) && bet.getEvent().getEquipo1().equals(eventsList.get(index).getEquipo1()) && bet.getEvent().getEquipo2().equals(eventsList.get(index).getEquipo2())) {
-								bet.setEvent(eventsList.get(index));
+							if (bet.getEvent().getFecha().equals(partido.getFecha()) && bet.getEvent().getEquipo1().equals(partido.getEquipo1()) && bet.getEvent().getEquipo2().equals(partido.getEquipo2())) {
+								bet.setEvent(partido);
 								if (bet.isGanador()) {
 									double saldo = apos.getSaldo();
 									double premio = bet.getCuota()*bet.getPredict().getMonto();
@@ -271,10 +323,10 @@ public class VentanaActualizarEventoFutbol extends JFrame {
 					}
 					Apostador.reescribirApostadoresTxt(listaApostadores);
 				}else {
-					eventsList.get(index).setTerminado(false);
+					partido.setTerminado(false);
 				}
 				
-				if (EventoFutbol.reescribirEventosFutbolTxt(eventsList, Archivos.archivosEventosFutbol)) {
+				if (EventoFutbol.reescribirEventosFutbolTxt(Archivos.archivosEventosFutbol)) {
 					JOptionPane.showMessageDialog(btnActualizar, "Evento actualizado con éxito");
 					VentanaActualizarEventoFutbol.this.dispose();
 				} else {

@@ -333,7 +333,7 @@ public class EventoFutbol extends Evento{
 		return eventoFutbol;
 	}
 	
-	static boolean reescribirEventosFutbolTxt(ArrayList<EventoFutbol> eventosFutbol, String archivo) {
+	/*static boolean reescribirEventosFutbolTxt(ArrayList<EventoFutbol> eventosFutbol, String archivo) {
 	    try {
 	        PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
 	        eventosPorFecha.clear();
@@ -353,6 +353,22 @@ public class EventoFutbol extends Evento{
 
 	            lista.add(ef);
 	        }
+	        escritor.close();
+	    } catch (IOException e) {
+	        return false;
+	    }
+	    return true;
+	}*/
+	static boolean reescribirEventosFutbolTxt(String archivo) {
+	    try {
+	        PrintWriter escritor = new PrintWriter(new FileWriter(archivo));
+	        
+	        for (LocalDate key : eventosPorFecha.keySet()) {
+				for (EventoFutbol ev : eventosPorFecha.get(key)) {
+					String registro = ev.toString();
+					escritor.println(registro);
+				}
+			}
 	        escritor.close();
 	    } catch (IOException e) {
 	        return false;
