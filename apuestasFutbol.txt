@@ -12,3 +12,4 @@ Estadísticas completas#15.0#2025, 6, 17, Tottenham, Leicester, 5, 0, 0, 0, 0, 0
 Goles#5.0#2025, 5, 26, Flamengo, Palmeiras, 1, 0, 0, 0, 0, 0, 0, false#2#null
 Ganador o empate#2.0#2025, 5, 26, Flamengo, Palmeiras, 1, 0, 0, 0, 0, 0, 0, false#1#null
 Ganador o empate#2.0#2025, 5, 26, Inter, Lazio, 4, 0, 0, 0, 0, 0, 0, false#1#null
+Goles#5.0#2026, 11, 5, Bolivia, Mexico, 6, 0, 0, 0, 0, 0, 0, false#2#null

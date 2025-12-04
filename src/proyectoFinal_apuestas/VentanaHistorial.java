@@ -125,7 +125,7 @@ public class VentanaHistorial extends JFrame {
 		ScrollBasketball.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panCenter.add(ScrollBasketball);
 
-		// ------------------- PANEL DE FILTROS -------------------
+		// ComboBox para dia, mes y anio
 
 		JPanel panFiltros = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		cbDesdeDia = new JComboBox<Integer>();
@@ -147,7 +147,7 @@ public class VentanaHistorial extends JFrame {
 		}
 
 		int anioActual = LocalDate.now().getYear();
-		for (int a = 2000; a <= anioActual; a++) {
+		for (int a = 2010; a <= anioActual+10; a++) {
 			cbDesdeAnio.addItem(a);
 			cbHastaAnio.addItem(a);
 		}
@@ -190,7 +190,7 @@ public class VentanaHistorial extends JFrame {
 
 		mostrarHistorialEnRango(LocalDate.MIN, LocalDate.MAX);
 
-		// FILTRAR
+		// boton de Filtrar
 
 		btnFiltrar.addActionListener(new ActionListener() {
 			@Override
@@ -358,7 +358,7 @@ public class VentanaHistorial extends JFrame {
 			panFutbol.add(new JSeparator());
 		}
 
-		// -------- BASKETBALL --------
+		// Basketball 
 		String[] torneosBask = { "NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso" };
 
 		for (Apuesta ap : listaBask) {

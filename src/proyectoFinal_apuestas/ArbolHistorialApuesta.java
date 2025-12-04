@@ -58,7 +58,7 @@ public class ArbolHistorialApuesta {
     }
     
     
-    // ==== NUEVO: recorrido descendente SOLO en el rango [desde, hasta] ====
+    // Árbol con recorrido en rango
     public void llenarListaOrdenadaDescRango(LocalDate desde, LocalDate hasta, ArrayList<Apuesta> lista_ordenadas) {
         recorrerDescRango(raiz, desde, hasta, lista_ordenadas);
     }
@@ -69,19 +69,16 @@ public class ArbolHistorialApuesta {
             return;
         }
 
-        // Si la fecha del nodo es mayor que "hasta", solo tiene sentido ir a la izquierda
         if (nodo.fecha.isAfter(hasta)) {
             recorrerDescRango(nodo.izq, desde, hasta, lista_ordenadas);
             return;
         }
 
-        // Si la fecha del nodo es menor que "desde", solo tiene sentido ir a la derecha
         if (nodo.fecha.isBefore(desde)) {
             recorrerDescRango(nodo.der, desde, hasta, lista_ordenadas);
             return;
         }
 
-        // Si está dentro del rango, hacemos el in-order descendente normal
         recorrerDescRango(nodo.der, desde, hasta, lista_ordenadas);
 
         for (int i = 0; i < nodo.elementos.size(); i++) {

@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.time.LocalDate; 
 
 public class VentanaCrearApuesta extends JFrame {
 
@@ -19,6 +20,11 @@ public class VentanaCrearApuesta extends JFrame {
 	public VentanaCrearApuesta() {
 		ArrayList<EventoFutbol> eventsFut = EventoFutbol.leerEventosFutbolTxt(Archivos.archivosEventosFutbol);
 		ArrayList<EventoBasketball> eventsBask = EventoBasketball.leerEventosBasketballTxt(Archivos.archivosEventosBasketball);
+		
+		JComboBox<LocalDate> comboBoxFechas = new JComboBox<>();
+		JButton btnFiltrarFecha = new JButton("Filtrar por fecha");
+
+
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("UCBet - Crear Evento");
@@ -37,7 +43,7 @@ public class VentanaCrearApuesta extends JFrame {
 		panTitulo.add(lblTitulo);
 		contentPane.add(panTitulo, BorderLayout.NORTH);
 
-		JPanel panCentro = new JPanel(new GridLayout(6, 2, 10, 10));
+		JPanel panCentro = new JPanel(new GridLayout(7, 2, 10, 10));
 		panCentro.setBackground(new Color(235, 245, 251));
 		contentPane.add(panCentro, BorderLayout.CENTER);
 
@@ -52,22 +58,52 @@ public class VentanaCrearApuesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				deporte = comboBoxDeporte.getSelectedIndex();
+				comboBoxFechas.removeAllItems();
+
+
 				if (deporte == 1) {
-					String[] listedEvents = new String[eventsFut.size()];
+					eventsFut.clear();
+					ArrayList<String> listaStrings = new ArrayList<String>();
+					for (LocalDate fecha : EventoFutbol.getEventosPorFecha().keySet()) {
+						ArrayList<EventoFutbol> lista = EventoFutbol.getEventosPorFecha().get(fecha);
+						if (lista != null) {
+							for (EventoFutbol ev : lista) {
+								eventsFut.add(ev);
+								listaStrings.add(ev.toString());
+							}
+						}    comboBoxFechas.addItem(fecha);
+					}
+
+
+					String[] listedEvents = new String[listaStrings.size()];
 					for (int i = 0; i < listedEvents.length; i++) {
-						listedEvents[i] = eventsFut.get(i).toString();
+						listedEvents[i] = listaStrings.get(i);
 					}
 					comboBoxEventos.setModel(new DefaultComboBoxModel<String>(listedEvents));
 					
 				}else if (deporte == 2) {
-					String[] listedEvents = new String[eventsBask.size()];
+					eventsBask.clear();
+					ArrayList<String> listaStrings = new ArrayList<String>();
+					for (LocalDate fecha : EventoBasketball.getEventosPorFecha().keySet()) {
+						ArrayList<EventoBasketball> lista = EventoBasketball.getEventosPorFecha().get(fecha);
+						if (lista != null) {
+							for (EventoBasketball ev : lista) {
+								eventsBask.add(ev);
+								listaStrings.add(ev.toString());
+							}
+						}    comboBoxFechas.addItem(fecha);
+					}
+
+					String[] listedEvents = new String[listaStrings.size()];
 					for (int i = 0; i < listedEvents.length; i++) {
-						listedEvents[i] = eventsBask.get(i).toString();
+						listedEvents[i] = listaStrings.get(i);
 					}
 					comboBoxEventos.setModel(new DefaultComboBoxModel<String>(listedEvents));
-				}else if (deporte==0) {
-					comboBoxEventos.setModel(new DefaultComboBoxModel(new String[] {}));
+				} else if (deporte==0) {
+				    comboBoxEventos.setModel(new DefaultComboBoxModel(new String[] {}));
+				    comboBoxFechas.removeAllItems();
 				}
+
 			}
 		});
 
@@ -77,6 +113,14 @@ public class VentanaCrearApuesta extends JFrame {
 		comboBoxEventos = new JComboBox<String>();
 		comboBoxEventos.setModel(new DefaultComboBoxModel(new String[] {}));
 		panCentro.add(comboBoxEventos);
+
+		JLabel lblFecha = new JLabel("Fecha:");
+		panCentro.add(lblFecha);
+		panCentro.add(comboBoxFechas);
+
+		JLabel lblVacio = new JLabel("");
+		panCentro.add(lblVacio);
+		panCentro.add(btnFiltrarFecha);
 		
 		JLabel lblTipo = new JLabel("Tipo de apuesta:");
 		panCentro.add(lblTipo);
@@ -124,6 +168,52 @@ public class VentanaCrearApuesta extends JFrame {
 		JButton btnCrearApuesta = new JButton("Crear Apuesta");
 		panBotones.add(btnCrearApuesta);
 		contentPane.add(panBotones, BorderLayout.SOUTH);
+		
+		btnFiltrarFecha.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+
+		        int idxFecha = comboBoxFechas.getSelectedIndex();
+		        if (idxFecha < 0) {
+		            return;
+		        }
+
+		        LocalDate fecha = comboBoxFechas.getItemAt(idxFecha);
+
+				if (deporte == 1) {
+					ArrayList<EventoFutbol> lista = EventoFutbol.getEventosPorFecha().get(fecha);
+					eventsFut.clear();
+					ArrayList<String> listaStrings = new ArrayList<String>();
+					if (lista != null) {
+						for (EventoFutbol ev : lista) {
+							eventsFut.add(ev);
+							listaStrings.add(ev.toString());
+						}
+					}
+					String[] listedEvents = new String[listaStrings.size()];
+					for (int i = 0; i < listedEvents.length; i++) {
+						listedEvents[i] = listaStrings.get(i);
+					}
+					comboBoxEventos.setModel(new DefaultComboBoxModel<String>(listedEvents));
+
+				} else if (deporte == 2) {
+					ArrayList<EventoBasketball> lista = EventoBasketball.getEventosPorFecha().get(fecha);
+					eventsBask.clear();
+					ArrayList<String> listaStrings = new ArrayList<String>();
+					if (lista != null) {
+						for (EventoBasketball ev : lista) {
+							eventsBask.add(ev);
+							listaStrings.add(ev.toString());
+						}
+					}
+					String[] listedEvents = new String[listaStrings.size()];
+					for (int i = 0; i < listedEvents.length; i++) {
+						listedEvents[i] = listaStrings.get(i);
+					}
+					comboBoxEventos.setModel(new DefaultComboBoxModel<String>(listedEvents));
+				}
+			}
+		});
 
 		btnCrearApuesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -4,3 +4,4 @@ Goles#3.0#2025, 6, 30, ABB, Always Ready, 2, 0, 0, 0, 0, 0, 0, false#2#50.0, 1, 
 Ganador o empate#2.0#2025, 4, 4, Valencia, Sevilla, 3, 3, 0, 0, 0, 0, 0, true#1#10.0, 2, 0, 0, 0, 0, 0, 0
 Ganador o empate#2.0#2025, 6, 17, Tottenham, Leicester, 5, 2, 0, 0, 0, 0, 0, true#1#10.0, 2, 0, 0, 0, 0, 0, 0
 Ganador o empate#2.0#2025, 5, 26, Inter, Lazio, 4, 0, 0, 0, 0, 0, 0, false#1#20.0, 0, 0, 0, 0, 0, 0, 0
+Goles#5.0#2026, 11, 5, Bolivia, Mexico, 6, 0, 0, 0, 0, 0, 0, false#2#20.0, 0, 2, 0, 0, 0, 0, 0

@@ -406,6 +406,7 @@ public class VentanaApuestasConPartido extends JFrame {
         competenciasFutbol.add("La Liga");
         competenciasFutbol.add("Serie A");
         competenciasFutbol.add("Premier League");
+        competenciasFutbol.add("Amistoso");
 
         ArrayList<String> competenciasBasketball = new ArrayList<>();
         competenciasBasketball.add("NBA");
@@ -413,6 +414,7 @@ public class VentanaApuestasConPartido extends JFrame {
         competenciasBasketball.add("ACB");
         competenciasBasketball.add("FIBA");
         competenciasBasketball.add("NCAA");
+        competenciasBasketball.add("Amistoso");
 
         for (String competenciaFutbol : competenciasFutbol) {
             if (nombreCompetencia.equals(competenciaFutbol)) {
