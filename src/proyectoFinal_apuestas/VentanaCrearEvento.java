@@ -50,7 +50,8 @@ public class VentanaCrearEvento extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (comboBoxDeporte.getSelectedIndex()==1) {
-					comboBoxTorneo.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar torneo", "Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"}));					
+					comboBoxTorneo.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar torneo", "Champions league", "Copa Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"}));
+	
 				}else if (comboBoxDeporte.getSelectedIndex()==2) {
 					comboBoxTorneo.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar torneo", "NBA", "Euro League", "ACB", "FIBA", "NCAA", "Amistoso"}));	
 				}else {

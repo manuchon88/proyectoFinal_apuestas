@@ -370,7 +370,7 @@ public class VentanaPrincipal extends JFrame {
 //		}
 		
 		// SEGUNDA PRESENTACIÓN ESTRUCTURA DE DATOS
-		String[] torneos_futbol = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
+		String[] torneos_futbol = {"Champions league", "Copa Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
 
 		TreeMap<LocalDate, ArrayList<EventoFutbol>> mapaEventos = EventoFutbol.getEventosPorFecha();
 

@@ -457,6 +457,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
         competenciasFutbol.add("La Liga");
         competenciasFutbol.add("Serie A");
         competenciasFutbol.add("Premier League");
+        competenciasFutbol.add("Amistoso");
 
         ArrayList<String> competenciasBasketball = new ArrayList<>();
         competenciasBasketball.add("NBA");
@@ -464,6 +465,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
         competenciasBasketball.add("ACB");
         competenciasBasketball.add("FIBA");
         competenciasBasketball.add("NCAA");
+        competenciasBasketball.add("Amistoso");
 
         for (String competenciaFutbol : competenciasFutbol) {
             if (nombreCompetencia.equals(competenciaFutbol)) {
@@ -482,7 +484,7 @@ public class VentanaApuestasConCompetencia extends JFrame {
 	 
 	 
 	 public ArrayList<EventoFutbol> partidosFut(String competencia){
-		 String[] torneos = {"Champions league", "Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
+		 String[] torneos = {"Champions league", "Copa Libertadores", "Premier league Boliviana", "La Liga", "Serie A", "Premier League", "Amistoso"};
 		 ArrayList<EventoFutbol> partidos = new ArrayList<EventoFutbol>();
 		 ArrayList<EventoFutbol> eventsFut = EventoFutbol.leerEventosFutbolTxt(Archivos.archivosEventosFutbol);
 		 for (int i = 0; i < torneos.length; i++) {
